@@ -1,0 +1,117 @@
+{
+  "name": "form-configurable",
+  "version": "0.0.0-development",
+  "license": "MIT",
+  "private": false,
+  "author": "Adi Fatkhurozi <ady.fatkhurozi@gmail.com>",
+  "description": "Performant, flexible and extensible forms library for React Form Configurable",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/icons-material": "^5.10.3",
+    "@mui/material": "^5.10.3",
+    "expressionparser": "^1.1.5",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0",
+    "react-scripts": "5.0.1",
+    "react-use": "^17.4.0",
+    "typescript": "^4.8.2",
+    "web-vitals": "^3.0.1",
+    "react-json-view": "^1.21.3"
+  },
+  "scripts": {
+    "commit": "git-cz",
+    "build-formula": "babel ./src/gateway/formula_override.ts  --out-dir ./public/js/ --extensions '.ts,.js' --source-maps inline",
+    "start": "react-scripts start",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "publish": "npm run build && cd ./dist && npm publish --access public",
+    "build-homepage": "react-scripts build",
+    "build": "rimraf dist/* && rimraf types/* && npm run build:stable && npm run build:typescript && npm run build:copy-files && rimraf dist/demo && rimraf dist/index.d.ts",
+    "build:stable": "node scripts/build.js stable",
+    "build:typescript": "npx tsc --emitDeclarationOnly",
+    "build:copy-files": "node scripts/copy-files.js",
+    "semantic-release": "semantic-release --branches master"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.18.10",
+    "@babel/preset-typescript": "^7.18.6",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@types/jest": "^29.0.0",
+    "@types/node": "^18.7.14",
+    "@types/react": "^18.0.18",
+    "@types/react-dom": "^18.0.6",
+    "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-transform-import-aliases": "^1.2.0",
+    "cz-conventional-changelog": "^3.3.0",
+    "semantic-release": "^19.0.5",
+    "tsconfig-paths-webpack-plugin": "^4.0.0",
+    "webpack": "^5.74.0"
+  },
+  "release": {
+    "branches": [
+      "master",
+      "next"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist"
+        }
+      ],
+      "@semantic-release/github"
+    ],
+    "ci": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adyfk/form-configurable.git"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "form",
+    "forms",
+    "form-validation",
+    "validation",
+    "typescript",
+    "react-hooks",
+    "react-form",
+    "form-dynamic",
+    "form-configurable",
+    "expression-form"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/adyfk/form-configurable/issues"
+  }
+}
