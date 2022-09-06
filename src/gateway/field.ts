@@ -45,7 +45,7 @@ interface BaseStyle {
 }
 
 interface BaseConfig {
-  name: 'disabled' | 'hidden';
+  name: 'editable' | 'show';
   value?: any;
   expression?: ExpressionString | null;
 }

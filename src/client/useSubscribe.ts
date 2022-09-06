@@ -1,29 +1,17 @@
 import { useEffect } from 'react';
-import { Subject, Subscription } from './createSubject';
+import { Control, Fields } from './createFormControl';
 
-interface useSubscribeProps {
-  disabled?: boolean;
-  subject: Subject;
-  callback: () => void;
-}
-
-export const useSubscribe = (props: useSubscribeProps) => {
+const useSubscribe = ({
+  control,
+  callback,
+}: {
+  control: Control;
+  callback: (values: Record<string, any>, _fields: Fields) => any;
+}) => {
   useEffect(() => {
-    const tearDown = (subscription: Subscription | false) => {
-      if (subscription) {
-        subscription.unsubscribe();
-      }
-    };
-
-    const subscription =
-      !props.disabled &&
-      props.subject.subscribe({
-        next: props.callback,
-      });
-
-    return () => tearDown(subscription);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.disabled]);
+    const unsubscribe = control.subscribeWatch(callback);
+    return unsubscribe;
+  });
 };
 
 export default useSubscribe;

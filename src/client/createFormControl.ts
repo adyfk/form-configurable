@@ -1,11 +1,10 @@
 import { expressionToValue, SchemaField } from 'gateway';
-import createSubject, { Subject } from './createSubject';
 
 export interface Fields {
-  errors: Record<string, string>;
-  touchedFields: Record<string, boolean>;
-  hiddenFields: Record<string, boolean>;
-  disabledFields: Record<string, boolean>;
+  error: Record<string, string>;
+  touched: Record<string, boolean>;
+  show: Record<string, boolean>;
+  editable: Record<string, boolean>;
 }
 
 export interface FormState {
@@ -21,26 +20,22 @@ export interface RootFormState {
   isValidating: boolean;
 }
 
-export type Control = ReturnType<typeof createFormControl>;
+export type FormValues = Record<string, any>;
 
-export type Subjects = {
-  value: Subject;
-  state: Subject;
-  all: Subject;
-};
+export type Control = ReturnType<typeof createFormControl>;
 
 export interface CreateFormControlProps {
   schema: SchemaField[];
-  extraData?: Record<string, any>;
+  extraData?: FormValues;
 }
 
 export const createFormControl = (props: CreateFormControlProps) => {
-  const _values: Record<string, any> = {};
+  const _values: FormValues = {};
   const _fields: Fields = {
-    errors: {},
-    touchedFields: {},
-    hiddenFields: {},
-    disabledFields: {},
+    error: {},
+    touched: {},
+    show: {},
+    editable: {},
   };
   const _formState: RootFormState = {
     isSubmitted: false,
@@ -50,21 +45,24 @@ export const createFormControl = (props: CreateFormControlProps) => {
   };
   const _refs: Record<string, any> = {};
 
-  const _subjects: Subjects = {
-    value: createSubject(),
-    state: createSubject(),
-    all: createSubject(),
+  const _subjects: { watchs: any[] } = {
+    watchs: [],
   };
 
-  const hasError = () => !!Object.keys(_fields.errors).length;
+  const subscribeWatch = (callback: any) => {
+    _subjects.watchs.push(callback);
+    return () => {
+      _subjects.watchs = _subjects.watchs.filter((fn) => fn !== callback);
+    };
+  };
 
-  // initialize default values
-  const reset = () => {
-    for (const field of props.schema) {
-      _values[field.fieldName] = field.initialValue;
+  const notifyWatch = () => {
+    for (const fn of _subjects.watchs) {
+      fn(_values, _fields);
     }
-    _subjects.all.next();
   };
+
+  const hasError = () => !!Object.keys(_fields.error).length;
 
   const executeExpressionOverrideSelf = (field: SchemaField) => {
     if (field.override?.self) {
@@ -80,19 +78,19 @@ export const createFormControl = (props: CreateFormControlProps) => {
   };
 
   const executeExpressionConfig = (field: SchemaField) => {
-    for (const configField of field.config) {
-      if (!configField.expression) {
-        _fields[`${configField.name}Fields`] = configField.value;
-      } else {
+    for (const { expression, name, value } of field.config) {
+      if (expression) {
         try {
-          const isValid = expressionToValue(configField.expression, {
+          const isValid = expressionToValue(expression, {
             ..._values,
             ...props.extraData,
           });
-          _fields[`${configField.name}Fields`] = !!isValid as any;
+          _fields[name][field.fieldName] = !!isValid as any;
         } catch (error) {
-          //
+          _fields[name][field.fieldName] = false as any;
         }
+      } else {
+        _fields[name][field.fieldName] = value;
       }
     }
   };
@@ -114,8 +112,8 @@ export const createFormControl = (props: CreateFormControlProps) => {
         error = rule.error;
       }
     }
-    if (error) _fields.errors[fieldName] = error;
-    else delete _fields.errors[fieldName];
+    if (error) _fields.error[fieldName] = error;
+    else delete _fields.error[fieldName];
   };
 
   const executeEachField = (
@@ -143,11 +141,11 @@ export const createFormControl = (props: CreateFormControlProps) => {
     value: boolean = true,
     shoudRender: boolean = true
   ) => {
-    const isPreviousTouched = _fields.touchedFields[name];
-    _fields.touchedFields[name] = value;
+    const isPreviousTouched = _fields.touched[name];
+    _fields.touched[name] = value;
 
     if (shoudRender && isPreviousTouched !== value) {
-      _subjects.all.next();
+      notifyWatch();
     }
   };
 
@@ -159,13 +157,23 @@ export const createFormControl = (props: CreateFormControlProps) => {
     executeEachField(['override', 'config', 'validate']);
     // const end = performance.now();
     // console.log('time taken', start - end);
-    _subjects.all.next();
+    notifyWatch();
+  };
+
+  // initialize default values
+  const reset = () => {
+    for (const field of props.schema) {
+      _values[field.fieldName] = field.initialValue;
+    }
+    for (const field of props.schema) {
+      executeExpressionConfig(field);
+    }
+    notifyWatch();
   };
 
   reset();
 
   return {
-    subjects: _subjects,
     values: _values,
     fields: _fields,
     refs: _refs,
@@ -173,6 +181,8 @@ export const createFormControl = (props: CreateFormControlProps) => {
     get hasError() {
       return hasError();
     },
+    subscribeWatch,
+    notifyWatch,
     updateTouch,
     onChange,
     executeEachField,

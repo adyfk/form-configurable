@@ -1,7 +1,7 @@
 import type { SchemaField } from 'gateway';
 import { useEffect, useRef, useState } from 'react';
-import { Control } from './createFormControl';
-import { useSubscribe } from './useSubscribe';
+import { Control, Fields, FormValues } from './createFormControl';
+import useSubscribe from './useSubscribe';
 
 export type FieldProps = {
   name: string;
@@ -10,18 +10,20 @@ export type FieldProps = {
 };
 
 export const initializeField = ({
-  control,
+  values,
+  fields,
   name,
 }: {
-  control: Control;
+  values: FormValues;
+  fields: Fields;
   name: string;
 }) => {
   return {
-    value: control.values[name],
-    error: control.fields.errors[name],
-    touched: control.fields.touchedFields[name],
-    hidden: control.fields.hiddenFields[name],
-    disabled: control.fields.disabledFields[name],
+    value: values[name],
+    error: fields.error[name],
+    touched: fields.touched[name],
+    editable: fields.editable[name],
+    show: fields.show[name],
   };
 };
 
@@ -34,35 +36,37 @@ export const useField = ({
 }) => {
   const formState = control.formState;
   const _ref = useRef();
-  const _state = useRef(initializeField({ control, name }));
+  const _state = useRef<any>({});
   const [state, updateState] = useState({ ..._state.current });
 
+  const latestState = (values: FormValues, fields: Fields) => {
+    const latestState = initializeField({ values, fields, name });
+    if (JSON.stringify(_state.current) !== JSON.stringify(latestState)) {
+      _state.current = latestState;
+      updateState(latestState);
+    }
+  };
   useSubscribe({
-    subject: control.subjects.all,
-    callback: () => {
-      const latestState = initializeField({ control, name });
-      if (JSON.stringify(_state.current) !== JSON.stringify(latestState)) {
-        _state.current = latestState;
-        updateState(latestState);
-      }
-    },
+    control,
+    callback: latestState,
   });
 
   useEffect(() => {
     control.refs[name] = _ref;
+    latestState(control.values, control.fields);
     return () => {
       delete control.refs[name];
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [control]);
 
   return {
     formState,
     ref: _ref,
     value: state.value,
     error: state.error,
-    hidden: state.hidden,
-    disabled: state.disabled,
+    show: typeof state.show === 'undefined' ? true : state.show,
+    editable: typeof state.editable === 'undefined' ? true : state.editable,
     touched: formState.isSubmitted || state.touched,
     onChange: (value: any) => control.onChange(name, value),
     onBlur: () => control.updateTouch(name),

@@ -12,7 +12,7 @@ const pages = [
     path: '/',
   },
   {
-    label: 'React Form',
+    label: 'Demo',
     path: 'form',
   },
   {

@@ -1,4 +1,5 @@
-import { FormEvent, useRef, useState } from 'react';
+import { FormEvent, useEffect, useRef, useState } from 'react';
+import { useUpdate } from 'react-use';
 import {
   Control,
   createFormControl,
@@ -7,10 +8,10 @@ import {
 } from './createFormControl';
 
 export const useForm = (props: CreateFormControlProps) => {
+  const update = useUpdate();
   const _formControl = useRef<Control>(createFormControl(props));
-  const [formState, setFormState] = useState<RootFormState>(
-    _formControl.current.formState
-  );
+
+  const [formState, setFormState] = useState<RootFormState>({} as any);
 
   const getFormControl = () => _formControl.current;
 
@@ -45,7 +46,7 @@ export const useForm = (props: CreateFormControlProps) => {
         formControl.executeEachField(['validate']);
 
         if (formControl.hasError) {
-          await onInvalid?.(formControl.fields.errors, formControl.values);
+          await onInvalid?.(formControl.fields.error, formControl.values);
         } else {
           await onValid(formControl.values);
         }
@@ -59,9 +60,15 @@ export const useForm = (props: CreateFormControlProps) => {
           isSubmitSuccessful: false,
         });
       } finally {
-        _formControl.current.subjects.all.next();
+        _formControl.current.notifyWatch();
       }
     };
+
+  useEffect(() => {
+    _formControl.current = createFormControl(props);
+    update();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.schema, props.extraData]);
 
   return {
     fields: props.schema,
