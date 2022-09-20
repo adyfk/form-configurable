@@ -15,6 +15,7 @@
     "@types/react": "^18.0.20",
     "@types/react-dom": "^18.0.6",
     "expressionparser": "^1.1.5",
+    "form-configurable": "^1.1.1",
     "jsoneditor": "^9.9.1",
     "jsoneditor-react": "^3.1.2",
     "react": "^18.2.0",
