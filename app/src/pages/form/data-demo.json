@@ -1,0 +1,4641 @@
+[
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "firstValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [],
+    "initialValue": "",
+    "meta": { "label": "First Value", "placeholder": "Input Number" },
+    "style": {},
+    "rules": [
+      { "error": "required", "expression": "!firstValue" },
+      {
+        "error": "should lower than second value",
+        "expression": "firstValue > secondValue"
+      }
+    ]
+  },
+  {
+    "fieldName": "secondValue",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "show", "expression": "firstValue" }],
+    "initialValue": "",
+    "meta": { "label": "Second Value", "placeholder": "Input Number" },
+    "rules": [{ "expression": "!secondValue", "error": "required" }],
+    "style": {}
+  },
+  {
+    "fieldName": "result",
+    "fieldType": "TEXT",
+    "valueType": "NUMBER",
+    "config": [{ "name": "editable", "value": false }],
+    "initialValue": 0,
+    "meta": { "label": "Result", "placeholder": "result" },
+    "style": {},
+    "rules": [],
+    "override": { "self": "firstValue + secondValue" }
+  }
+]
