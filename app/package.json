@@ -33,7 +33,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "npm i form-configurable"
+    "postinstall": "npm i form-configurable@latest"
   },
   "eslintConfig": {
     "extends": [

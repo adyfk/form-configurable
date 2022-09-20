@@ -22,6 +22,7 @@
     "commit": "git-cz",
     "build-formula": "babel ./src/gateway/formula_override.ts  --out-dir ./public/js/ --extensions '.ts,.js' --source-maps inline",
     "publish": "npm run build && cd ./dist && npm publish --access public",
+    "build-homepage": "cd ./app && npm run build",
     "build": "rimraf dist/* && rimraf types/* && npm run build:stable && npm run build:typescript && npm run build:copy-files",
     "build:stable": "node scripts/build.js stable",
     "build:typescript": "npx tsc --emitDeclarationOnly",
