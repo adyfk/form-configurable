@@ -56,7 +56,12 @@ interface SchemaWysywgField extends BaseField {
 interface SchemaOptionField extends BaseField {
   fieldType: 'DROPDOWN' | 'CHECKBOX' | 'RADIO';
   valueType: 'NUMBER' | 'STRING' | 'OBJECT';
-  meta?: Partial<MetaField> & { options: any[] };
+  meta?: Partial<MetaField> & {
+    options: any[];
+    asObject?: boolean;
+    attrId?: string;
+    attrLabel?: string;
+  };
 }
 
 interface SchemaDateField extends BaseField {
