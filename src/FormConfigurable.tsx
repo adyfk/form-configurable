@@ -1,13 +1,14 @@
 /* eslint-disable array-callback-return */
 import { FC } from 'react';
 
-import {
+import type {
   Schema,
   SchemaGroupType,
-  Form,
   SchemaViewType,
   SchemaFieldType,
-} from './';
+} from './types/schema';
+
+import type { Form } from './logic/createForm';
 
 export type GroupType = FC<{
   form?: Form;

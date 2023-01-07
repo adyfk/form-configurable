@@ -28,7 +28,7 @@
     "build:typescript": "npx tsc --emitDeclarationOnly",
     "build:copy-files": "node scripts/copy-files.js",
     "semantic-release": "semantic-release --branches master",
-    "docs": "typedoc src --out app/public/docs"
+    "docs": "typedoc src --out app/public/build/docs"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",
