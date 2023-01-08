@@ -26,8 +26,7 @@ const executeExpressionRule = (
   extraData: Record<any, any>
 ) => {
   if (!config.rules) return;
-
-  delete errors.error[config.fieldName];
+  delete errors[config.fieldName];
 
   for (const rule of config.rules) {
     try {
@@ -61,7 +60,7 @@ const executeEachConfig = (
   }
 };
 
-const validate = (
+export const validate = (
   schema: Schema[],
   data: Record<any, any>,
   extraData?: Record<any, any>
@@ -72,5 +71,3 @@ const validate = (
   executeEachConfig(schema, values, errors, extraData || {});
   return errors;
 };
-
-export default validate;
