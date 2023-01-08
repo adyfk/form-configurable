@@ -4,6 +4,7 @@ import FormDemo from './pages/form';
 import Header from './components/header';
 import Container from '@mui/material/Container';
 import { Helmet } from 'react-helmet';
+import ErrorBoundary from './components/error';
 
 const AppDemo = () => {
   return (
@@ -23,11 +24,13 @@ const AppDemo = () => {
       </Helmet>
       <Header />
       <Container maxWidth="xl" sx={{ mt: 2 }}>
-        <Routes>
-          <Route path="/parser" element={<ParserDemo />}></Route>
-          <Route path="/" element={<FormDemo />}></Route>
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
+        <ErrorBoundary>
+          <Routes>
+            <Route path="/parser" element={<ParserDemo />}></Route>
+            <Route path="/" element={<FormDemo />}></Route>
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </ErrorBoundary>
       </Container>
     </>
   );

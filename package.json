@@ -17,6 +17,7 @@
     "typescript": "^4.9.4"
   },
   "scripts": {
+    "serve": "npx serve -s app/build",
     "test": "react-scripts test",
     "commit": "git-cz",
     "build-formula": "babel ./src/gateway/formula_override.ts  --out-dir ./public/js/ --extensions '.ts,.js' --source-maps inline",
@@ -28,7 +29,7 @@
     "build:typescript": "npx tsc --emitDeclarationOnly",
     "build:copy-files": "node scripts/copy-files.js",
     "semantic-release": "semantic-release --branches master",
-    "docs": "typedoc src --out app/build/docs"
+    "docs": "typedoc src --out docs"
   },
   "devDependencies": {
     "@babel/cli": "^7.20.7",

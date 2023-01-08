@@ -18,18 +18,6 @@ making applications the laziest is to create a form where we need to make valida
     npm i form-configurable
 ```
 
-## Quick Start
-
-create two files and name them userForm Test.ts and App.tsx
-
-### useFormTest.ts
-
-## Type Schema Field
-
-```ts
-
-```
-
 ## [Expression Parser Operator](https://form-configurable.netlify.app)
 
 ### Contributors

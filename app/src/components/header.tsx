@@ -4,7 +4,9 @@ import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import IconButton from '@mui/material/IconButton';
 import { Link } from 'react-router-dom';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const pages = [
   {
@@ -55,6 +57,23 @@ const Header = () => {
                 </Button>
               </Link>
             ))}
+          </Box>
+          <Box>
+            <Button
+              component="a"
+              variant="outlined"
+              sx={{ color: 'white' }}
+              href="https://github.com/adyfk/form-configurable/tree/master/docs"
+            >
+              Docs
+            </Button>
+            <IconButton
+              component="a"
+              sx={{ color: 'white' }}
+              href="https://github.com/adyfk/form-configurable"
+            >
+              <GitHubIcon />
+            </IconButton>
           </Box>
         </Toolbar>
       </Container>

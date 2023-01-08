@@ -1,5 +1,5 @@
 import Box from '@mui/material/Box';
-import { Schema } from 'form-configurable';
+import type { Schema } from 'form-configurable';
 import { useState } from 'react';
 import Form from './form';
 import JsonSchema from './schema';
