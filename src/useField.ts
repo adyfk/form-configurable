@@ -74,7 +74,13 @@ export const useField = (props: {
     editable: typeof state.editable === 'undefined' ? true : state.editable,
     touched: formState.isSubmitted || state.touched,
     onChange: useCallback(
-      (value: any) => form.onChange(config.fieldName, value),
+      (arg: any) => {
+        if (typeof arg === 'function') {
+          form.setValue(config.fieldName, arg(form.values));
+        } else {
+          form.setValue(config.fieldName, arg);
+        }
+      },
       [config.fieldName, form]
     ),
     onBlur: useCallback(

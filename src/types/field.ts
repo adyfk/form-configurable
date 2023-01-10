@@ -58,9 +58,6 @@ interface SchemaOptionField extends BaseField {
   valueType: 'NUMBER' | 'STRING' | 'OBJECT';
   meta?: Partial<MetaField> & {
     options: any[];
-    asObject?: boolean;
-    attrId?: string;
-    attrLabel?: string;
   };
 }
 
@@ -68,15 +65,9 @@ interface SchemaDateField extends BaseField {
   fieldType: 'DATE';
   valueType: 'DATE';
   meta?: Partial<MetaField> & {
-    dateFormat: string;
+    format: string;
     view: ('month' | 'year')[];
   };
-}
-
-interface SchemaTimeField extends BaseField {
-  fieldType: 'TIME';
-  valueType: 'DATE';
-  meta?: Partial<MetaField>;
 }
 
 interface SchemaFileField extends BaseField {
@@ -100,6 +91,5 @@ export type SchemaField =
   | SchemaOptionField
   | SchemaFileField
   | SchemaDateField
-  | SchemaTimeField
   | SchemaCustomField
   | SchemaHiddenField;

@@ -5,6 +5,8 @@ import Header from './components/header';
 import Container from '@mui/material/Container';
 import { Helmet } from 'react-helmet';
 import ErrorBoundary from './components/error';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const AppDemo = () => {
   return (
@@ -23,15 +25,17 @@ const AppDemo = () => {
         />
       </Helmet>
       <Header />
-      <Container maxWidth="xl" sx={{ mt: 2 }}>
-        <ErrorBoundary>
-          <Routes>
-            <Route path="/parser" element={<ParserDemo />}></Route>
-            <Route path="/" element={<FormDemo />}></Route>
-            <Route path="*" element={<Navigate to="/" replace />} />
-          </Routes>
-        </ErrorBoundary>
-      </Container>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Container maxWidth="xl" sx={{ mt: 2 }}>
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/parser" element={<ParserDemo />}></Route>
+              <Route path="/" element={<FormDemo />}></Route>
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </ErrorBoundary>
+        </Container>
+      </LocalizationProvider>
     </>
   );
 };

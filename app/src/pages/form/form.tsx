@@ -14,10 +14,25 @@ import FormConfigurable, {
   ViewType,
   FieldType,
 } from 'form-configurable/FormConfigurable';
-import { Box, Button, Grid, TextField, Typography } from '@mui/material';
-import { transformToNumber } from '../../utils/number';
+import {
+  Box,
+  Button,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
+  Grid,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+  FormGroup,
+  Checkbox,
+} from '@mui/material';
+import InputCurrency from '../../components/input-currency';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 
-const FormGroup: GroupType = ({ config, form, child: Child }) => {
+const FieldGroup: GroupType = ({ config, form, child: Child }) => {
   const { show } = useView({ config, form });
 
   if (!show) return <></>;
@@ -37,7 +52,7 @@ const FormGroup: GroupType = ({ config, form, child: Child }) => {
   );
 };
 
-const FormView: ViewType = ({ config, form }) => {
+const FieldView: ViewType = ({ config, form }) => {
   const { show } = useView({ config, form });
 
   if (!show) return <></>;
@@ -55,9 +70,27 @@ const FormView: ViewType = ({ config, form }) => {
 const FieldText: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, onChange } = useField({ config });
+  const { value, error, touched, onChange } = useField({ config, debug: true });
+  if (config.fieldType !== 'TEXT') return null;
 
-  if (config.variant !== 'FIELD' || config.fieldType !== 'TEXT') return null;
+  if (config.valueType === 'NUMBER') {
+    return (
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          size="small"
+          label={config.meta?.label}
+          value={value}
+          onChange={onChange}
+          InputProps={{
+            inputComponent: InputCurrency as any,
+          }}
+          error={touched && !!error}
+          helperText={touched && error}
+        ></TextField>
+      </Grid>
+    );
+  }
 
   return (
     <Grid item xs={12}>
@@ -65,17 +98,135 @@ const FieldText: FC<{
         fullWidth
         size="small"
         label={config.meta?.label}
-        value={value}
+        value={value || null}
         onChange={(e) => {
-          if (config.valueType === 'NUMBER') {
-            onChange(transformToNumber(e.target.value));
-          } else {
-            onChange(e.target.value);
-          }
+          onChange(e.target.value);
         }}
-        error={!!error}
-        helperText={error}
+        error={touched && !!error}
+        helperText={touched && error}
       ></TextField>
+    </Grid>
+  );
+};
+
+const FieldDate: FC<{
+  config: SchemaFieldType;
+}> = ({ config }) => {
+  const { value, error, touched, onChange } = useField({ config, debug: true });
+  if (config.fieldType !== 'DATE') return null;
+
+  return (
+    <Grid item xs={12}>
+      <DesktopDatePicker
+        label={config.meta?.label}
+        inputFormat={config.meta?.format}
+        value={value}
+        onChange={(date) => {
+          console.log({ date });
+          onChange(date?.toISOString() || '');
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            size="small"
+            fullWidth
+            error={touched && !!error}
+            helperText={touched && error}
+          />
+        )}
+      />
+    </Grid>
+  );
+};
+
+const FieldDropdown: FC<{
+  config: SchemaFieldType;
+}> = ({ config }) => {
+  const { value, error, touched, onChange } = useField({ config, debug: true });
+  if (config.fieldType !== 'DROPDOWN') return null;
+
+  return (
+    <Grid item xs={12}>
+      <FormControl fullWidth error={!!(touched && error)}>
+        <Select
+          size="small"
+          value={value?.value}
+          displayEmpty
+          renderValue={(selected) => {
+            if (!selected) {
+              return <em>Placeholder</em>;
+            }
+            return selected;
+          }}
+        >
+          {config.meta?.options.map((option) => {
+            return (
+              <MenuItem value={option.value} onClick={() => onChange(option)}>
+                {option.label}
+              </MenuItem>
+            );
+          })}
+        </Select>
+        <FormHelperText>{error}</FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+interface IOption {
+  label: any;
+  value: any;
+}
+
+const FieldCheckbox: FC<{
+  config: SchemaFieldType;
+}> = ({ config }) => {
+  const { value, error, touched, onChange } = useField({ config, debug: true });
+  if (config.fieldType !== 'CHECKBOX') return null;
+
+  const onChangeCheckbox = (indexSelected: number, option: IOption) => {
+    if (indexSelected >= 0) {
+      const tempValue = [...value];
+      tempValue.splice(indexSelected, 1);
+      onChange(tempValue);
+    } else {
+      onChange([...value, option]);
+    }
+  };
+
+  return (
+    <Grid item xs={12}>
+      <FormControl
+        fullWidth
+        error={!!(touched && error)}
+        component="fieldset"
+        variant="standard"
+      >
+        <FormLabel component="legend">{config.meta?.label}</FormLabel>
+        <FormGroup>
+          {config.meta?.options.map((option) => {
+            const indexOfChecked = (value as any[])?.findIndex(
+              (selectedOption: IOption) => selectedOption.value === option.value
+            );
+
+            const checked = indexOfChecked >= 0;
+            return (
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={checked}
+                    onChange={() => onChangeCheckbox(indexOfChecked, option)}
+                    name={option.value}
+                  />
+                }
+                label={config.meta?.label}
+              />
+            );
+          })}
+        </FormGroup>
+        <FormHelperText>{error}</FormHelperText>
+      </FormControl>
     </Grid>
   );
 };
@@ -85,7 +236,15 @@ const FormFieldContainer: FieldType = ({ config }) => {
     return <FieldText config={config} />;
   }
 
-  if (config.fieldType === 'CHECKBOX') return <>x</>;
+  if (config.fieldType === 'DATE') {
+    return <FieldDate config={config} />;
+  }
+
+  if (config.fieldType === 'DROPDOWN') {
+    return <FieldDropdown config={config} />;
+  }
+
+  if (config.fieldType === 'CHECKBOX') return <FieldCheckbox config={config} />;
 
   return <></>;
 };
@@ -102,20 +261,22 @@ const FormExample: FC<{
   return (
     <Box>
       <form onSubmit={handleSubmit(console.log, console.error)}>
-        <FormContext.Provider value={context}>
-          <FormConfigurable
-            Group={FormGroup}
-            View={FormView}
-            Field={FormFieldContainer}
-            schema={schema}
-            form={form}
-          />
-          <Box display={'flex'} justifyContent="center" mt={2}>
-            <Button variant="contained" type="submit">
-              Save
-            </Button>
-          </Box>
-        </FormContext.Provider>
+        <Grid container spacing={2}>
+          <FormContext.Provider value={context}>
+            <FormConfigurable
+              Group={FieldGroup}
+              View={FieldView}
+              Field={FormFieldContainer}
+              schema={schema}
+              form={form}
+            />
+            <Grid item xs={12}>
+              <Button variant="contained" type="submit" fullWidth>
+                Save
+              </Button>
+            </Grid>
+          </FormContext.Provider>
+        </Grid>
       </form>
     </Box>
   );

@@ -79,7 +79,7 @@ export const useConfig = (props: { form?: Form; config: Schema }) => {
       show: typeof state.show === 'undefined' ? true : state.show,
       editable: typeof state.editable === 'undefined' ? true : state.editable,
       touched: formState.isSubmitted || state.touched,
-      onChange: (value: any) => form.onChange(config.fieldName, value),
+      onChange: (value: any) => form.setValue(config.fieldName, value),
       onBlur: () => form.updateTouch(config.fieldName),
     };
   } else {

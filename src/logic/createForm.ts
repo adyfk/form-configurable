@@ -188,7 +188,7 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const onChange = async (
+  const setValue = async (
     fieldName: string,
     value: any,
     options?: { freeze: boolean }
@@ -199,6 +199,20 @@ export const createForm = (props: CreateFormProps) => {
 
     updateTouch(fieldName, true, false);
     executeConfig(['override', 'config', 'validate'], fieldName);
+    notifyWatch();
+  };
+
+  const setValues = async (
+    values: Record<any, any>,
+    options?: { freeze: boolean }
+  ) => {
+    Object.entries(values).forEach(([key, value]) => {
+      _values[key] = value;
+    });
+
+    if (options?.freeze) return;
+
+    executeConfig(['config', 'validate']);
     notifyWatch();
   };
 
@@ -244,7 +258,8 @@ export const createForm = (props: CreateFormProps) => {
     subscribeWatch,
     notifyWatch,
     updateTouch,
-    onChange,
+    setValue,
+    setValues,
     executeConfig,
     reset,
   };

@@ -4,6 +4,8 @@ import CssBaseline from '@mui/material/CssBaseline';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+// When using TypeScript 4.x and above
+import type {} from '@mui/x-date-pickers/themeAugmentation';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
