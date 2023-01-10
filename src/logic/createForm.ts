@@ -31,6 +31,19 @@ export interface CreateFormProps {
   extraData?: FormValues;
 }
 
+const autoGenerateIdConfig = (schema: Schema[]): Schema[] => {
+  return schema.map((config) => {
+    const tempConfig: Schema = {
+      ...config,
+      key: generateId(),
+    };
+    if (tempConfig.variant === 'GROUP') {
+      tempConfig.child = autoGenerateIdConfig(tempConfig.child);
+    }
+    return tempConfig;
+  });
+};
+
 export const createForm = (props: CreateFormProps) => {
   const _schema: Schema[] = [];
   const _values: FormValues = {};
@@ -173,28 +186,18 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const onChange = async (fieldName: string, value: any) => {
+  const onChange = async (
+    fieldName: string,
+    value: any,
+    options?: { freeze: boolean }
+  ) => {
     _values[fieldName] = value;
+
+    if (options?.freeze) return;
+
     updateTouch(fieldName, true, false);
-    // const start = performance.now();
     executeConfig(['override', 'config', 'validate'], fieldName);
-    // const end = performance.now();
-    // console.log('time taken', start - end);
-
     notifyWatch();
-  };
-
-  const autoGenerateIdConfig = (schema: Schema[]): Schema[] => {
-    return schema.map((config) => {
-      const tempConfig: Schema = {
-        ...config,
-        key: generateId(),
-      };
-      if (tempConfig.variant === 'GROUP') {
-        tempConfig.child = autoGenerateIdConfig(tempConfig.child);
-      }
-      return tempConfig;
-    });
   };
 
   const initializeValues = (schema: Schema[]) => {

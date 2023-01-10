@@ -10,8 +10,7 @@ import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Divider from '@mui/material/Divider';
 import formuleDesc from '../data/formula-desc.json';
-// import { expressionToValue } from 'form-configurable/parser';
-const expressionToValue = (x: any, y: any) => x;
+import { expressionToValue } from 'form-configurable/parser';
 
 function ParserDescribe() {
   const [groupList, setGroupList] = useState<Record<string, any[]>>({});

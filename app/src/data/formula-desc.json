@@ -144,18 +144,6 @@
     "text": "Performs negation of the value: -value. Note: no space can be present before \"value\". (equivalent to NEG(value))"
   },
   {
-    "op": "ISPRIME",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns TRUE if value is prime, FALSE otherwise."
-  },
-  {
-    "op": "GCD",
-    "fix": "prefix",
-    "sig": ["a: Number", "b: Number", "Number"],
-    "text": "Returns the greatest common divisor of a and b."
-  },
-  {
     "op": "NOT",
     "fix": "prefix",
     "sig": ["value: Boolean", "Boolean"],
@@ -174,130 +162,10 @@
     "text": "Returns the absolute value of the number: ABS(value)."
   },
   {
-    "op": "ACOS",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the arc cosine (inverse cosine) of the number: ACOS(value)."
-  },
-  {
-    "op": "ACOSH",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the inverse hyperbolic cosine of the number: ACOSH(value)."
-  },
-  {
-    "op": "ASIN",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the arcsine of the number: ASIN(value)."
-  },
-  {
-    "op": "ASINH",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the inverse hyperbolic sine of the number: ASINH(value)."
-  },
-  {
-    "op": "ATAN",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the arctangent of the number: ATAN(value)."
-  },
-  {
-    "op": "ATAN2",
-    "fix": "prefix",
-    "sig": ["y: Number", "x: Number", "Number"],
-    "text": "Returns the angle (radians) from the X-axis to a point, given a cartesian y-coordinate and x-coordinate: ATAN2(y, x)."
-  },
-  {
-    "op": "ATANH",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the inverse hyperbolic tangent of the number: ATANH(value)."
-  },
-  {
-    "op": "CUBEROOT",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns an approximation of the cubed root of the number: CUBEROOT(value)."
-  },
-  {
-    "op": "COS",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the cosine of the number: COS(value)."
-  },
-  {
-    "op": "COSH",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the hyperbolic cosine of the number: COSH(value)."
-  },
-  {
-    "op": "EXP",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the natural logarithm (e) raised to this value: EXP(value)."
-  },
-  {
-    "op": "LN",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the natural logarithm (base e) of the number: LN(value)."
-  },
-  {
-    "op": "LOG",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the base 10 logarithm of the number: LOG(value)."
-  },
-  {
-    "op": "LOG2",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the base 2 logarithm of the number: LOG2(value)."
-  },
-  {
-    "op": "SIN",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the sine of the number: SIN(value)."
-  },
-  {
-    "op": "SINH",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the hyperbolic sine of the number: SINH(value)."
-  },
-  {
-    "op": "SQRT",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the square root of the number: SQRT(value)."
-  },
-  {
-    "op": "TAN",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the tangent of the number: TAN(value)."
-  },
-  {
-    "op": "TANH",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the hyperbolic tangent of the number: TANH(value)."
-  },
-  {
     "op": "DEGREES",
     "fix": "prefix",
     "sig": ["radians: Number", "Number"],
     "text": "Performs a conversion of radians to degrees: DEGREES(radians)."
-  },
-  {
-    "op": "RADIANS",
-    "fix": "prefix",
-    "sig": ["degrees: Number", "Number"],
-    "text": "Performs a conversion of radians to degrees: RADIANS(degrees)."
   },
   {
     "op": "CEIL",
@@ -388,30 +256,6 @@
     "fix": "prefix",
     "sig": ["string: String", "String"],
     "text": "Converts a string to lowercase: LOWER(string)."
-  },
-  {
-    "op": "DEC2BIN",
-    "fix": "prefix",
-    "sig": ["decimal: Integer", "binary: String"],
-    "text": "Returns a string of \"1\" and \"0\" characters representing the binary representation of the decimal value. DEC2BIN(decimal)"
-  },
-  {
-    "op": "DEC2HEX",
-    "fix": "prefix",
-    "sig": ["decimal: Integer", "hex: String"],
-    "text": "Returns a string of characters representing the hexadecimal representation of the decimal value. DEC2HEX(decimal)"
-  },
-  {
-    "op": "BIN2DEC",
-    "fix": "prefix",
-    "sig": ["binary: String", "decimal: Integer"],
-    "text": "Returns the base 10 value of a binary string of \"1\" and \"0\" characters. BIN2DEC(binary)"
-  },
-  {
-    "op": "HEX2DEC",
-    "fix": "prefix",
-    "sig": ["hex: String", "decimal: Integer"],
-    "text": "Returns the base 10 value of a hexadecimal string. HEX2DEC(hex)"
   },
   {
     "op": "SORT",

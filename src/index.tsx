@@ -6,3 +6,4 @@ export * from './useSubscribe';
 export * from './types/schema';
 export * from './types/core';
 export * from './logic/createForm';
+export * from './logic/transform';

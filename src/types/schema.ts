@@ -21,6 +21,7 @@ interface SchemaBase {
 
 export interface SchemaGroupType extends SchemaBase {
   variant: 'GROUP';
+  section?: string;
   meta: Partial<{
     title: string;
     subtitle: string;
@@ -33,6 +34,7 @@ export interface SchemaGroupType extends SchemaBase {
 
 export interface SchemaViewType extends SchemaBase {
   variant: 'VIEW';
+  section?: string;
   meta: Partial<{
     title: string;
     subtitle: string;

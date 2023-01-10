@@ -165,6 +165,27 @@ const char = (result: ExpressionValue) => {
   return result;
 };
 
+const date = (result: ExpressionValue) => {
+  if (`${result}` === 'Invalid Date') {
+    throw new Error(`Expected date, found: ${typeof result}`);
+  }
+
+  if (result instanceof Date) return result;
+
+  if (!(typeof result === 'string' || typeof result === 'number')) {
+    throw new Error(`Expected string or number, found: ${typeof result}`);
+  }
+  const parseToDate = new Date(result);
+
+  if (`${parseToDate}` === 'Invalid Date') {
+    throw new Error(
+      `Expected string or number date format, found: ${typeof result}`
+    );
+  }
+
+  return parseToDate;
+};
+
 type Callable = (...args: ExpressionArray<ExpressionThunk>) => ExpressionValue;
 
 export const formula = function (
@@ -214,63 +235,31 @@ export const formula = function (
   };
 
   const prefixOps: FunctionOps = {
+    DATE_MIN: (date1, date2) => {
+      const d1 = date(date1());
+      const d2 = date(date2());
+
+      return d1 > d2;
+    },
+    DATE_MAX: (date1, date2) => {
+      const d1 = date(date1());
+      const d2 = date(date2());
+
+      return d2 > d1;
+    },
+
     NEG: (arg) => -num(arg()),
     ADD: (a, b) => num(a()) + num(b()),
     SUB: (a, b) => num(a()) - num(b()),
     MUL: (a, b) => num(a()) * num(b()),
     DIV: (a, b) => num(a()) / num(b()),
     MOD: (a, b) => num(a()) % num(b()),
-    ISPRIME: (arg) => {
-      const val = num(arg());
-      for (let i = 2, s = Math.sqrt(val); i <= s; i++) {
-        if (val % i === 0) return false;
-      }
-      return val !== 1;
-    },
-    GCD: (arg1, arg2) => {
-      let a = num(arg1());
-      let b = num(arg2());
-      a = Math.abs(a);
-      b = Math.abs(b);
-      if (b > a) {
-        var temp = a;
-        a = b;
-        b = temp;
-      }
-      while (true) {
-        if (b === 0) return a;
-        a %= b;
-        if (a === 0) return b;
-        b %= a;
-      }
-    },
     NOT: (arg) => !arg(),
     '!': (arg) => !arg(),
     ABS: (arg) => Math.abs(num(arg())),
-    ACOS: (arg) => Math.acos(num(arg())),
-    ACOSH: (arg) => Math.acosh(num(arg())),
-    ASIN: (arg) => Math.asin(num(arg())),
-    ASINH: (arg) => Math.asinh(num(arg())),
-    ATAN: (arg) => Math.atan(num(arg())),
-
-    ATAN2: (arg1, arg2) => Math.atan2(num(arg1()), num(arg2())),
-
-    ATANH: (arg) => Math.atanh(num(arg())),
-    CUBEROOT: (arg) => Math.cbrt(num(arg())),
     CEIL: (arg) => Math.ceil(num(arg())),
-
-    COS: (arg) => Math.cos(num(arg())),
-    COSH: (arg) => Math.cos(num(arg())),
     EXP: (arg) => Math.exp(num(arg())),
     FLOOR: (arg) => Math.floor(num(arg())),
-    LN: (arg) => Math.log(num(arg())),
-    LOG: (arg) => Math.log10(num(arg())),
-    LOG2: (arg) => Math.log2(num(arg())),
-    SIN: (arg) => Math.sin(num(arg())),
-    SINH: (arg) => Math.sinh(num(arg())),
-    SQRT: (arg) => Math.sqrt(num(arg())),
-    TAN: (arg) => Math.tan(num(arg())),
-    TANH: (arg) => Math.tanh(num(arg())),
     ROUND: (arg) => Math.round(num(arg())),
     SIGN: (arg) => Math.sign(num(arg())),
     TRUNC: (arg) => Math.trunc(num(arg())),
@@ -296,18 +285,11 @@ export const formula = function (
       );
       return num(sum) / arr.length;
     },
-
     SUM: (arg) =>
       evalArray(arg(), num).reduce((prev: number, curr) => prev + num(curr), 0),
     CHAR: (arg) => String.fromCharCode(num(arg())),
     CODE: (arg) => char(arg()).charCodeAt(0),
 
-    DEC2BIN: (arg) => arg().toString(2),
-    DEC2HEX: (arg) => arg().toString(16),
-    DEC2STR: (arg) => arg().toString(10),
-    BIN2DEC: (arg) => Number.parseInt(string(arg()), 2),
-    HEX2DEC: (arg) => Number.parseInt(string(arg()), 16),
-    STR2DEC: (arg) => Number.parseInt(string(arg()), 10),
     DEGREES: (arg) => (num(arg()) * 180) / Math.PI,
     RADIANS: (arg) => (num(arg()) * Math.PI) / 180,
 
@@ -619,22 +601,6 @@ export const formula = function (
       const numVal = parseFloat(term);
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case 'E':
-            return Math.E;
-          case 'LN2':
-            return Math.LN2;
-          case 'LN10':
-            return Math.LN10;
-          case 'LOG2E':
-            return Math.LOG2E;
-          case 'LOG10E':
-            return Math.LOG10E;
-          case 'PI':
-            return Math.PI;
-          case 'SQRTHALF':
-            return Math.SQRT1_2;
-          case 'SQRT2':
-            return Math.SQRT2;
           case 'FALSE':
             return false;
           case 'TRUE':
@@ -662,22 +628,6 @@ export const formula = function (
 
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case 'E':
-            return 'number';
-          case 'LN2':
-            return 'number';
-          case 'LN10':
-            return 'number';
-          case 'LOG2E':
-            return 'number';
-          case 'LOG10E':
-            return 'number';
-          case 'PI':
-            return 'number';
-          case 'SQRTHALF':
-            return 'number';
-          case 'SQRT2':
-            return 'number';
           case 'FALSE':
             return 'boolean';
           case 'TRUE':
