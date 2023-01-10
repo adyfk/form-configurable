@@ -22,9 +22,13 @@ const initializeField = ({
   show: props.show[config.key as string],
 });
 
-export const useField = (props: { form?: Form; config: SchemaFieldType }) => {
+export const useField = (props: {
+  form?: Form;
+  config: SchemaFieldType;
+  debug?: boolean;
+}) => {
   const { form: formContext } = useContext(FormContext);
-  const { form = formContext, config } = props;
+  const { form = formContext, config, debug } = props;
   const formState = form.formState;
   const _ref = useRef();
   const _state = useRef<any>({});
@@ -58,6 +62,8 @@ export const useField = (props: { form?: Form; config: SchemaFieldType }) => {
       delete form.refs[config.fieldName];
     };
   });
+
+  debug && console.log(`field - ${config.fieldName} =`, { state, formState });
 
   return {
     formState,

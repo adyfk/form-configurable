@@ -15,6 +15,7 @@ import FormConfigurable, {
   FieldType,
 } from 'form-configurable/FormConfigurable';
 import { Box, Button, Grid, TextField, Typography } from '@mui/material';
+import { transformToNumber } from '../../utils/number';
 
 const FormGroup: GroupType = ({ config, form, child: Child }) => {
   const { show } = useView({ config, form });
@@ -25,7 +26,7 @@ const FormGroup: GroupType = ({ config, form, child: Child }) => {
     <Grid
       item
       xs={12}
-      sx={{ border: '1px solid lightgray', borderRadius: 5, p: 2 }}
+      sx={{ border: '1px solid lightgray', borderRadius: 5, px: 2, py: 1 }}
     >
       <Typography mb={2} variant="h6" fontWeight={700}>
         {config.meta.title}
@@ -55,14 +56,22 @@ const FieldText: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
   const { value, error, onChange } = useField({ config });
+
+  if (config.variant !== 'FIELD' || config.fieldType !== 'TEXT') return null;
+
   return (
     <Grid item xs={12}>
       <TextField
         fullWidth
+        size="small"
         label={config.meta?.label}
         value={value}
         onChange={(e) => {
-          onChange(e.target.value);
+          if (config.valueType === 'NUMBER') {
+            onChange(transformToNumber(e.target.value));
+          } else {
+            onChange(e.target.value);
+          }
         }}
         error={!!error}
         helperText={error}
@@ -76,7 +85,9 @@ const FormFieldContainer: FieldType = ({ config }) => {
     return <FieldText config={config} />;
   }
 
-  return <>x</>;
+  if (config.fieldType === 'CHECKBOX') return <>x</>;
+
+  return <></>;
 };
 
 const FormExample: FC<{

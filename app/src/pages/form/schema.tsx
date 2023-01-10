@@ -16,6 +16,22 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
     schema: [
       {
         variant: 'FIELD',
+        fieldName: 'number',
+        initialValue: '',
+        fieldType: 'TEXT',
+        valueType: 'NUMBER',
+        meta: {
+          label: 'Number',
+        },
+        rules: [
+          {
+            error: 'Should greather than 0',
+            expression: 'number > 0',
+          },
+        ],
+      },
+      {
+        variant: 'FIELD',
         fieldName: 'name',
         initialValue: '',
         fieldType: 'TEXT',

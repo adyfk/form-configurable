@@ -29,6 +29,7 @@ export type FormValues = Record<string, any>;
 export interface CreateFormProps {
   schema: Schema[];
   extraData?: FormValues;
+  debug?: boolean;
 }
 
 const autoGenerateIdConfig = (schema: Schema[]): Schema[] => {
@@ -78,6 +79,7 @@ export const createForm = (props: CreateFormProps) => {
     for (const fn of _subjects.watchs) {
       fn(_values, _fields, _props);
     }
+    props.debug && console.log({ _values, _fields, _props, _formState });
   };
 
   const hasError = () => !Object.keys(_fields.error).length;
