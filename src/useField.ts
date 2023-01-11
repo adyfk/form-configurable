@@ -66,6 +66,7 @@ export const useField = (props: {
   debug && console.log(`field - ${config.fieldName} =`, { state, formState });
 
   return {
+    form,
     formState,
     ref: _ref,
     value: state.value,

@@ -18,7 +18,7 @@
     "date-fns": "^2.29.3",
     "dayjs": "^1.11.7",
     "expressionparser": "^1.1.5",
-    "form-configurable": "^1.4.1",
+    "form-configurable": "^1.4.2",
     "jsoneditor": "^9.9.2",
     "jsoneditor-react": "^3.1.2",
     "react": "^18.2.0",

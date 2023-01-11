@@ -23,6 +23,22 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
     schema: [
       {
         variant: 'FIELD',
+        fieldType: 'FILE',
+        fieldName: 'file',
+        initialValue: [],
+        meta: {
+          label: 'File',
+        },
+        style: {
+          container: {
+            xs: 12,
+            md: 12,
+            lg: 12,
+          },
+        },
+      },
+      {
+        variant: 'FIELD',
         fieldType: 'RADIO',
         fieldName: 'radio',
         initialValue: { label: '', value: '' },

@@ -74,10 +74,10 @@ interface SchemaDateField extends BaseField {
 interface SchemaFileField extends BaseField {
   fieldType: 'FILE';
   valueType: 'ARRAY_OBJECT';
-  meta?: Partial<MetaField> & {
-    attrId: string;
-    attrLabel: string;
-  };
+  meta?: Partial<MetaField> &
+    Partial<{
+      multiple: boolean;
+    }>;
 }
 
 interface SchemaCustomField extends BaseField {

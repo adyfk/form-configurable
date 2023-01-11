@@ -29,9 +29,50 @@ import {
   Checkbox,
   Radio,
   RadioGroup,
+  FormGroup,
 } from '@mui/material';
 import InputCurrency from '../../components/input-currency';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+
+function guidGenerator() {
+  var S4 = function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  };
+  return (
+    S4() +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    S4() +
+    S4()
+  );
+}
+
+const mockUploadFile = ({
+  onProgress,
+  onSuccess,
+}: {
+  onProgress: any;
+  onSuccess: any;
+}) => {
+  let total = 0;
+
+  const callback = setInterval(() => {
+    total += 100;
+    onProgress(total);
+
+    if (total >= 1000) {
+      onSuccess();
+      clearInterval(callback);
+    }
+  }, 500);
+};
 
 const FieldGroup: GroupType = ({ config, form, child: Child }) => {
   const { show } = useView({ config, form });
@@ -67,14 +108,19 @@ const FieldView: ViewType = ({ config, form }) => {
 const FieldText: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config });
+  const { value, error, touched, editable, show, onChange } = useField({
+    config,
+  });
   if (config.fieldType !== 'TEXT') return null;
+
+  if (!show) return <></>;
 
   if (config.valueType === 'NUMBER') {
     return (
       <Grid item {...(config.style?.container as any)}>
         <TextField
           fullWidth
+          disabled={!editable}
           size="small"
           label={config.meta?.label}
           value={value}
@@ -93,6 +139,7 @@ const FieldText: FC<{
     <Grid item {...(config.style?.container as any)}>
       <TextField
         fullWidth
+        disabled={!editable}
         size="small"
         label={config.meta?.label}
         value={value || null}
@@ -109,12 +156,17 @@ const FieldText: FC<{
 const FieldDate: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config });
+  const { value, error, touched, show, editable, onChange } = useField({
+    config,
+  });
   if (config.fieldType !== 'DATE') return null;
+
+  if (!show) return <></>;
 
   return (
     <Grid item {...(config.style?.container as any)}>
       <DesktopDatePicker
+        disabled={!editable}
         label={config.meta?.label}
         inputFormat={config.meta?.format}
         value={value || null}
@@ -142,14 +194,19 @@ const FieldDate: FC<{
 const FieldDropdown: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config });
+  const { value, error, touched, show, editable, onChange } = useField({
+    config,
+  });
   if (config.fieldType !== 'DROPDOWN') return null;
+
+  if (!show) return <></>;
 
   return (
     <Grid item {...(config.style?.container as any)}>
       <FormControl fullWidth error={!!(touched && error)}>
         <Select
           size="small"
+          disabled={!editable}
           value={value?.value}
           displayEmpty
           renderValue={(selected) => {
@@ -185,7 +242,9 @@ interface IOption {
 const FieldCheckbox: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config });
+  const { value, error, touched, show, editable, onChange } = useField({
+    config,
+  });
   if (config.fieldType !== 'CHECKBOX') return null;
 
   const onChangeCheckbox = (indexSelected: number, option: IOption) => {
@@ -198,6 +257,8 @@ const FieldCheckbox: FC<{
     }
   };
 
+  if (!show) return <></>;
+
   return (
     <Grid item {...(config.style?.container as any)}>
       <FormControl
@@ -207,28 +268,30 @@ const FieldCheckbox: FC<{
         variant="standard"
       >
         <FormLabel component="legend">{config.meta?.label}</FormLabel>
+        <FormGroup>
+          {config.meta?.options.map((option) => {
+            const indexOfChecked = (value as any[])?.findIndex(
+              (selectedOption: IOption) => selectedOption.value === option.value
+            );
 
-        {config.meta?.options.map((option) => {
-          const indexOfChecked = (value as any[])?.findIndex(
-            (selectedOption: IOption) => selectedOption.value === option.value
-          );
-
-          const checked = indexOfChecked >= 0;
-          return (
-            <FormControlLabel
-              key={option.value}
-              control={
-                <Checkbox
-                  size="small"
-                  checked={checked}
-                  onChange={() => onChangeCheckbox(indexOfChecked, option)}
-                  name={`${option.value}`}
-                />
-              }
-              label={config.meta?.label}
-            />
-          );
-        })}
+            const checked = indexOfChecked >= 0;
+            return (
+              <FormControlLabel
+                key={option.value}
+                disabled={!editable}
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={checked}
+                    onChange={() => onChangeCheckbox(indexOfChecked, option)}
+                    name={`${option.value}`}
+                  />
+                }
+                label={config.meta?.label}
+              />
+            );
+          })}
+        </FormGroup>
         <FormHelperText>{touched && error}</FormHelperText>
       </FormControl>
     </Grid>
@@ -238,8 +301,13 @@ const FieldCheckbox: FC<{
 const FieldRadio: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config });
+  const { value, error, touched, show, editable, onChange } = useField({
+    config,
+  });
+
   if (config.fieldType !== 'RADIO') return null;
+
+  if (!show) return <></>;
 
   return (
     <Grid item {...(config.style?.container as any)}>
@@ -250,6 +318,7 @@ const FieldRadio: FC<{
             return (
               <FormControlLabel
                 key={option.value}
+                disabled={!editable}
                 onChange={() => onChange(option)}
                 control={<Radio size="small" />}
                 checked={option.value === value?.value}
@@ -258,6 +327,94 @@ const FieldRadio: FC<{
             );
           })}
         </RadioGroup>
+        <FormHelperText>{touched && error}</FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+const FieldFile: FC<{
+  config: SchemaFieldType;
+}> = ({ config }) => {
+  const { form, value, error, touched, show, editable, onChange } = useField({
+    config,
+  });
+
+  if (!show) return <></>;
+
+  const uploadFile = (enqueFile: any) => {
+    const { fileId } = enqueFile;
+    try {
+      mockUploadFile({
+        onProgress: (progress: number) => {
+          const pureValue = [...form.values[config.fieldName]];
+          const foundIndex = pureValue.findIndex(
+            (file) => file.fileId === fileId
+          );
+          pureValue[foundIndex] = { ...pureValue[foundIndex], progress };
+          onChange(pureValue);
+        },
+        onSuccess: () => {
+          const pureValue = [...form.values[config.fieldName]];
+          const foundIndex = pureValue.findIndex(
+            (file) => file.fileId === fileId
+          );
+          pureValue[foundIndex] = {
+            fileId,
+            fileName: `Has Uploaded ${fileId}`,
+          };
+          onChange(pureValue);
+        },
+      });
+    } catch (error) {}
+  };
+
+  const onSelectFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files as FileList;
+    const registeredFiles = [];
+
+    for (let index = 0; index < files.length; index++) {
+      const file = files.item(index);
+      registeredFiles.push({
+        fileId: guidGenerator(),
+        fileName: file?.name,
+        file,
+      });
+    }
+
+    onChange(registeredFiles);
+
+    for (let index = 0; index < registeredFiles.length; index++) {
+      const file = registeredFiles[index];
+      uploadFile(file);
+    }
+
+    e.target.value = '';
+  };
+
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      <FormControl error={touched && error}>
+        <Typography>FILES</Typography>
+        <Button disabled={!editable} variant="contained" component="label">
+          Upload
+          <input
+            onChange={onSelectFiles}
+            hidden
+            accept="image/*"
+            multiple
+            type="file"
+          />
+        </Button>
+        {value?.map((file: any) => {
+          return (
+            <div key={file?.fileId}>
+              <Typography>{file?.fileId}</Typography>
+              <Typography>{file?.progress}</Typography>
+              <Typography>{file?.fileName}</Typography>
+            </div>
+          );
+        })}
         <FormHelperText>{touched && error}</FormHelperText>
       </FormControl>
     </Grid>
@@ -280,7 +437,7 @@ const FormFieldContainer: FieldType = ({ config }) => {
   } else if (config.fieldType === 'WYSWYG') {
     return <></>;
   } else if (config.fieldType === 'FILE') {
-    return <></>;
+    return <FieldFile config={config}></FieldFile>;
   } else if (config.fieldType === 'CUSTOM') {
     return <></>;
   }
