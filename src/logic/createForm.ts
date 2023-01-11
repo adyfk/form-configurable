@@ -82,7 +82,7 @@ export const createForm = (props: CreateFormProps) => {
     props.debug && console.log({ _values, _fields, _props, _formState });
   };
 
-  const hasError = () => !Object.keys(_fields.error).length;
+  const hasError = () => !!Object.keys(_fields.error).length;
 
   const executeExpressionOverride = (
     config: SchemaFieldType,
@@ -188,7 +188,7 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const setValue = async (
+  const setValue = (
     fieldName: string,
     value: any,
     options?: { freeze: boolean }
@@ -202,18 +202,46 @@ export const createForm = (props: CreateFormProps) => {
     notifyWatch();
   };
 
-  const setValues = async (
+  const setValues = (
     values: Record<any, any>,
     options?: { freeze: boolean }
   ) => {
     Object.entries(values).forEach(([key, value]) => {
-      _values[key] = value;
+      setValue(key, value, { freeze: true });
     });
 
     if (options?.freeze) return;
 
     executeConfig(['config', 'validate']);
     notifyWatch();
+  };
+
+  const setError = (
+    fieldName: string,
+    value?: any,
+    options?: { freeze: boolean }
+  ) => {
+    if (value) _fields.error[fieldName] = value;
+    else delete _fields.error[fieldName];
+
+    if (options?.freeze) return;
+    notifyWatch();
+  };
+
+  const setErrors = (
+    values: Record<any, any>,
+    options?: { freeze: boolean }
+  ) => {
+    Object.entries(values).forEach(([key, value]) => {
+      setError(key, value, { freeze: true });
+    });
+
+    if (options?.freeze) return;
+    notifyWatch();
+  };
+
+  const setFormState = (key: keyof RootFormState, value: boolean) => {
+    _formState[key] = value;
   };
 
   const initializeValues = (schema: Schema[]) => {
@@ -260,6 +288,9 @@ export const createForm = (props: CreateFormProps) => {
     updateTouch,
     setValue,
     setValues,
+    setError,
+    setErrors,
+    setFormState,
     executeConfig,
     reset,
   };

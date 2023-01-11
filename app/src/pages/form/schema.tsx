@@ -16,12 +16,26 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
     schema: [
       {
         variant: 'FIELD',
+        fieldType: 'RADIO',
+        fieldName: 'radio',
+        initialValue: { label: '', value: '' },
+        meta: {
+          label: 'Radio',
+          options: [
+            { label: 'Radio 1', value: 1 },
+            { label: 'Radio 2', value: 2 },
+            { label: 'Radio 3', value: 3 },
+          ],
+        },
+        rules: [{ error: 'Required', expression: '!GET("value", radio)' }],
+      },
+      {
+        variant: 'FIELD',
         fieldType: 'CHECKBOX',
         fieldName: 'checkbox_number',
         initialValue: [],
         meta: {
           label: 'CHECKBOX NUMBER',
-          placeholder: 'Placeholder',
           options: [
             { label: 'Checkbox 1 Number', value: 1 },
             { label: 'Checkbox 2 Number', value: 2 },
@@ -39,7 +53,6 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         initialValue: [],
         meta: {
           label: 'CHECKBOX STRING',
-          placeholder: 'Placeholder',
           options: [
             { label: 'Checkbox 1 String', value: '1' },
             { label: 'Checkbox 2 String', value: '2' },
@@ -57,7 +70,6 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         initialValue: { label: '', value: '' },
         meta: {
           label: 'DROPDOWN NUMBER',
-          placeholder: 'Placeholder',
           options: [
             { label: 'Dropdown 1 Number', value: 1 },
             { label: 'Dropdown 2 Number', value: 2 },
@@ -75,7 +87,6 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         initialValue: { label: '', value: '' },
         meta: {
           label: 'DROPDOWN STRING',
-          placeholder: 'Placeholder',
           options: [
             { label: 'Dropdown 1 String', value: '1' },
             { label: 'Dropdown 2 String', value: '2' },
@@ -96,7 +107,7 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
           label: 'Date',
           format: 'DD/MM/YYYY',
         },
-        rules: [],
+        rules: [{ error: 'Required', expression: '!date' }],
       } as any,
       {
         variant: 'FIELD',

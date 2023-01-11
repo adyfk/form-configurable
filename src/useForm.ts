@@ -14,7 +14,11 @@ import {
   RootFormState,
 } from './logic/createForm';
 
-export const useForm = (props: CreateFormProps) => {
+export const useForm = (
+  props: CreateFormProps & {
+    forceSubmitOnError?: boolean;
+  }
+) => {
   const update = useUpdate();
   const _form = useRef<Form>(createForm(props));
 
@@ -51,9 +55,9 @@ export const useForm = (props: CreateFormProps) => {
             isSubmitted: true,
           });
           form.executeConfig(['validate']);
-
-          if (form.hasError) {
+          if (form.hasError && !props.forceSubmitOnError) {
             await onInvalid?.(form.fields.error, form.values);
+            throw new Error('Submit Failed Has Error');
           } else {
             await onValid(form.values);
           }
@@ -70,7 +74,7 @@ export const useForm = (props: CreateFormProps) => {
           _form.current.notifyWatch();
         }
       },
-    [updateFormState]
+    [props.forceSubmitOnError, updateFormState]
   );
 
   useEffect(() => {

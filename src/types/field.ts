@@ -58,6 +58,7 @@ interface SchemaOptionField extends BaseField {
   valueType: 'NUMBER' | 'STRING' | 'OBJECT';
   meta?: Partial<MetaField> & {
     options: any[];
+    row?: boolean;
   };
 }
 

@@ -26,8 +26,9 @@ import {
   Select,
   TextField,
   Typography,
-  FormGroup,
   Checkbox,
+  Radio,
+  RadioGroup,
 } from '@mui/material';
 import InputCurrency from '../../components/input-currency';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
@@ -70,7 +71,7 @@ const FieldView: ViewType = ({ config, form }) => {
 const FieldText: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config, debug: true });
+  const { value, error, touched, onChange } = useField({ config });
   if (config.fieldType !== 'TEXT') return null;
 
   if (config.valueType === 'NUMBER') {
@@ -112,7 +113,7 @@ const FieldText: FC<{
 const FieldDate: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config, debug: true });
+  const { value, error, touched, onChange } = useField({ config });
   if (config.fieldType !== 'DATE') return null;
 
   return (
@@ -120,9 +121,8 @@ const FieldDate: FC<{
       <DesktopDatePicker
         label={config.meta?.label}
         inputFormat={config.meta?.format}
-        value={value}
+        value={value || null}
         onChange={(date) => {
-          console.log({ date });
           onChange(date?.toISOString() || '');
         }}
         renderInput={(params) => (
@@ -142,7 +142,7 @@ const FieldDate: FC<{
 const FieldDropdown: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config, debug: true });
+  const { value, error, touched, onChange } = useField({ config });
   if (config.fieldType !== 'DROPDOWN') return null;
 
   return (
@@ -161,7 +161,11 @@ const FieldDropdown: FC<{
         >
           {config.meta?.options.map((option) => {
             return (
-              <MenuItem value={option.value} onClick={() => onChange(option)}>
+              <MenuItem
+                key={option.value}
+                value={option.value}
+                onClick={() => onChange(option)}
+              >
                 {option.label}
               </MenuItem>
             );
@@ -181,7 +185,7 @@ interface IOption {
 const FieldCheckbox: FC<{
   config: SchemaFieldType;
 }> = ({ config }) => {
-  const { value, error, touched, onChange } = useField({ config, debug: true });
+  const { value, error, touched, onChange } = useField({ config });
   if (config.fieldType !== 'CHECKBOX') return null;
 
   const onChangeCheckbox = (indexSelected: number, option: IOption) => {
@@ -203,29 +207,58 @@ const FieldCheckbox: FC<{
         variant="standard"
       >
         <FormLabel component="legend">{config.meta?.label}</FormLabel>
-        <FormGroup>
-          {config.meta?.options.map((option) => {
-            const indexOfChecked = (value as any[])?.findIndex(
-              (selectedOption: IOption) => selectedOption.value === option.value
-            );
 
-            const checked = indexOfChecked >= 0;
+        {config.meta?.options.map((option) => {
+          const indexOfChecked = (value as any[])?.findIndex(
+            (selectedOption: IOption) => selectedOption.value === option.value
+          );
+
+          const checked = indexOfChecked >= 0;
+          return (
+            <FormControlLabel
+              key={option.value}
+              control={
+                <Checkbox
+                  size="small"
+                  checked={checked}
+                  onChange={() => onChangeCheckbox(indexOfChecked, option)}
+                  name={`${option.value}`}
+                />
+              }
+              label={config.meta?.label}
+            />
+          );
+        })}
+        <FormHelperText>{error}</FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+const FieldRadio: FC<{
+  config: SchemaFieldType;
+}> = ({ config }) => {
+  const { value, error, touched, onChange } = useField({ config });
+  if (config.fieldType !== 'RADIO') return null;
+
+  return (
+    <Grid item xs={12}>
+      <FormControl error={!!(touched && error)} variant="standard">
+        <FormLabel>{config.meta?.label}</FormLabel>
+        <RadioGroup row={config.meta?.row}>
+          {config.meta?.options.map((option) => {
             return (
               <FormControlLabel
-                control={
-                  <Checkbox
-                    size="small"
-                    checked={checked}
-                    onChange={() => onChangeCheckbox(indexOfChecked, option)}
-                    name={option.value}
-                  />
-                }
-                label={config.meta?.label}
+                key={option.value}
+                onChange={() => onChange(option)}
+                control={<Radio />}
+                checked={option.value === value?.value}
+                label={option.label}
               />
             );
           })}
-        </FormGroup>
-        <FormHelperText>{error}</FormHelperText>
+        </RadioGroup>
+        <FormHelperText>{touched && error}</FormHelperText>
       </FormControl>
     </Grid>
   );
@@ -234,17 +267,23 @@ const FieldCheckbox: FC<{
 const FormFieldContainer: FieldType = ({ config }) => {
   if (config.fieldType === 'TEXT') {
     return <FieldText config={config} />;
-  }
-
-  if (config.fieldType === 'DATE') {
+  } else if (config.fieldType === 'DATE') {
     return <FieldDate config={config} />;
-  }
-
-  if (config.fieldType === 'DROPDOWN') {
+  } else if (config.fieldType === 'DROPDOWN') {
     return <FieldDropdown config={config} />;
+  } else if (config.fieldType === 'CHECKBOX') {
+    return <FieldCheckbox config={config} />;
+  } else if (config.fieldType === 'RADIO') {
+    return <FieldRadio config={config} />;
+  } else if (config.fieldType === 'TEXTAREA') {
+    return <></>;
+  } else if (config.fieldType === 'WYSWYG') {
+    return <></>;
+  } else if (config.fieldType === 'FILE') {
+    return <></>;
+  } else if (config.fieldType === 'CUSTOM') {
+    return <></>;
   }
-
-  if (config.fieldType === 'CHECKBOX') return <FieldCheckbox config={config} />;
 
   return <></>;
 };
