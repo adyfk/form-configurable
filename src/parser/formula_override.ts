@@ -340,6 +340,13 @@ export const formula = function (
         }
       });
     },
+    MAP_ITEM: (arg1, arg2) => {
+      const item = string(arg1());
+      const arr = evalArray(arg2());
+      return arr.map((val: any) => {
+        return val[item];
+      });
+    },
     REDUCE: (arg1, arg2, arg3) => {
       const func = arg1();
       const start = arg2();

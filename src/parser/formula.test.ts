@@ -37,7 +37,13 @@ const parser = init(
 );
 
 const calc = (expression: string, terms?: Record<string, ExpressionValue>) => {
-  return parser.expressionToValue(expression, terms);
+  return parser.expressionToValue(expression, {
+    ...terms,
+    arrObject: [
+      { name: 'adi', age: 20 },
+      { name: 'fatk', age: 22 },
+    ],
+  });
 };
 
 describe('Infix Simple Arithmetic', () => {
@@ -472,5 +478,14 @@ describe('Date', () => {
   });
   it('test date min to be true', () => {
     expect(calc('DATE_MIN("2020-11-17", "2019-11-17")')).toBe(true);
+  });
+});
+
+describe('Array Object', () => {
+  test('MAP_ITEM get list item of name', () => {
+    expect(calc('MAP_ITEM("name", arrObject)')).toEqual(['adi', 'fatk']);
+  });
+  test('MAP_ITEM get list item of age', () => {
+    expect(calc('MAP_ITEM("age", arrObject)')).toEqual([20, 22]);
   });
 });

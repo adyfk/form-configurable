@@ -123,7 +123,11 @@ const FieldDate: FC<{
         inputFormat={config.meta?.format}
         value={value || null}
         onChange={(date) => {
-          onChange(date?.toISOString() || '');
+          if (date && date?.isValid()) {
+            onChange(date.toISOString());
+          } else {
+            onChange('');
+          }
         }}
         renderInput={(params) => (
           <TextField
@@ -251,7 +255,7 @@ const FieldRadio: FC<{
               <FormControlLabel
                 key={option.value}
                 onChange={() => onChange(option)}
-                control={<Radio />}
+                control={<Radio size="small" />}
                 checked={option.value === value?.value}
                 label={option.label}
               />

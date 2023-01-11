@@ -6,13 +6,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useUpdate } from 'react-use';
 import {
   Form,
   createForm,
   CreateFormProps,
   RootFormState,
 } from './logic/createForm';
+import useUpdate from './hooks/useUpdate';
 
 export const useForm = (
   props: CreateFormProps & {
