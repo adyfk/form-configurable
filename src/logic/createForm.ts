@@ -151,7 +151,7 @@ export const createForm = (props: CreateFormProps) => {
     fieldName?: string
   ) => {
     for (const config of schema) {
-      if (config.variant === 'FIELD') {
+      if (config.variant === 'FIELD' && config.fieldType !== 'CUSTOM') {
         if (eventType.includes('override')) {
           executeExpressionOverride(config, fieldName);
         }

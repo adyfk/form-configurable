@@ -65,7 +65,7 @@ async function createModulePackages({ from, to }) {
   );
 }
 
-const packageIncludes = ['expressionparser', 'react-use'];
+const packageIncludes = ['expressionparser'];
 
 async function includeFileInBuild(file) {
   const sourcePath = path.resolve(packagePath, file);
