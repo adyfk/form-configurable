@@ -39,11 +39,7 @@ const FieldGroup: GroupType = ({ config, form, child: Child }) => {
   if (!show) return <></>;
 
   return (
-    <Grid
-      item
-      xs={12}
-      sx={{ border: '1px solid lightgray', borderRadius: 5, px: 2, py: 1 }}
-    >
+    <Grid item {...(config.style?.container as any)}>
       <Typography mb={2} variant="h6" fontWeight={700}>
         {config.meta.title}
         <Typography variant="caption">{config.meta.subtitle}</Typography>
@@ -59,7 +55,7 @@ const FieldView: ViewType = ({ config, form }) => {
   if (!show) return <></>;
 
   return (
-    <Grid item xs={12}>
+    <Grid item {...(config.style?.container as any)}>
       <Typography variant="h6">
         {config.meta.title}
         <Typography variant="caption">{config.meta.subtitle}</Typography>
@@ -76,7 +72,7 @@ const FieldText: FC<{
 
   if (config.valueType === 'NUMBER') {
     return (
-      <Grid item xs={12}>
+      <Grid item {...(config.style?.container as any)}>
         <TextField
           fullWidth
           size="small"
@@ -94,7 +90,7 @@ const FieldText: FC<{
   }
 
   return (
-    <Grid item xs={12}>
+    <Grid item {...(config.style?.container as any)}>
       <TextField
         fullWidth
         size="small"
@@ -117,7 +113,7 @@ const FieldDate: FC<{
   if (config.fieldType !== 'DATE') return null;
 
   return (
-    <Grid item xs={12}>
+    <Grid item {...(config.style?.container as any)}>
       <DesktopDatePicker
         label={config.meta?.label}
         inputFormat={config.meta?.format}
@@ -150,7 +146,7 @@ const FieldDropdown: FC<{
   if (config.fieldType !== 'DROPDOWN') return null;
 
   return (
-    <Grid item xs={12}>
+    <Grid item {...(config.style?.container as any)}>
       <FormControl fullWidth error={!!(touched && error)}>
         <Select
           size="small"
@@ -175,7 +171,7 @@ const FieldDropdown: FC<{
             );
           })}
         </Select>
-        <FormHelperText>{error}</FormHelperText>
+        <FormHelperText>{touched && error}</FormHelperText>
       </FormControl>
     </Grid>
   );
@@ -203,7 +199,7 @@ const FieldCheckbox: FC<{
   };
 
   return (
-    <Grid item xs={12}>
+    <Grid item {...(config.style?.container as any)}>
       <FormControl
         fullWidth
         error={!!(touched && error)}
@@ -233,7 +229,7 @@ const FieldCheckbox: FC<{
             />
           );
         })}
-        <FormHelperText>{error}</FormHelperText>
+        <FormHelperText>{touched && error}</FormHelperText>
       </FormControl>
     </Grid>
   );
@@ -246,7 +242,7 @@ const FieldRadio: FC<{
   if (config.fieldType !== 'RADIO') return null;
 
   return (
-    <Grid item xs={12}>
+    <Grid item {...(config.style?.container as any)}>
       <FormControl error={!!(touched && error)} variant="standard">
         <FormLabel>{config.meta?.label}</FormLabel>
         <RadioGroup row={config.meta?.row}>
@@ -304,8 +300,8 @@ const FormExample: FC<{
   return (
     <Box>
       <form onSubmit={handleSubmit(console.log, console.error)}>
-        <Grid container spacing={2}>
-          <FormContext.Provider value={context}>
+        <FormContext.Provider value={context}>
+          <Grid container spacing={2}>
             <FormConfigurable
               Group={FieldGroup}
               View={FieldView}
@@ -318,8 +314,8 @@ const FormExample: FC<{
                 Save
               </Button>
             </Grid>
-          </FormContext.Provider>
-        </Grid>
+          </Grid>
+        </FormContext.Provider>
       </form>
     </Box>
   );

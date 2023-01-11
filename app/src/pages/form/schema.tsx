@@ -2,12 +2,19 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import JsonEditor from '../../components/json-editor';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Schema } from 'form-configurable';
+import { IconButton, styled } from '@mui/material';
+import { UploadFile } from '@mui/icons-material';
 // import schema from './data-demo.json';
 // import { FieldType, ValueType } from 'gateway';
 
+const Input = styled('input')({
+  display: 'none',
+});
+
 function JsonSchema({ onLoad }: { onLoad: any }) {
+  const [renderJson, setRenderJson] = useState(true);
   const [value, setValue] = useState<{
     extraData: any;
     schema: Schema[];
@@ -27,6 +34,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
             { label: 'Radio 3', value: 3 },
           ],
         },
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
         rules: [{ error: 'Required', expression: '!GET("value", radio)' }],
       },
       {
@@ -45,6 +59,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         rules: [
           { error: 'Required', expression: 'LENGTH(checkbox_number) = 0' },
         ],
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
       },
       {
         variant: 'FIELD',
@@ -62,6 +83,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         rules: [
           { error: 'Required', expression: 'LENGTH(checkbox_string) = 0' },
         ],
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
       },
       {
         variant: 'FIELD',
@@ -79,6 +107,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         rules: [
           { error: 'Required', expression: '!GET("value", dropdown_number)' },
         ],
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
       },
       {
         variant: 'FIELD',
@@ -96,6 +131,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         rules: [
           { error: 'Required', expression: '!GET("value", dropdown_string)' },
         ],
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
       },
       {
         variant: 'FIELD',
@@ -108,6 +150,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
           format: 'DD/MM/YYYY',
         },
         rules: [{ error: 'Required', expression: '!date' }],
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
       } as any,
       {
         variant: 'FIELD',
@@ -124,6 +173,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
             expression: 'number <= 0',
           },
         ],
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
       },
       {
         variant: 'FIELD',
@@ -140,6 +196,13 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
             expression: '!name',
           },
         ],
+        style: {
+          container: {
+            xs: 12,
+            md: 8,
+            lg: 6,
+          },
+        },
       },
       {
         variant: 'VIEW',
@@ -147,6 +210,11 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
           title: 'View Title Information',
         },
         props: [{ name: 'show', expression: 'name' }],
+        style: {
+          container: {
+            xs: 12,
+          },
+        },
       },
       {
         variant: 'GROUP',
@@ -172,9 +240,18 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
             },
           },
         ],
+        style: {
+          container: {
+            xs: 12,
+          },
+        },
       },
     ],
   });
+
+  useEffect(() => {
+    if (!renderJson) setRenderJson(true);
+  }, [renderJson]);
 
   return (
     <>
@@ -183,12 +260,34 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         justifyContent="space-between"
         alignItems={'center'}
       >
-        <Typography py={2}>Object Schema</Typography>
+        <Typography py={2}>
+          Object Schema{' '}
+          <label htmlFor="upload-json">
+            <Input
+              onChange={async (e) => {
+                try {
+                  const reader = new FileReader();
+                  reader.readAsText(e.target.files?.[0] as any, 'UTF-8');
+                  reader.onload = (e) => {
+                    setValue(JSON.parse(e.target?.result as any));
+                    setRenderJson(false);
+                  };
+                } catch (error) {}
+              }}
+              accept={'application/JSON'}
+              id="upload-json"
+              type="file"
+            />
+            <IconButton size="small" component="span">
+              <UploadFile />
+            </IconButton>
+          </label>
+        </Typography>
         <Button onClick={() => onLoad(value)} variant="outlined" size="small">
           Implement To Form
         </Button>
       </Box>
-      <JsonEditor value={value} onChange={setValue} />
+      {renderJson && <JsonEditor value={value} onChange={setValue} />}
     </>
   );
 }

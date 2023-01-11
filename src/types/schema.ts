@@ -1,10 +1,10 @@
-import { ClassName, ExpressionString } from './core';
+import { ExpressionString } from './core';
 import { SchemaField } from './field';
 
 interface BaseStyle {
-  container: ClassName;
-  content: ClassName;
-  badge: ClassName;
+  container: any;
+  content: any;
+  badge: any;
 }
 
 interface BaseProp {
