@@ -31,7 +31,14 @@ export const useField = (props: {
   const { form = formContext, config, debug } = props;
   const formState = form.formState;
   const _ref = useRef();
-  const _state = useRef<any>({});
+  const _state = useRef<any>(
+    initializeField({
+      values: form.values,
+      fields: form.fields,
+      props: form.props,
+      config,
+    })
+  );
   const [state, updateState] = useState({ ..._state.current });
 
   const latestState = useCallback(

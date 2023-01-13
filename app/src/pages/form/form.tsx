@@ -15,6 +15,11 @@ import FormConfigurable, {
   FieldType,
 } from 'form-configurable/FormConfigurable';
 import {
+  withSubmitMiddleware,
+  FormSyncReactHookForm,
+  resolverMiddleware,
+} from 'form-configurable/useSubmitMiddleware';
+import {
   Box,
   Button,
   FormControl,
@@ -31,8 +36,12 @@ import {
   RadioGroup,
   FormGroup,
 } from '@mui/material';
+import { Controller, useForm as useFormHook } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import InputCurrency from '../../components/input-currency';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import * as yup from 'yup';
+import { DevTool } from '@hookform/devtools';
 
 function guidGenerator() {
   var S4 = function () {
@@ -421,6 +430,89 @@ const FieldFile: FC<{
   );
 };
 
+const schema = yup
+  .object({
+    firstname: yup.string().required(),
+    lastname: yup.string().required(),
+  })
+  .required();
+
+const FieldCustom: FC<{
+  config: SchemaFieldType;
+}> = ({ config }) => {
+  const { form, value } = useField({ config });
+  const action = useFormHook({
+    resolver: resolverMiddleware({
+      resolver: yupResolver(schema),
+      form,
+    }),
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+    defaultValues: value,
+    shouldFocusError: true,
+  });
+
+  const { control, handleSubmit } = action;
+
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      <FormSyncReactHookForm config={config} form={form} action={action} />
+      <DevTool control={control} />
+      <Box p={2} border="1px solid lightgray" borderRadius={2}>
+        <Typography>
+          Sub Form Complex{' '}
+          <Button
+            onClick={handleSubmit(
+              (values) => {
+                console.log('valid', values);
+              },
+              (values) => {
+                console.log('invalid', values);
+              }
+            )}
+          >
+            Validate Local
+          </Button>
+        </Typography>
+        <Box mt={1} display={'flex'} flexDirection={'column'} gap={2}>
+          <Controller
+            name={'firstname'}
+            control={control}
+            render={({ field, fieldState }) => {
+              return (
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="firstname"
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                  {...field}
+                />
+              );
+            }}
+          ></Controller>
+          <Controller
+            name={'lastname'}
+            control={control}
+            render={({ field, fieldState }) => {
+              return (
+                <TextField
+                  fullWidth
+                  size="small"
+                  label="lastname"
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                  {...field}
+                />
+              );
+            }}
+          ></Controller>
+        </Box>
+      </Box>
+    </Grid>
+  );
+};
+
 const FormFieldContainer: FieldType = ({ config }) => {
   if (config.fieldType === 'TEXT') {
     return <FieldText config={config} />;
@@ -439,7 +531,7 @@ const FormFieldContainer: FieldType = ({ config }) => {
   } else if (config.fieldType === 'FILE') {
     return <FieldFile config={config}></FieldFile>;
   } else if (config.fieldType === 'CUSTOM') {
-    return <></>;
+    return <FieldCustom config={config} />;
   }
 
   return <></>;
@@ -478,4 +570,4 @@ const FormExample: FC<{
   );
 };
 
-export default FormExample;
+export default withSubmitMiddleware(FormExample, { order: 'before' });

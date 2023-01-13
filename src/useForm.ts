@@ -2,6 +2,7 @@ import {
   createContext,
   FormEvent,
   useCallback,
+  useContext,
   useEffect,
   useRef,
   useState,
@@ -13,6 +14,7 @@ import {
   RootFormState,
 } from './logic/createForm';
 import useUpdate from './hooks/useUpdate';
+import { SumbitMiddlewareContext } from './useSubmitMiddleware';
 
 export const useForm = (
   props: CreateFormProps & {
@@ -20,6 +22,7 @@ export const useForm = (
   }
 ) => {
   const update = useUpdate();
+  const { validateListSubmit, order } = useContext(SumbitMiddlewareContext);
   const _form = useRef<Form>(createForm(props));
 
   const [formState, setFormState] = useState<RootFormState>({} as any);
@@ -46,21 +49,31 @@ export const useForm = (
         ) => Promise<void> | any
       ) =>
       async (event: FormEvent) => {
-        event.stopPropagation();
-        event.preventDefault();
+        event?.stopPropagation();
+        event?.preventDefault();
+
+        const form = getForm();
+
         try {
-          const form = getForm();
           updateFormState({
             isSubmitting: true,
             isSubmitted: true,
           });
+          if (order === 'before') {
+            await validateListSubmit();
+          }
+
           form.executeConfig(['validate']);
           if (form.hasError && !props.forceSubmitOnError) {
-            await onInvalid?.(form.fields.error, form.values);
             throw new Error('Submit Failed Has Error');
           } else {
             await onValid(form.values);
           }
+
+          if (order === 'after') {
+            await validateListSubmit();
+          }
+
           updateFormState({
             isSubmitting: false,
             isSubmitSuccessful: true,
@@ -70,11 +83,17 @@ export const useForm = (
             isSubmitting: false,
             isSubmitSuccessful: false,
           });
+
+          try {
+            await onInvalid?.(form.fields.error, form.values);
+          } catch (error) {
+            //
+          }
         } finally {
           _form.current.notifyWatch();
         }
       },
-    [props.forceSubmitOnError, updateFormState]
+    [props.forceSubmitOnError, updateFormState, order, validateListSubmit]
   );
 
   useEffect(() => {

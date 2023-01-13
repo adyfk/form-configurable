@@ -23,6 +23,17 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
     schema: [
       {
         variant: 'FIELD',
+        fieldType: 'CUSTOM',
+        fieldName: 'custom',
+        initialValue: {},
+        style: {
+          container: {
+            xs: 12,
+          },
+        },
+      },
+      {
+        variant: 'FIELD',
         fieldType: 'FILE',
         fieldName: 'file',
         initialValue: [],
@@ -204,7 +215,7 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
         fieldType: 'TEXT',
         valueType: 'STRING',
         meta: {
-          label: 'Name',
+          label: 'Input name to show hidden field',
         },
         rules: [
           {
