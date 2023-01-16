@@ -71,3 +71,5 @@ export const validate = (
   executeEachConfig(schema, values, errors, extraData || {});
   return errors;
 };
+
+export default validate;
