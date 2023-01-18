@@ -65,7 +65,7 @@ async function createModulePackages({ from, to }) {
   );
 }
 
-const packageIncludes = ['expressionparser'];
+const packageIncludes = ['expressionparser', '@babel/runtime'];
 
 async function includeFileInBuild(file) {
   const sourcePath = path.resolve(packagePath, file);
