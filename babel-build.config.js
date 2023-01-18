@@ -1,4 +1,4 @@
-// const path = require('path');
+const path = require('path');
 const productionPlugins = [
   // ['babel-plugin-react-remove-properties'],
 ];
@@ -6,16 +6,19 @@ const productionPlugins = [
 module.exports = function getBabelConfig(api) {
   const useESModules = false;
   // const useESModules = api.env(['stable']);
-  // function resolveAliasPath(relativeToBabelConf) {
-  //   const resolvedPath = path.relative(
-  //     process.cwd(),
-  //     path.resolve(__dirname, relativeToBabelConf)
-  //   );
-  //   return `./${resolvedPath.replace('\\', '/')}`;
-  // }
+  function resolveAliasPath(relativeToBabelConf) {
+    const resolvedPath = path.relative(
+      process.cwd(),
+      path.resolve(__dirname, relativeToBabelConf)
+    );
+    return `./${resolvedPath.replace('\\', '/')}`;
+  }
 
   const defaultAlias = {
-    // atoms: resolveAliasPath('./src/atoms'),
+    atoms: resolveAliasPath('./src/atoms'),
+    logic: resolveAliasPath('./src/logic'),
+    src: resolveAliasPath('./src'),
+    utlis: resolveAliasPath('./utlis'),
   };
 
   const presets = [

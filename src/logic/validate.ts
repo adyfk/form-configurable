@@ -1,5 +1,5 @@
 import { expressionToValue } from 'src/parser';
-import { Schema, SchemaFieldType } from 'src/types/schema';
+import type { Schema, SchemaFieldType } from 'src/types/schema';
 
 const executeExpressionOverride = (
   config: SchemaFieldType,
