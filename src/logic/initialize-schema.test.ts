@@ -1,5 +1,5 @@
 import type { Schema } from 'src/types/schema';
-import initializeSchema from './intialize-schema';
+import initializeSchema from './initialize-schema';
 
 const schema: Schema[] = [
   {

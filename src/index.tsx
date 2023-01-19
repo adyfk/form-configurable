@@ -5,5 +5,8 @@ export * from './useView';
 export * from './useSubscribe';
 export * from './types/schema';
 export * from './types/core';
+export * from './types/field';
 export * from './logic/createForm';
 export * from './logic/transform';
+export * from './logic/validate';
+export * from './logic/initialize-schema';

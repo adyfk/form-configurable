@@ -63,7 +63,7 @@ const Header = () => {
               component="a"
               variant="outlined"
               sx={{ color: 'white' }}
-              href="https://github.com/adyfk/form-configurable/tree/master/docs"
+              href="https://form-configurable-docs.netlify.app"
             >
               Docs
             </Button>

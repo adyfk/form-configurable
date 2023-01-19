@@ -4,24 +4,38 @@ import { FormContext } from './useForm';
 import { Fields, Form, FormValues, Props } from './logic/createForm';
 import useSubscribe from './useSubscribe';
 
-const initializeView = ({
+export const initializeView = ({
   props,
   config,
 }: {
   props: Props;
   config: Schema;
 }) => {
-  return {
-    editable: props.editable[config.key as string],
-    show: props.show[config.key as string],
+  const field: {
+    viewState: Record<string, any>;
+  } = {
+    viewState: {},
   };
+
+  for (const key in props) {
+    const value = props[key]?.[config.key as string];
+    field.viewState[key] = typeof value === 'undefined' ? true : value;
+  }
+
+  return field;
 };
+
+type IStateInitializeView = ReturnType<typeof initializeView>;
 
 export const useView = (props: { form?: Form; config: Schema }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, config } = props;
-  const _state = useRef<any>({});
-  const [state, updateState] = useState({ ..._state.current });
+  const _state = useRef<IStateInitializeView>(
+    initializeView({ props: form.props, config })
+  );
+  const [state, updateState] = useState<IStateInitializeView>({
+    ..._state.current,
+  });
 
   const latestState = useCallback(
     (values: FormValues, _: Fields, props: Props) => {
@@ -46,8 +60,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   }, [config]);
 
   return {
-    show: typeof state.show === 'undefined' ? true : state.show,
-    editable: typeof state.editable === 'undefined' ? true : state.editable,
+    viewState: state.viewState,
   };
 };
 

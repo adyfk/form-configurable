@@ -1,4 +1,4 @@
-import { ExpressionString } from './core';
+import { ExpressionString, SchemaBase } from './core';
 
 interface MetaField {
   placeholder: string;
@@ -10,6 +10,7 @@ interface MetaField {
   badge: string;
   optional: boolean;
   required: boolean;
+  [key: string]: any;
 }
 
 interface BaseRule {
@@ -23,37 +24,38 @@ interface BaseOverride {
   others: Record<string, any>;
 }
 
-interface BaseField {
+interface BaseField extends SchemaBase {
+  variant: 'FIELD';
   initialValue: any;
   fieldName: string;
   override?: Partial<BaseOverride>;
   rules?: BaseRule[];
 }
 
-interface SchemaTextField extends BaseField {
+export interface SchemaFieldText extends BaseField {
   fieldType: 'TEXT';
   valueType: 'STRING' | 'NUMBER';
   meta?: Partial<MetaField>;
 }
 
-interface SchemaHiddenField extends BaseField {
+export interface SchemaFieldHidden extends BaseField {
   fieldType: 'HIDDEN';
   meta?: Partial<MetaField>;
 }
 
-interface SchemaTextAreaField extends BaseField {
+export interface SchemaFieldTextArea extends BaseField {
   fieldType: 'TEXTAREA';
   valueType: 'STRING';
   meta?: Partial<MetaField> & Partial<{ rows: number; cols: number }>;
 }
 
-interface SchemaWysywgField extends BaseField {
+export interface SchemaFieldWyswyg extends BaseField {
   fieldType: 'WYSWYG';
   valueType: 'STRING';
   meta?: Partial<MetaField> & Partial<{ rows: number; cols: number }>;
 }
 
-interface SchemaOptionField extends BaseField {
+export interface SchemaFieldOption extends BaseField {
   fieldType: 'DROPDOWN' | 'CHECKBOX' | 'RADIO';
   valueType: 'NUMBER' | 'STRING' | 'OBJECT';
   meta?: Partial<MetaField> & {
@@ -62,7 +64,7 @@ interface SchemaOptionField extends BaseField {
   };
 }
 
-interface SchemaDateField extends BaseField {
+export interface SchemaFieldDate extends BaseField {
   fieldType: 'DATE';
   valueType: 'DATE';
   meta?: Partial<MetaField> & {
@@ -71,7 +73,7 @@ interface SchemaDateField extends BaseField {
   };
 }
 
-interface SchemaFileField extends BaseField {
+export interface SchemaFieldFile extends BaseField {
   fieldType: 'FILE';
   valueType: 'ARRAY_OBJECT';
   meta?: Partial<MetaField> &
@@ -80,17 +82,17 @@ interface SchemaFileField extends BaseField {
     }>;
 }
 
-interface SchemaCustomField extends BaseField {
+export interface SchemaFieldCustom extends BaseField {
   fieldType: 'CUSTOM';
   meta: Partial<MetaField> & Record<string, any>;
 }
 
 export type SchemaField =
-  | SchemaTextField
-  | SchemaTextAreaField
-  | SchemaWysywgField
-  | SchemaOptionField
-  | SchemaFileField
-  | SchemaDateField
-  | SchemaCustomField
-  | SchemaHiddenField;
+  | SchemaFieldText
+  | SchemaFieldTextArea
+  | SchemaFieldWyswyg
+  | SchemaFieldOption
+  | SchemaFieldFile
+  | SchemaFieldDate
+  | SchemaFieldCustom
+  | SchemaFieldHidden;

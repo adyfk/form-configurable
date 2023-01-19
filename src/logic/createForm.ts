@@ -2,10 +2,11 @@ import generateId from '../utils/generateId';
 import { expressionToValue } from '../parser';
 import type { Schema, SchemaFieldType } from '../types/schema';
 
-export interface Props {
+export type Props = {
   show: Record<string, boolean>;
   editable: Record<string, boolean>;
-}
+  [key: string]: Record<string, boolean>;
+};
 
 export interface Fields {
   error: Record<string, string>;
@@ -29,15 +30,22 @@ export type FormValues = Record<string, any>;
 export interface CreateFormProps {
   schema: Schema[];
   extraData?: FormValues;
-  debug?: boolean;
+  log?: (arg: {
+    _values: FormValues;
+    _fields: Fields;
+    _props: Props;
+    _formState: RootFormState;
+  }) => void;
 }
 
 const autoGenerateIdConfig = (schema: Schema[]): Schema[] => {
   return schema.map((config) => {
     const tempConfig: Schema = {
       ...config,
-      key: generateId(),
     };
+
+    if (!tempConfig.key) tempConfig['key'] = generateId();
+
     if (tempConfig.variant === 'GROUP') {
       tempConfig.child = autoGenerateIdConfig(tempConfig.child);
     }
@@ -79,10 +87,18 @@ export const createForm = (props: CreateFormProps) => {
     for (const fn of _subjects.watchs) {
       fn(_values, _fields, _props);
     }
-    props.debug && console.log({ _values, _fields, _props, _formState });
+    !!props.log && props.log({ _values, _fields, _props, _formState });
   };
 
   const hasError = () => !!Object.keys(_fields.error).length;
+
+  const isPropsSkipExceute = (config: Schema) => {
+    const editable = _props.editable[config.key as string];
+    const show = _props.show[config.key as string];
+    if (typeof editable !== 'undefined' && !editable) return true;
+    if (typeof show !== 'undefined' && !show) return true;
+    return false;
+  };
 
   const executeExpressionOverride = (
     config: SchemaFieldType,
@@ -108,6 +124,8 @@ export const createForm = (props: CreateFormProps) => {
     if (!config.props) return;
 
     for (const { expression, name, value } of config.props) {
+      if (!_props[name]) _props[name] = {};
+
       if (expression) {
         try {
           const isValid = expressionToValue(expression, {
@@ -145,34 +163,53 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
+  const clearErrorEachConfig = (schema: Schema[]) => {
+    for (const config of schema) {
+      if (config.variant === 'FIELD') {
+        delete _fields.error[config.key as string];
+        delete _fields.touched[config.key as string];
+      } else if (config.variant === 'GROUP') {
+        clearErrorEachConfig(config.child);
+      }
+    }
+  };
+
   const executeEachConfig = (
     schema: Schema[],
-    eventType: ('override' | 'config' | 'validate')[],
-    fieldName?: string
+    fieldName?: string,
+    options: { skipValidate: boolean } = { skipValidate: false }
   ) => {
     for (const config of schema) {
-      if (config.variant === 'FIELD' && config.fieldType !== 'CUSTOM') {
-        if (eventType.includes('override')) {
-          executeExpressionOverride(config, fieldName);
+      if (config.variant === 'FIELD') {
+        executeExpressionOverride(config, fieldName);
+        executeExpressionProps(config);
+        if (isPropsSkipExceute(config)) {
+          clearErrorEachConfig([config]);
+          continue;
         }
-        if (eventType.includes('validate')) {
+
+        if (!options.skipValidate) {
           executeExpressionRule(config);
         }
       } else if (config.variant === 'GROUP') {
-        executeEachConfig(config.child, eventType, fieldName);
-      }
+        executeExpressionProps(config);
+        if (isPropsSkipExceute(config)) {
+          clearErrorEachConfig(config.child);
+          continue;
+        }
 
-      if (eventType.includes('config')) {
+        executeEachConfig(config.child, fieldName, options);
+      } else {
         executeExpressionProps(config);
       }
     }
   };
 
   const executeConfig = (
-    eventType: ('override' | 'config' | 'validate')[],
-    fieldName?: string
+    fieldName?: string,
+    options: { skipValidate: boolean } = { skipValidate: false }
   ) => {
-    executeEachConfig(_schema, eventType, fieldName);
+    executeEachConfig(_schema, fieldName, options);
   };
 
   const updateTouch = (
@@ -198,7 +235,7 @@ export const createForm = (props: CreateFormProps) => {
     if (options?.freeze) return;
 
     updateTouch(fieldName, true, false);
-    executeConfig(['override', 'config', 'validate'], fieldName);
+    executeConfig(fieldName);
     notifyWatch();
   };
 
@@ -212,7 +249,7 @@ export const createForm = (props: CreateFormProps) => {
 
     if (options?.freeze) return;
 
-    executeConfig(['config', 'validate']);
+    executeConfig();
     notifyWatch();
   };
 
@@ -255,13 +292,16 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   // initialize default values
-  const reset = () => {
+  const initialize = () => {
     // generate key
     Object.assign(_schema, autoGenerateIdConfig(props.schema));
     initializeValues(_schema);
 
-    executeConfig(['config']);
+    executeConfig();
+    notifyWatch();
+  };
 
+  const reset = () => {
     for (const fieldName in _fields.error) {
       delete _fields.error[fieldName];
     }
@@ -271,7 +311,7 @@ export const createForm = (props: CreateFormProps) => {
     notifyWatch();
   };
 
-  reset();
+  initialize();
 
   return {
     schema: _schema,

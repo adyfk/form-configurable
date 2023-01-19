@@ -1,23 +1,5 @@
-import { ExpressionString } from './core';
+import { SchemaBase } from './core';
 import { SchemaField } from './field';
-
-interface BaseStyle {
-  container: any;
-  content: any;
-  badge: any;
-}
-
-interface BaseProp {
-  name: 'editable' | 'show';
-  value?: any;
-  expression?: ExpressionString | null;
-}
-
-interface SchemaBase {
-  key?: string;
-  style?: Partial<BaseStyle>;
-  props?: BaseProp[];
-}
 
 export interface SchemaGroupType extends SchemaBase {
   variant: 'GROUP';
@@ -28,6 +10,7 @@ export interface SchemaGroupType extends SchemaBase {
     tooltip: string;
     hint: string;
     badge: string;
+    [key: string]: any;
   }>;
   child: Schema[];
 }
@@ -41,12 +24,10 @@ export interface SchemaViewType extends SchemaBase {
     tooltip: string;
     hint: string;
     badge: string;
+    [key: string]: any;
   }>;
 }
 
-export type SchemaFieldType = {
-  variant: 'FIELD';
-} & SchemaBase &
-  SchemaField;
+export type SchemaFieldType = SchemaField;
 
 export type Schema = SchemaGroupType | SchemaViewType | SchemaFieldType;

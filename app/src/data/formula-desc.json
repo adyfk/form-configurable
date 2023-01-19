@@ -6,22 +6,10 @@
     "text": "Performs addition: a + b"
   },
   {
-    "op": "ADD",
-    "fix": "prefix",
-    "sig": ["a: Number", "b: Number", "Number"],
-    "text": "Performs addition: ADD(a, b) = a + b"
-  },
-  {
     "op": "*",
     "fix": "infix",
     "sig": ["a: Number", "b: Number", "Number"],
     "text": "Performs multiplication: a * b"
-  },
-  {
-    "op": "MUL",
-    "fix": "prefix",
-    "sig": ["a: Number", "b: Number", "Number"],
-    "text": "Performs multiplication: MUL(a, b) = a * b"
   },
   {
     "op": "-",
@@ -30,22 +18,10 @@
     "text": "Performs subtraction: a - b"
   },
   {
-    "op": "SUB",
-    "fix": "prefix",
-    "sig": ["a: Number", "b: Number", "Number"],
-    "text": "Performs subtraction: SUB(a, b) = a - b"
-  },
-  {
     "op": "/",
     "fix": "infix",
     "sig": ["a: Number", "b: Number", "Number"],
     "text": "Performs division: a / b"
-  },
-  {
-    "op": "DIV",
-    "fix": "prefix",
-    "sig": ["a: Number", "b: Number", "Number"],
-    "text": "Performs division: DIV(a, b) = a / b"
   },
   {
     "op": ",",
@@ -162,12 +138,6 @@
     "text": "Returns the absolute value of the number: ABS(value)."
   },
   {
-    "op": "DEGREES",
-    "fix": "prefix",
-    "sig": ["radians: Number", "Number"],
-    "text": "Performs a conversion of radians to degrees: DEGREES(radians)."
-  },
-  {
     "op": "CEIL",
     "fix": "prefix",
     "sig": ["value: Number", "Number"],
@@ -186,22 +156,10 @@
     "text": "Returns the value rounded to the nearest integer: ROUND(value)."
   },
   {
-    "op": "TRUNC",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the integral part of the number, truncating any fractional digits: TRUNC(value)."
-  },
-  {
-    "op": "SIGN",
-    "fix": "prefix",
-    "sig": ["value: Number", "Number"],
-    "text": "Returns the sign of the value, indicating whether the number is positive (1) or negative (-1): SIGN(value)."
-  },
-  {
-    "op": "ISNAN",
+    "op": "IS_NAN",
     "fix": "prefix",
     "sig": ["value", "Boolean"],
-    "text": "Returns TRUE if a value is not a number (e.g. the result of an invalid mathematical operation), otherwise returns FALSE: ISNAN(value)."
+    "text": "Returns TRUE if a value is not a number (e.g. the result of an invalid mathematical operation), otherwise returns FALSE: IS_NAN(value)."
   },
   {
     "op": "IF",
@@ -318,6 +276,12 @@
     "text": "Performs a mapper function on each element of the array: MAP(mapper, array)."
   },
   {
+    "op": "MAP_ITEM",
+    "fix": "prefix",
+    "sig": ["mapper: Reference", "array: Array", "Array"],
+    "text": "Performs a mapper object item on each element of the array: MAP(mapper, array)."
+  },
+  {
     "op": "REDUCE",
     "fix": "prefix",
     "sig": ["reducer: Reference", "start", "array: Array", "Array"],
@@ -346,46 +310,10 @@
     "text": "Splits a single array of pairs into two arrays with values at their respective positions: UNZIP(array)"
   },
   {
-    "op": "TAKE",
-    "fix": "prefix",
-    "sig": ["n: Integer", "Array"],
-    "text": "Takes the first n values from the array: TAKE(n, array)"
-  },
-  {
-    "op": "DROP",
-    "fix": "prefix",
-    "sig": ["n: Integer", "Array"],
-    "text": "Drops the first n values from the array: DROP(n, array)"
-  },
-  {
-    "op": "SLICE",
-    "fix": "prefix",
-    "sig": ["startIndex: Integer", "limitIndex: Integer", "Array"],
-    "text": "Slices an array from startIndex to (but not including) limitIndex: SLICE(startIndex, limitIndex, array)"
-  },
-  {
     "op": "CONCAT",
     "fix": "prefix",
     "sig": ["array1: Array", "array2: Array", "Array"],
     "text": "Concatenates two arrays into one: CONCAT(array1, array2)"
-  },
-  {
-    "op": "HEAD",
-    "fix": "prefix",
-    "sig": ["array: Array", "Value"],
-    "text": "Retrieves the first element of an array: HEAD(array)"
-  },
-  {
-    "op": "TAIL",
-    "fix": "prefix",
-    "sig": ["array: Array", "Array"],
-    "text": "Returns the array without the first element: TAIL(array)"
-  },
-  {
-    "op": "LAST",
-    "fix": "prefix",
-    "sig": ["array: Array", "Value"],
-    "text": "Retrieves the last element of an array: HEAD(array)"
   },
   {
     "op": "CONS",

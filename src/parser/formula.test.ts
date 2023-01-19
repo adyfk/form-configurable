@@ -2,7 +2,9 @@ import { init } from 'expressionparser';
 import formula from './formula_override';
 import type { ExpressionValue } from 'expressionparser/dist/ExpressionParser';
 
-const termVals: { [key: string]: number | ((...args: any) => any) } = {
+const termVals: {
+  [key: string]: number | ((...args: any) => any);
+} = {
   a: 12,
   b: 9,
   c: -3,
@@ -20,29 +22,47 @@ const termTypes: { [key: string]: 'number' | 'function' } = {
 
 const parser = init(
   formula,
-  (term: string) => {
+  (term: any) => {
     if (term in termVals) {
       return termVals[term];
     } else {
-      throw new Error(`Invalid term: ${term}`);
+      return term;
     }
   },
-  (term: string) => {
+  (term: any) => {
     if (term in termTypes) {
       return termTypes[term];
     } else {
-      return 'number';
+      return term;
     }
   }
 );
 
 const calc = (expression: string, terms?: Record<string, ExpressionValue>) => {
   return parser.expressionToValue(expression, {
-    ...terms,
     arrObject: [
       { name: 'adi', age: 20 },
       { name: 'fatk', age: 22 },
     ],
+    x: 10,
+    y: -20,
+    booltrue: true,
+    boolfalse: false,
+    xstring: 'this is string',
+    xdate: new Date().toISOString(),
+    xobject: {
+      x: 5,
+      y: -4,
+      booltrue: true,
+      boolfalse: false,
+      xstring: 'this is obect string',
+      xdate: new Date().toISOString(),
+      arrstring: ['tfirst', 'tsecond', 'tthird'],
+      arrsnumber: [5, 4, 1],
+    },
+    arrstring: ['first', 'second', 'third'],
+    arrsnumber: [5, 4, 1],
+    ...terms,
   });
 };
 
@@ -112,12 +132,6 @@ describe('Terminal', () => {
   it('should result in 42', () => {
     const result = calc('_TEST + 1 - 1');
     expect(result).toBe(42);
-  });
-
-  it('should raise error', () => {
-    expect(() => {
-      calc('_TEST + _INVALID');
-    }).toThrowError('Invalid term');
   });
 });
 
@@ -270,39 +284,9 @@ describe('Array Functions', () => {
     ]);
   });
 
-  it('should result in [42, 69]', () => {
-    const result = calc('TAKE(2, [42, 69, 54])');
-    expect(result).toEqual([42, 69]);
-  });
-
-  it('should result in [69, 54]', () => {
-    const result = calc('DROP(2, [1, 42, 69, 54])');
-    expect(result).toEqual([69, 54]);
-  });
-
-  it('should result in [42, 69] condition 1', () => {
-    const result = calc('SLICE(1, 3, [1, 42, 69, 54])');
-    expect(result).toEqual([42, 69]);
-  });
-
   it('should result in [42, 69, 54] condition 2', () => {
     const result = calc('CONCAT([42, 69], [54])');
     expect(result).toEqual([42, 69, 54]);
-  });
-
-  it('should result in 42', () => {
-    const result = calc('HEAD([42, 69, 54])');
-    expect(result).toBe(42);
-  });
-
-  it('should result in [69, 54] condition 2', () => {
-    const result = calc('TAIL([42, 69, 54])');
-    expect(result).toEqual([69, 54]);
-  });
-
-  it('should result in 54', () => {
-    const result = calc('LAST([42, 69, 54])');
-    expect(result).toBe(54);
   });
 
   it('should result in [2,3,4]', () => {
@@ -355,7 +339,7 @@ describe('Dictionaries', () => {
 
 describe('Maths', () => {
   it('should be false', () => {
-    const result = calc('ISNAN(1/0)');
+    const result = calc('IS_NAN(1/0)');
     expect(result).toBe(false);
   });
 
@@ -365,7 +349,7 @@ describe('Maths', () => {
   });
 
   it('should be false condition 2', () => {
-    const result = calc('ISNAN(0)');
+    const result = calc('IS_NAN(0)');
     expect(result).toBe(false);
   });
 
@@ -394,16 +378,6 @@ describe('Maths', () => {
     expect(result).toBe(1);
   });
 
-  it('should result in 1 condition 7', () => {
-    const result = calc('TRUNC(1.9)');
-    expect(result).toBe(1);
-  });
-
-  it('should result in 1 condition 8', () => {
-    const result = calc('SIGN(5)');
-    expect(result).toBe(1);
-  });
-
   it('should result in -1', () => {
     const result = calc('FLOOR(-0.1)');
     expect(result).toBe(-1);
@@ -424,16 +398,6 @@ describe('Maths', () => {
     expect(result).toBe(-1);
   });
 
-  it('should result in -1 condition 4', () => {
-    const result = calc('TRUNC(-1.9)');
-    expect(result).toBe(-1);
-  });
-
-  it('should result in -1 condition 5', () => {
-    const result = calc('SIGN(-5)');
-    expect(result).toBe(-1);
-  });
-
   it('should be true condition 3', () => {
     const result = calc('0.99999999999999999 + EPSILON > 1');
     expect(result).toBe(true);
@@ -441,12 +405,6 @@ describe('Maths', () => {
 });
 
 describe('Exceptions', () => {
-  it("should throw 'Expected number'", () => {
-    expect(() => {
-      calc('add("A", "B")');
-    }).toThrowError('Expected number, found: string');
-  });
-
   it("should throw 'Expected array'", () => {
     expect(() => {
       calc('sort("ABC")');
@@ -487,5 +445,44 @@ describe('Array Object', () => {
   });
   test('MAP_ITEM get list item of age', () => {
     expect(calc('MAP_ITEM("age", arrObject)')).toEqual([20, 22]);
+  });
+});
+
+describe('Every Function', () => {
+  it('EVERY', () => {
+    expect(calc('EVERY(4,[4,4,4,4])')).toBe(true);
+    expect(calc('EVERY("1",["1","1"])')).toBe(true);
+  });
+  it('EVERY_IS', () => {
+    expect(calc('EVERY_IS(IS_NUMBER,[4,4,4,4])')).toBe(true);
+    expect(calc('EVERY_IS(IS_STRING,["1","1"])')).toBe(true);
+  });
+
+  it('EVERY_WHILE', () => {
+    expect(calc('EVERY_WHILE(">", 10,[4,4,4,4])')).toBe(true);
+  });
+});
+
+describe('IS_Test', () => {
+  it('IS_NAN test', () => {
+    expect(calc('IS_NAN("x")')).toBe(true);
+  });
+  it('IS_NUMBER test', () => {
+    expect(calc('IS_NUMBER(5)')).toBe(true);
+  });
+  it('IS_STRING test', () => {
+    expect(calc('IS_STRING("5")')).toBe(true);
+  });
+  it('IS_ARRAY test', () => {
+    expect(calc('IS_ARRAY([1,2,3])')).toBe(true);
+  });
+  it('IS_DICT test', () => {
+    expect(calc('IS_DICT(xobject)')).toBe(true);
+  });
+  it('IS_DATE test', () => {
+    expect(calc(`IS_DATE(${new Date().toISOString()})`)).toBe(true);
+  });
+  it('IS_EMAIL test', () => {
+    expect(calc(`IS_EMAIL("ady.fatk@gmail.com")`)).toBe(true);
   });
 });

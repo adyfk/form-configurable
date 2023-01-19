@@ -3,8 +3,10 @@ import { Schema } from './types/schema';
 import { FormContext } from './useForm';
 import { Fields, Form, FormValues, Props } from './logic/createForm';
 import useSubscribe from './useSubscribe';
+import { initializeField } from './useField';
+import { initializeView } from './useView';
 
-const initializeField = ({
+const initializeConfig = ({
   values,
   fields,
   props,
@@ -16,32 +18,34 @@ const initializeField = ({
   config: Schema;
 }) => {
   if (config.variant === 'FIELD') {
-    return {
-      value: values[config.fieldName],
-      error: fields.error[config.fieldName],
-      touched: fields.touched[config.fieldName],
-      editable: props.editable[config.key as string],
-      show: props.show[config.key as string],
-    };
+    return initializeField({ values, fields, props, config });
   } else {
-    return {
-      editable: props.editable[config.key as string],
-      show: props.show[config.key as string],
-    };
+    return initializeView({ props, config });
   }
 };
+
+type IStateInitializeConfig = ReturnType<typeof initializeConfig>;
 
 export const useConfig = (props: { form?: Form; config: Schema }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, config } = props;
   const formState = form.formState;
   const _ref = useRef();
-  const _state = useRef<any>({});
-  const [state, updateState] = useState({ ..._state.current });
+  const _state = useRef<IStateInitializeConfig>(
+    initializeConfig({
+      values: form.values,
+      fields: form.fields,
+      props: form.props,
+      config,
+    })
+  );
+  const [state, updateState] = useState<IStateInitializeConfig>({
+    ..._state.current,
+  });
 
   const latestState = useCallback(
     (values: FormValues, fields: Fields, props: Props) => {
-      const latestState = initializeField({ values, fields, props, config });
+      const latestState = initializeConfig({ values, fields, props, config });
       if (JSON.stringify(_state.current) !== JSON.stringify(latestState)) {
         _state.current = latestState;
         updateState(latestState);
@@ -53,7 +57,7 @@ export const useConfig = (props: { form?: Form; config: Schema }) => {
   useSubscribe({
     form,
     callback: latestState,
-    disabled: config.variant !== 'FIELD' && !config.props?.length,
+    disabled: !config.props?.length,
   });
 
   useEffect(() => {
@@ -74,18 +78,13 @@ export const useConfig = (props: { form?: Form; config: Schema }) => {
     return {
       formState,
       ref: _ref,
-      value: state.value,
-      error: state.error,
-      show: typeof state.show === 'undefined' ? true : state.show,
-      editable: typeof state.editable === 'undefined' ? true : state.editable,
-      touched: formState.isSubmitted || state.touched,
+      state,
       onChange: (value: any) => form.setValue(config.fieldName, value),
       onBlur: () => form.updateTouch(config.fieldName),
     };
   } else {
     return {
-      show: typeof state.show === 'undefined' ? true : state.show,
-      editable: typeof state.editable === 'undefined' ? true : state.editable,
+      state,
     };
   }
 };

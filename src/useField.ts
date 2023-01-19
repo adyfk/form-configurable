@@ -4,7 +4,7 @@ import { Fields, Form, FormValues, Props } from './logic/createForm';
 import useSubscribe from './useSubscribe';
 import { FormContext } from './useForm';
 
-const initializeField = ({
+export const initializeField = ({
   values,
   fields,
   props,
@@ -14,24 +14,39 @@ const initializeField = ({
   fields: Fields;
   props: Props;
   config: SchemaFieldType;
-}) => ({
-  value: values[config.fieldName],
-  error: fields.error[config.fieldName],
-  touched: fields.touched[config.fieldName],
-  editable: props.editable[config.key as string],
-  show: props.show[config.key as string],
-});
+}) => {
+  const field: {
+    value: any;
+    error: any;
+    touched: any;
+    fieldState: Record<string, any>;
+  } = {
+    value: values[config.fieldName],
+    error: fields.error[config.fieldName],
+    touched: fields.touched[config.fieldName],
+    fieldState: {},
+  };
+
+  for (const key in props) {
+    const value = props[key]?.[config.key as string];
+    field.fieldState[key] = typeof value === 'undefined' ? true : value;
+  }
+
+  return field;
+};
+
+export type IStateInitializeField = ReturnType<typeof initializeField>;
 
 export const useField = (props: {
   form?: Form;
   config: SchemaFieldType;
-  debug?: boolean;
+  log?: (config: SchemaFieldType, field: IStateInitializeField) => void;
 }) => {
   const { form: formContext } = useContext(FormContext);
-  const { form = formContext, config, debug } = props;
+  const { form = formContext, config, log } = props;
   const formState = form.formState;
   const _ref = useRef();
-  const _state = useRef<any>(
+  const _state = useRef<IStateInitializeField>(
     initializeField({
       values: form.values,
       fields: form.fields,
@@ -39,7 +54,10 @@ export const useField = (props: {
       config,
     })
   );
-  const [state, updateState] = useState({ ..._state.current });
+
+  const [state, updateState] = useState<IStateInitializeField>({
+    ..._state.current,
+  });
 
   const latestState = useCallback(
     (values: FormValues, fields: Fields, props: Props) => {
@@ -68,18 +86,17 @@ export const useField = (props: {
     return () => {
       delete form.refs[config.fieldName];
     };
-  });
+  }, [config.fieldName, form.refs]);
 
-  debug && console.log(`field - ${config.fieldName} =`, { state, formState });
+  !!log && log(config, state);
 
   return {
     form,
     formState,
+    fieldState: state.fieldState,
     ref: _ref,
     value: state.value,
     error: state.error,
-    show: typeof state.show === 'undefined' ? true : state.show,
-    editable: typeof state.editable === 'undefined' ? true : state.editable,
     touched: formState.isSubmitted || state.touched,
     onChange: useCallback(
       (arg: any) => {

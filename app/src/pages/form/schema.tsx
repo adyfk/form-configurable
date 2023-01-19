@@ -93,6 +93,7 @@ function JsonSchema({ onLoad }: { onLoad: any }) {
             lg: 6,
           },
         },
+        props: [{ name: 'editable', expression: '!!GET("value", radio)' }],
       },
       {
         variant: 'FIELD',

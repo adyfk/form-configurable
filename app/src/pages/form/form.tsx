@@ -8,6 +8,14 @@ import {
   useField,
   useView,
   FormContext,
+  SchemaFieldText,
+  SchemaFieldDate,
+  SchemaFieldFile,
+  SchemaFieldOption,
+  // SchemaFieldCustom,
+  // SchemaFieldHidden,
+  // SchemaFieldTextArea,
+  // SchemaFieldWyswyg,
 } from 'form-configurable';
 import FormConfigurable, {
   GroupType,
@@ -84,9 +92,9 @@ const mockUploadFile = ({
 };
 
 const FieldGroup: GroupType = ({ config, form, child: Child }) => {
-  const { show } = useView({ config, form });
+  const { viewState } = useView({ config, form });
 
-  if (!show) return <></>;
+  if (!viewState.show) return <></>;
 
   return (
     <Grid item {...(config.style?.container as any)}>
@@ -100,9 +108,9 @@ const FieldGroup: GroupType = ({ config, form, child: Child }) => {
 };
 
 const FieldView: ViewType = ({ config, form }) => {
-  const { show } = useView({ config, form });
+  const { viewState } = useView({ config, form });
 
-  if (!show) return <></>;
+  if (!viewState.show) return <></>;
 
   return (
     <Grid item {...(config.style?.container as any)}>
@@ -115,12 +123,17 @@ const FieldView: ViewType = ({ config, form }) => {
 };
 
 const FieldText: FC<{
-  config: SchemaFieldType;
+  config: SchemaFieldText;
 }> = ({ config }) => {
-  const { value, error, touched, editable, show, onChange } = useField({
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { editable, show },
+    onChange,
+  } = useField({
     config,
   });
-  if (config.fieldType !== 'TEXT') return null;
 
   if (!show) return <></>;
 
@@ -163,12 +176,17 @@ const FieldText: FC<{
 };
 
 const FieldDate: FC<{
-  config: SchemaFieldType;
+  config: SchemaFieldDate;
 }> = ({ config }) => {
-  const { value, error, touched, show, editable, onChange } = useField({
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
     config,
   });
-  if (config.fieldType !== 'DATE') return null;
 
   if (!show) return <></>;
 
@@ -201,12 +219,17 @@ const FieldDate: FC<{
 };
 
 const FieldDropdown: FC<{
-  config: SchemaFieldType;
+  config: SchemaFieldOption;
 }> = ({ config }) => {
-  const { value, error, touched, show, editable, onChange } = useField({
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
     config,
   });
-  if (config.fieldType !== 'DROPDOWN') return null;
 
   if (!show) return <></>;
 
@@ -249,12 +272,17 @@ interface IOption {
 }
 
 const FieldCheckbox: FC<{
-  config: SchemaFieldType;
+  config: SchemaFieldOption;
 }> = ({ config }) => {
-  const { value, error, touched, show, editable, onChange } = useField({
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
     config,
   });
-  if (config.fieldType !== 'CHECKBOX') return null;
 
   const onChangeCheckbox = (indexSelected: number, option: IOption) => {
     if (indexSelected >= 0) {
@@ -308,13 +336,17 @@ const FieldCheckbox: FC<{
 };
 
 const FieldRadio: FC<{
-  config: SchemaFieldType;
+  config: SchemaFieldOption;
 }> = ({ config }) => {
-  const { value, error, touched, show, editable, onChange } = useField({
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
     config,
   });
-
-  if (config.fieldType !== 'RADIO') return null;
 
   if (!show) return <></>;
 
@@ -343,9 +375,16 @@ const FieldRadio: FC<{
 };
 
 const FieldFile: FC<{
-  config: SchemaFieldType;
+  config: SchemaFieldFile;
 }> = ({ config }) => {
-  const { form, value, error, touched, show, editable, onChange } = useField({
+  const {
+    form,
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
     config,
   });
 
@@ -545,7 +584,6 @@ const FormExample: FC<{
   const context = useForm(props.config);
 
   const { schema, form, handleSubmit } = context;
-
   return (
     <Box>
       <form onSubmit={handleSubmit(console.log, console.error)}>

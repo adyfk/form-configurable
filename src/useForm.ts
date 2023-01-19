@@ -45,7 +45,8 @@ export const useForm = (
         onValid: (values: Record<string, any>) => Promise<void> | any,
         onInvalid?: (
           errors: Record<string, any>,
-          values: Record<string, any>
+          values: Record<string, any>,
+          type: 'SCHEMA' | 'CUSTOM'
         ) => Promise<void> | any
       ) =>
       async (event: FormEvent) => {
@@ -63,9 +64,9 @@ export const useForm = (
             await validateListSubmit();
           }
 
-          form.executeConfig(['validate']);
+          form.executeConfig();
           if (form.hasError && !props.forceSubmitOnError) {
-            throw new Error('Submit Failed Has Error');
+            throw new Error('Error Schema');
           } else {
             await onValid(form.values);
           }
@@ -78,14 +79,18 @@ export const useForm = (
             isSubmitting: false,
             isSubmitSuccessful: true,
           });
-        } catch (error) {
+        } catch (error: any) {
           updateFormState({
             isSubmitting: false,
             isSubmitSuccessful: false,
           });
 
           try {
-            await onInvalid?.(form.fields.error, form.values);
+            await onInvalid?.(
+              form.fields.error,
+              form.values,
+              error?.message === 'Error Schema' ? 'SCHEMA' : 'CUSTOM'
+            );
           } catch (error) {
             //
           }

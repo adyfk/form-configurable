@@ -235,6 +235,17 @@ export const formula = function (
   };
 
   const prefixOps: FunctionOps = {
+    IS_NAN: (arg) => isNaN(arg() as number),
+    IS_NUMBER: (arg) => !isNaN(num(arg())),
+    IS_STRING: (arg) => !!string(arg()),
+    IS_ARRAY: (arg) => !!array(arg()),
+    IS_DICT: (arg) => !!obj(arg()),
+    IS_DATE: (arg) => !!date(arg()),
+    IS_EMAIL: (arg) =>
+      !!string(arg()).match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ),
+
     DATE_MIN: (date1, date2) => {
       const d1 = date(date1());
       const d2 = date(date2());
@@ -249,20 +260,18 @@ export const formula = function (
     },
 
     NEG: (arg) => -num(arg()),
+    MOD: (a, b) => num(a()) % num(b()),
+    NOT: (arg) => !arg(),
+    '!': (arg) => !arg(),
     ADD: (a, b) => num(a()) + num(b()),
     SUB: (a, b) => num(a()) - num(b()),
     MUL: (a, b) => num(a()) * num(b()),
     DIV: (a, b) => num(a()) / num(b()),
-    MOD: (a, b) => num(a()) % num(b()),
-    NOT: (arg) => !arg(),
-    '!': (arg) => !arg(),
     ABS: (arg) => Math.abs(num(arg())),
     CEIL: (arg) => Math.ceil(num(arg())),
     EXP: (arg) => Math.exp(num(arg())),
     FLOOR: (arg) => Math.floor(num(arg())),
     ROUND: (arg) => Math.round(num(arg())),
-    SIGN: (arg) => Math.sign(num(arg())),
-    TRUNC: (arg) => Math.trunc(num(arg())),
 
     IF: (arg1, arg2, arg3) => {
       const condition = arg1;
@@ -275,7 +284,6 @@ export const formula = function (
         return elseStatement();
       }
     },
-
     AVERAGE: (arg) => {
       const arr = evalArray(arg());
 
@@ -289,9 +297,6 @@ export const formula = function (
       evalArray(arg(), num).reduce((prev: number, curr) => prev + num(curr), 0),
     CHAR: (arg) => String.fromCharCode(num(arg())),
     CODE: (arg) => char(arg()).charCodeAt(0),
-
-    DEGREES: (arg) => (num(arg()) * 180) / Math.PI,
-    RADIANS: (arg) => (num(arg()) * Math.PI) / 180,
 
     MIN: (arg) =>
       evalArray(arg()).reduce(
@@ -328,7 +333,6 @@ export const formula = function (
       const val = arg();
       return isArgumentsArray(val) ? val.slice() : [val];
     },
-    ISNAN: (arg) => isNaN(num(arg())),
     MAP: (arg1, arg2) => {
       const func = arg1();
       const arr = evalArray(arg2());
@@ -345,6 +349,35 @@ export const formula = function (
       const arr = evalArray(arg2());
       return arr.map((val: any) => {
         return val[item];
+      });
+    },
+    EVERY: (arg1, arg2) => {
+      const varg1 = arg1();
+      const arr = evalArray(arg2());
+      return arr.every((item) => item === varg1);
+    },
+    EVERY_IS: (arg1, arg2) => {
+      const func = arg1();
+      const arr = evalArray(arg2());
+      return arr.every((item) => {
+        const args: ExpressionArray<ExpressionThunk> = [() => item];
+        return call(string(func))(...args);
+      });
+    },
+    EVERY_WHILE: (arg1, arg2, arg3) => {
+      const func = arg1();
+      const value = arg2();
+      const arr = evalArray(arg3());
+      return arr.every((item) => {
+        const args: ExpressionArray<ExpressionThunk> = [
+          () => value,
+          () => item,
+        ];
+        if (typeof func === 'function') {
+          return func(...args);
+        } else {
+          return call(string(func))(...args);
+        }
       });
     },
     REDUCE: (arg1, arg2, arg3) => {
@@ -388,38 +421,10 @@ export const formula = function (
       const arr2 = inputArr.map((item) => array(item)[1]);
       return [arr1, arr2];
     },
-    TAKE: (arg1, arg2) => {
-      const n = num(arg1());
-      const arr = evalArray(arg2());
-      return arr.slice(0, n);
-    },
-    DROP: (arg1, arg2) => {
-      const n = num(arg1());
-      const arr = evalArray(arg2());
-      return arr.slice(n);
-    },
-    SLICE: (arg1, arg2, arg3) => {
-      const start = num(arg1());
-      const limit = num(arg2());
-      const arr = evalArray(arg3());
-      return arr.slice(start, limit);
-    },
     CONCAT: (arg1, arg2) => {
       const arr1 = array(arg1());
       const arr2 = array(arg2());
       return arr1.concat(arr2);
-    },
-    HEAD: (arg1) => {
-      const arr = array(arg1());
-      return arr[0];
-    },
-    TAIL: (arg1) => {
-      const arr = array(arg1());
-      return arr.slice(1);
-    },
-    LAST: (arg1) => {
-      const arr = array(arg1());
-      return arr[arr.length - 1];
     },
     CONS: (arg1, arg2) => {
       const head = arg1();
