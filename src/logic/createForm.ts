@@ -158,7 +158,7 @@ export const createForm = (props: CreateFormProps) => {
           break;
         }
       } catch (e: any) {
-        _fields.error[config.fieldName] = rule.error;
+        delete _fields.error[config.fieldName];
       }
     }
   };

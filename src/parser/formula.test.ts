@@ -426,9 +426,7 @@ describe('Exceptions', () => {
 
 describe('Date', () => {
   it('test date error', () => {
-    expect(() => {
-      calc('DATE_MIN("", "")');
-    }).toThrowError('Expected string or number date format, found: string');
+    expect(calc('DATE_MIN("", "")')).toBe(false);
   });
 
   it('test date min to be false', () => {

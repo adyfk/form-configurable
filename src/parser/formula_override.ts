@@ -235,28 +235,77 @@ export const formula = function (
   };
 
   const prefixOps: FunctionOps = {
-    IS_NAN: (arg) => isNaN(arg() as number),
-    IS_NUMBER: (arg) => !isNaN(num(arg())),
-    IS_STRING: (arg) => !!string(arg()),
-    IS_ARRAY: (arg) => !!array(arg()),
-    IS_DICT: (arg) => !!obj(arg()),
-    IS_DATE: (arg) => !!date(arg()),
-    IS_EMAIL: (arg) =>
-      !!string(arg()).match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      ),
+    IS_NAN: (arg) => {
+      try {
+        return isNaN(arg() as number);
+      } catch (error) {
+        return false;
+      }
+    },
+    IS_NUMBER: (arg) => {
+      try {
+        return !isNaN(num(arg()));
+      } catch (error) {
+        return false;
+      }
+    },
+    IS_STRING: (arg) => {
+      try {
+        return !!string(arg());
+      } catch (error) {
+        return false;
+      }
+    },
+    IS_ARRAY: (arg) => {
+      try {
+        return !!array(arg());
+      } catch (error) {
+        return false;
+      }
+    },
+    IS_DICT: (arg) => {
+      try {
+        return !!obj(arg());
+      } catch (error) {
+        return false;
+      }
+    },
+    IS_DATE: (arg) => {
+      try {
+        return !!date(arg());
+      } catch (error) {
+        return false;
+      }
+    },
+    IS_EMAIL: (arg) => {
+      try {
+        return !!string(arg()).match(
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+        );
+      } catch (error) {
+        return false;
+      }
+    },
 
     DATE_MIN: (date1, date2) => {
-      const d1 = date(date1());
-      const d2 = date(date2());
+      try {
+        const d1 = date(date1());
+        const d2 = date(date2());
 
-      return d1 > d2;
+        return d1 > d2;
+      } catch (error) {
+        return false;
+      }
     },
     DATE_MAX: (date1, date2) => {
-      const d1 = date(date1());
-      const d2 = date(date2());
+      try {
+        const d1 = date(date1());
+        const d2 = date(date2());
 
-      return d2 > d1;
+        return d2 > d1;
+      } catch (error) {
+        return false;
+      }
     },
 
     NEG: (arg) => -num(arg()),

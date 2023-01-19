@@ -30,7 +30,7 @@ const executeExpressionRule = (
 
   for (const rule of config.rules) {
     try {
-      const isTrue = !!expressionToValue(rule.expression, {
+      const isTrue = expressionToValue(rule.expression, {
         ...values,
         ...extraData,
       });
@@ -39,7 +39,7 @@ const executeExpressionRule = (
         break;
       }
     } catch (e: any) {
-      errors[config.fieldName] = rule.error;
+      delete errors[config.fieldName];
     }
   }
 };

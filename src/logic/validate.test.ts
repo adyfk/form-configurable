@@ -42,7 +42,6 @@ test('validate test error field', () => {
     lastName: 'the last name',
     age: 20,
   });
-
   expect(result).toEqual({
     firstName: 'FirstName Is Required',
     age: 'Age Should Higher Than 21',
