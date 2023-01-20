@@ -27,7 +27,8 @@ export interface SchemaViewField extends BaseView {
     | 'DROPDOWN'
     | 'DATE'
     | 'FILE'
-    | 'SWITCH';
+    | 'SWITCH'
+    | 'CUSTOM'
   meta?: Partial<MetaView>;
 }
 

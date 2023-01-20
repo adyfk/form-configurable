@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import { Schema } from '../types';
+import type { Schema } from '../types';
 
 const executeEachConfig = (
   schema: Schema[],

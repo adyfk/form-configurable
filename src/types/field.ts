@@ -40,29 +40,27 @@ interface BaseField extends SchemaBase {
 export interface SchemaFieldText extends BaseField {
   fieldType: 'TEXT';
   valueType: 'STRING' | 'NUMBER';
-  meta?: Partial<MetaField>;
-}
-
-export interface SchemaFieldHidden extends BaseField {
-  fieldType: 'HIDDEN';
+  initialValue: string | number;
   meta?: Partial<MetaField>;
 }
 
 export interface SchemaFieldTextArea extends BaseField {
   fieldType: 'TEXTAREA';
   valueType: 'STRING';
+  initialValue: string;
   meta?: Partial<MetaField> & Partial<{ rows: number; cols: number }>;
 }
 
 export interface SchemaFieldWyswyg extends BaseField {
   fieldType: 'WYSWYG';
   valueType: 'STRING';
+  initialValue: string;
   meta?: Partial<MetaField> & Partial<{ rows: number; cols: number }>;
 }
 
 export interface SchemaFieldCheckbox extends BaseField {
   fieldType: 'CHECKBOX';
-  valueType: IOption[];
+  initialValue: IOption[];
   meta?: Partial<MetaField> & {
     options: IOption[];
     row?: boolean;
@@ -72,7 +70,7 @@ export interface SchemaFieldCheckbox extends BaseField {
 
 export interface SchemaFieldRadio extends BaseField {
   fieldType: 'RADIO';
-  valueType: IOption;
+  initialValue: IOption;
   meta?: Partial<MetaField> & {
     options: IOption[];
     row?: boolean;
@@ -82,7 +80,7 @@ export interface SchemaFieldRadio extends BaseField {
 
 export interface SchemaFieldDropdown extends BaseField {
   fieldType: 'DROPDOWN';
-  valueType: IOption;
+  initialValue: IOption;
   meta?: Partial<MetaField> & {
     options: IOption[];
     other?: boolean;
@@ -91,7 +89,7 @@ export interface SchemaFieldDropdown extends BaseField {
 
 export interface SchemaFieldDropdownAsync extends BaseField {
   fieldType: 'DROPDOWN-ASYNC';
-  valueType: IOption;
+  initialValue: IOption;
   meta?: Partial<MetaField> & {
     optionUrl: string;
     other?: boolean;
@@ -100,6 +98,7 @@ export interface SchemaFieldDropdownAsync extends BaseField {
 
 export interface SchemaFieldCounter extends BaseField {
   fieldType: 'COUNTER';
+  initialValue: number;
   meta?: Partial<MetaField> & {
     min?: number;
     max?: number;
@@ -108,7 +107,7 @@ export interface SchemaFieldCounter extends BaseField {
 
 export interface SchemaFieldSwitch extends BaseField {
   fieldType: 'SWITCH';
-  valueType: boolean;
+  initialValue: boolean;
   meta?: Partial<MetaField>;
 }
 
@@ -137,8 +136,8 @@ export interface SchemaFieldFile extends BaseField {
     description?: string;
     uploadUrl?: string;
     maxFile?: number;
-    maxSize: number; // mb
-    allowExtension: (
+    maxSize?: number; // mb
+    allowExtension?: (
       | 'txt'
       | 'doc'
       | 'xls'
@@ -158,10 +157,12 @@ export interface SchemaFieldFile extends BaseField {
 
 export interface SchemaFieldCustom extends BaseField {
   fieldType: 'CUSTOM';
-  meta: Partial<MetaField> & Record<string, any>;
+  initialValue: any;
+  meta?: Partial<MetaField>;
 }
 
 export type SchemaField =
+  | SchemaFieldCustom
   | SchemaFieldText
   | SchemaFieldTextArea
   | SchemaFieldWyswyg
@@ -170,10 +171,9 @@ export type SchemaField =
   | SchemaFieldDropdown
   | SchemaFieldDropdownAsync
   | SchemaFieldCounter
+  | SchemaFieldSwitch
   | SchemaFieldFile
   | SchemaFieldDate
   | SchemaFieldDateRange
-  | SchemaFieldCustom
-  | SchemaFieldHidden;
 
 // FORMNAME_VARIANT_FIELDNAME
