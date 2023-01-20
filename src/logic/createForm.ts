@@ -1,6 +1,6 @@
 import generateId from '../utils/generateId';
 import { expressionToValue } from '../parser';
-import type { Schema, SchemaFieldType } from '../types/schema';
+import type { Schema, SchemaField } from '../types';
 
 export type Props = {
   show: Record<string, boolean>;
@@ -30,28 +30,22 @@ export type FormValues = Record<string, any>;
 export interface CreateFormProps {
   schema: Schema[];
   extraData?: FormValues;
-  log?: (arg: {
-    _values: FormValues;
-    _fields: Fields;
-    _props: Props;
-    _formState: RootFormState;
-  }) => void;
+  // eslint-disable-next-line no-unused-vars
+  log?: (arg: { _values: FormValues; _fields: Fields; _props: Props; _formState: RootFormState; }) => void;
 }
 
-const autoGenerateIdConfig = (schema: Schema[]): Schema[] => {
-  return schema.map((config) => {
-    const tempConfig: Schema = {
-      ...config,
-    };
+const autoGenerateIdConfig = (schema: Schema[]): Schema[] => schema.map((config) => {
+  const tempConfig: Schema = {
+    ...config,
+  };
 
-    if (!tempConfig.key) tempConfig['key'] = generateId();
+  if (!tempConfig.key) tempConfig.key = generateId();
 
-    if (tempConfig.variant === 'GROUP') {
-      tempConfig.child = autoGenerateIdConfig(tempConfig.child);
-    }
-    return tempConfig;
-  });
-};
+  if (tempConfig.variant === 'GROUP') {
+    tempConfig.child = autoGenerateIdConfig(tempConfig.child);
+  }
+  return tempConfig;
+});
 
 export const createForm = (props: CreateFormProps) => {
   const _schema: Schema[] = [];
@@ -87,7 +81,9 @@ export const createForm = (props: CreateFormProps) => {
     for (const fn of _subjects.watchs) {
       fn(_values, _fields, _props);
     }
-    !!props.log && props.log({ _values, _fields, _props, _formState });
+    props.log?.({
+      _values, _fields, _props, _formState,
+    });
   };
 
   const hasError = () => !!Object.keys(_fields.error).length;
@@ -101,8 +97,8 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   const executeExpressionOverride = (
-    config: SchemaFieldType,
-    fieldName?: string
+    config: SchemaField,
+    fieldName?: string,
   ) => {
     if (fieldName === config.fieldName && config.override?.others) {
       Object.assign(_values, config.override?.others);
@@ -142,7 +138,7 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const executeExpressionRule = (config: SchemaFieldType) => {
+  const executeExpressionRule = (config: SchemaField) => {
     if (!config.rules) return;
 
     delete _fields.error[config.fieldName];
@@ -177,7 +173,7 @@ export const createForm = (props: CreateFormProps) => {
   const executeEachConfig = (
     schema: Schema[],
     fieldName?: string,
-    options: { skipValidate: boolean } = { skipValidate: false }
+    options: { skipValidate: boolean } = { skipValidate: false },
   ) => {
     for (const config of schema) {
       if (config.variant === 'FIELD') {
@@ -207,7 +203,7 @@ export const createForm = (props: CreateFormProps) => {
 
   const executeConfig = (
     fieldName?: string,
-    options: { skipValidate: boolean } = { skipValidate: false }
+    options: { skipValidate: boolean } = { skipValidate: false },
   ) => {
     executeEachConfig(_schema, fieldName, options);
   };
@@ -215,7 +211,7 @@ export const createForm = (props: CreateFormProps) => {
   const updateTouch = (
     name: string,
     value: boolean = true,
-    shouldRender: boolean = true
+    shouldRender: boolean = true,
   ) => {
     const isPreviousTouched = _fields.touched[name];
     _fields.touched[name] = value;
@@ -228,7 +224,7 @@ export const createForm = (props: CreateFormProps) => {
   const setValue = (
     fieldName: string,
     value: any,
-    options?: { freeze: boolean }
+    options?: { freeze: boolean },
   ) => {
     _values[fieldName] = value;
 
@@ -241,7 +237,7 @@ export const createForm = (props: CreateFormProps) => {
 
   const setValues = (
     values: Record<any, any>,
-    options?: { freeze: boolean }
+    options?: { freeze: boolean },
   ) => {
     Object.entries(values).forEach(([key, value]) => {
       setValue(key, value, { freeze: true });
@@ -256,7 +252,7 @@ export const createForm = (props: CreateFormProps) => {
   const setError = (
     fieldName: string,
     value?: any,
-    options?: { freeze: boolean }
+    options?: { freeze: boolean },
   ) => {
     if (value) _fields.error[fieldName] = value;
     else delete _fields.error[fieldName];
@@ -267,7 +263,7 @@ export const createForm = (props: CreateFormProps) => {
 
   const setErrors = (
     values: Record<any, any>,
-    options?: { freeze: boolean }
+    options?: { freeze: boolean },
   ) => {
     Object.entries(values).forEach(([key, value]) => {
       setError(key, value, { freeze: true });

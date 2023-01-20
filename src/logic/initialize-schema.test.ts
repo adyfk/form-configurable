@@ -20,6 +20,7 @@ const schema: Schema[] = [
   },
   {
     variant: 'GROUP',
+    groupType: 'DEFAULT',
     child: [
       {
         fieldName: 'age',
@@ -72,6 +73,7 @@ test('initialize test error field', () => {
     },
     {
       variant: 'GROUP',
+      groupType: 'DEFAULT',
       child: [
         {
           fieldName: 'age',

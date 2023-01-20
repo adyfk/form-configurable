@@ -1,3 +1,5 @@
+/* eslint-disable func-names */
+/* eslint-disable no-use-before-define */
 import type {
   Delegate,
   ExpressionThunk,
@@ -12,11 +14,12 @@ import type {
 } from 'expressionparser/dist/ExpressionParser';
 
 export interface FunctionOps {
+  // eslint-disable-next-line no-unused-vars
   [op: string]: (...args: ExpressionThunk[]) => ExpressionValue;
 }
 
 export const isArgumentsArray = (
-  args: ExpressionValue
+  args: ExpressionValue,
 ): args is ArgumentsArray => Array.isArray(args) && !!args.isArgumentsArray;
 
 const unpackArgs = (f: Delegate) => (expr: ExpressionThunk) => {
@@ -26,22 +29,22 @@ const unpackArgs = (f: Delegate) => (expr: ExpressionThunk) => {
     if (f.length > 1) {
       throw new Error(
         `Too few arguments. Expected ${f.length}, found 1 (${JSON.stringify(
-          result
-        )})`
+          result,
+        )})`,
       );
     }
     return f(() => result);
-  } else if (result.length === f.length || f.length === 0) {
+  } if (result.length === f.length || f.length === 0) {
+    // eslint-disable-next-line prefer-spread
     return f.apply(null, result);
-  } else {
-    throw new Error(`Incorrect number of arguments. Expected ${f.length}`);
   }
+  throw new Error(`Incorrect number of arguments. Expected ${f.length}`);
 };
 
 const num = (result: ExpressionValue) => {
   if (typeof result !== 'number') {
     throw new Error(
-      `Expected number, found: ${typeof result} ${JSON.stringify(result)}`
+      `Expected number, found: ${typeof result} ${JSON.stringify(result)}`,
     );
   }
 
@@ -51,12 +54,12 @@ const num = (result: ExpressionValue) => {
 const array = (result: ExpressionValue) => {
   if (!Array.isArray(result)) {
     throw new Error(
-      `Expected array, found: ${typeof result} ${JSON.stringify(result)}`
+      `Expected array, found: ${typeof result} ${JSON.stringify(result)}`,
     );
   }
 
   if (isArgumentsArray(result)) {
-    throw new Error(`Expected array, found: arguments`);
+    throw new Error('Expected array, found: arguments');
   }
 
   return result;
@@ -65,7 +68,7 @@ const array = (result: ExpressionValue) => {
 const bool = (value: ExpressionValue) => {
   if (typeof value !== 'boolean') {
     throw new Error(
-      `Expected boolean, found: ${typeof value} ${JSON.stringify(value)}`
+      `Expected boolean, found: ${typeof value} ${JSON.stringify(value)}`,
     );
   }
 
@@ -86,7 +89,11 @@ const evalBool = (value: ExpressionValue): boolean => {
   return bool(result);
 };
 
-const evalString = (value: ExpressionValue) => {
+const evalArray = (
+  arr: ExpressionValue,
+  // eslint-disable-next-line no-unused-vars
+  typeCheck?: (value: ExpressionValue) => ExpressionValue,
+) => array(arr).map((value) => {
   let result;
   if (typeof value === 'function' && value.length === 0) {
     result = value();
@@ -94,40 +101,24 @@ const evalString = (value: ExpressionValue) => {
     result = value;
   }
 
-  return string(result);
-};
-
-const evalArray = (
-  arr: ExpressionValue,
-  typeCheck?: (value: ExpressionValue) => ExpressionValue
-) => {
-  return array(arr).map((value) => {
-    let result;
-    if (typeof value === 'function' && value.length === 0) {
-      result = value();
-    } else {
-      result = value;
+  if (typeCheck) {
+    try {
+      result = typeCheck(result);
+    } catch (err: any) {
+      throw new Error(`In array; ${err.message}`);
     }
+  }
 
-    if (typeCheck) {
-      try {
-        result = typeCheck(result);
-      } catch (err: any) {
-        throw new Error(`In array; ${err.message}`);
-      }
-    }
-
-    return result;
-  });
-};
+  return result;
+});
 
 const obj = (obj: ExpressionValue) => {
   if (typeof obj !== 'object' || obj === null) {
     throw new Error(
-      `Expected object, found: ${typeof obj} ${JSON.stringify(obj)}`
+      `Expected object, found: ${typeof obj} ${JSON.stringify(obj)}`,
     );
   } else if (Array.isArray(obj)) {
-    throw new Error(`Expected object, found array`);
+    throw new Error('Expected object, found array');
   }
 
   return obj;
@@ -137,8 +128,8 @@ const iterable = (result: ExpressionValue) => {
   if (!Array.isArray(result) && typeof result !== 'string') {
     throw new Error(
       `Expected array or string, found: ${typeof result} ${JSON.stringify(
-        result
-      )}`
+        result,
+      )}`,
     );
   }
 
@@ -148,7 +139,7 @@ const iterable = (result: ExpressionValue) => {
 const string = (result: ExpressionValue) => {
   if (typeof result !== 'string') {
     throw new Error(
-      `Expected string, found: ${typeof result} ${JSON.stringify(result)}`
+      `Expected string, found: ${typeof result} ${JSON.stringify(result)}`,
     );
   }
 
@@ -158,7 +149,7 @@ const string = (result: ExpressionValue) => {
 const char = (result: ExpressionValue) => {
   if (typeof result !== 'string' || result.length !== 1) {
     throw new Error(
-      `Expected char, found: ${typeof result} ${JSON.stringify(result)}`
+      `Expected char, found: ${typeof result} ${JSON.stringify(result)}`,
     );
   }
 
@@ -179,18 +170,30 @@ const date = (result: ExpressionValue) => {
 
   if (`${parseToDate}` === 'Invalid Date') {
     throw new Error(
-      `Expected string or number date format, found: ${typeof result}`
+      `Expected string or number date format, found: ${typeof result}`,
     );
   }
 
   return parseToDate;
 };
 
+const evalString = (value: ExpressionValue) => {
+  let result;
+  if (typeof value === 'function' && value.length === 0) {
+    result = value();
+  } else {
+    result = value;
+  }
+
+  return string(result);
+};
+
+// eslint-disable-next-line no-unused-vars
 type Callable = (...args: ExpressionArray<ExpressionThunk>) => ExpressionValue;
 
 export const formula = function (
   termDelegate: TermDelegate,
-  termTypeDelegate?: TermTyper
+  termTypeDelegate?: TermTyper,
 ): ExpressionParserOptions {
   const call = (name: string): Callable => {
     const upperName = name.toUpperCase();
@@ -199,11 +202,10 @@ export const formula = function (
         args.isArgumentsArray = true;
         return prefixOps[upperName](() => args);
       };
-    } else if (infixOps.hasOwnProperty(upperName)) {
+    } if (infixOps.hasOwnProperty(upperName)) {
       return (...args) => infixOps[upperName](args[0], args[1]);
-    } else {
-      throw new Error(`Unknown function: ${name}`);
     }
+    throw new Error(`Unknown function: ${name}`);
   };
 
   const infixOps: InfixOps = {
@@ -231,20 +233,13 @@ export const formula = function (
     '<=': (a, b) => a() <= b(),
     AND: (a, b) => a() && b(),
     OR: (a, b) => a() || b(),
-    '^': (a, b) => Math.pow(num(a()), num(b())),
+    '^': (a, b) => num(a()) ** num(b()),
   };
 
   const prefixOps: FunctionOps = {
-    IS_NAN: (arg) => {
-      try {
-        return isNaN(arg() as number);
-      } catch (error) {
-        return false;
-      }
-    },
     IS_NUMBER: (arg) => {
       try {
-        return !isNaN(num(arg()));
+        return !Number.isNaN(num(arg()));
       } catch (error) {
         return false;
       }
@@ -280,7 +275,7 @@ export const formula = function (
     IS_EMAIL: (arg) => {
       try {
         return !!string(arg()).match(
-          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
         );
       } catch (error) {
         return false;
@@ -329,34 +324,30 @@ export const formula = function (
 
       if (condition()) {
         return thenStatement();
-      } else {
-        return elseStatement();
       }
+      return elseStatement();
     },
     AVERAGE: (arg) => {
       const arr = evalArray(arg());
 
       const sum = arr.reduce(
         (prev: number, curr): number => prev + num(curr),
-        0
+        0,
       );
       return num(sum) / arr.length;
     },
-    SUM: (arg) =>
-      evalArray(arg(), num).reduce((prev: number, curr) => prev + num(curr), 0),
+    SUM: (arg) => evalArray(arg(), num).reduce((prev: number, curr) => prev + num(curr), 0),
     CHAR: (arg) => String.fromCharCode(num(arg())),
     CODE: (arg) => char(arg()).charCodeAt(0),
 
-    MIN: (arg) =>
-      evalArray(arg()).reduce(
-        (prev: number, curr) => Math.min(prev, num(curr)),
-        Number.POSITIVE_INFINITY
-      ),
-    MAX: (arg) =>
-      evalArray(arg()).reduce(
-        (prev: number, curr) => Math.max(prev, num(curr)),
-        Number.NEGATIVE_INFINITY
-      ),
+    MIN: (arg) => evalArray(arg()).reduce(
+      (prev: number, curr) => Math.min(prev, num(curr)),
+      Number.POSITIVE_INFINITY,
+    ),
+    MAX: (arg) => evalArray(arg()).reduce(
+      (prev: number, curr) => Math.max(prev, num(curr)),
+      Number.NEGATIVE_INFINITY,
+    ),
     SORT: (arg) => {
       const arr = array(arg()).slice();
       arr.sort();
@@ -368,9 +359,7 @@ export const formula = function (
       return arr;
     },
     INDEX: (arg1, arg2) => iterable(arg1())[num(arg2())],
-    LENGTH: (arg) => {
-      return iterable(arg()).length;
-    },
+    LENGTH: (arg) => iterable(arg()).length,
     JOIN: (arg1, arg2) => evalArray(arg2()).join(string(arg1())),
     STRING: (arg) => evalArray(arg()).join(''),
     SPLIT: (arg1, arg2) => string(arg2()).split(string(arg1())),
@@ -388,17 +377,14 @@ export const formula = function (
       return arr.map((val) => {
         if (typeof func === 'function') {
           return () => func(val);
-        } else {
-          return call(string(func))(() => val);
         }
+        return call(string(func))(() => val);
       });
     },
     MAP_ITEM: (arg1, arg2) => {
       const item = string(arg1());
       const arr = evalArray(arg2());
-      return arr.map((val: any) => {
-        return val[item];
-      });
+      return arr.map((val: any) => val[item]);
     },
     EVERY: (arg1, arg2) => {
       const varg1 = arg1();
@@ -424,9 +410,8 @@ export const formula = function (
         ];
         if (typeof func === 'function') {
           return func(...args);
-        } else {
-          return call(string(func))(...args);
         }
+        return call(string(func))(...args);
       });
     },
     REDUCE: (arg1, arg2, arg3) => {
@@ -437,9 +422,8 @@ export const formula = function (
         const args: ExpressionArray<ExpressionThunk> = [() => prev, () => curr];
         if (typeof func === 'function') {
           return func(...args);
-        } else {
-          return call(string(func))(...args);
         }
+        return call(string(func))(...args);
       }, start);
     },
     RANGE: (arg1, arg2) => {
@@ -555,7 +539,7 @@ export const formula = function (
       const value = arg2();
       const inputObj = obj(arg3());
 
-      return Object.assign({}, inputObj, { [key]: value });
+      return { ...inputObj, [key]: value };
     },
     DICT: (arg1, arg2) => {
       const arr1 = evalArray(arg1());
@@ -576,7 +560,7 @@ export const formula = function (
       arr.forEach((item) => {
         const kvPair = array(item);
         if (kvPair.length !== 2) {
-          throw new Error(`UNZIPDICT: Expected sub-array of length 2`);
+          throw new Error('UNZIPDICT: Expected sub-array of length 2');
         }
 
         const [key, value] = kvPair;
@@ -658,7 +642,7 @@ export const formula = function (
       },
     },
 
-    termDelegate: function (term: string) {
+    termDelegate(term: string) {
       const numVal = parseFloat(term);
       if (Number.isNaN(numVal)) {
         switch (term) {
@@ -684,7 +668,7 @@ export const formula = function (
       }
     },
 
-    termTyper: function (term: string): TermType {
+    termTyper(term: string): TermType {
       const numVal = parseFloat(term);
 
       if (Number.isNaN(numVal)) {

@@ -1,11 +1,11 @@
-import { expressionToValue } from 'src/parser';
-import type { Schema, SchemaFieldType } from 'src/types/schema';
+import { expressionToValue } from '../parser';
+import type { Schema, SchemaField } from '../types';
 
 const executeExpressionOverride = (
-  config: SchemaFieldType,
+  config: SchemaField,
   values: Record<any, any>,
   errors: Record<any, any>,
-  extraData: Record<any, any>
+  extraData: Record<any, any>,
 ) => {
   if (config.override?.self) {
     try {
@@ -20,10 +20,10 @@ const executeExpressionOverride = (
 };
 
 const executeExpressionRule = (
-  config: SchemaFieldType,
+  config: SchemaField,
   values: Record<any, any>,
   errors: Record<any, any>,
-  extraData: Record<any, any>
+  extraData: Record<any, any>,
 ) => {
   if (!config.rules) return;
   delete errors[config.fieldName];
@@ -48,7 +48,7 @@ const executeEachConfig = (
   schema: Schema[],
   values: Record<any, any>,
   errors: Record<any, any>,
-  extraData: Record<any, any>
+  extraData: Record<any, any>,
 ) => {
   for (const config of schema) {
     if (config.variant === 'FIELD') {
@@ -63,7 +63,7 @@ const executeEachConfig = (
 export const validate = (
   schema: Schema[],
   data: Record<any, any>,
-  extraData?: Record<any, any>
+  extraData?: Record<any, any>,
 ) => {
   const errors: Record<any, any> = {};
   const values = { ...data };

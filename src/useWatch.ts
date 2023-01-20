@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useCallback, useContext } from 'react';
 import { FormContext } from './useForm';
 import { Form } from './logic/createForm';
@@ -14,7 +15,7 @@ export const useWatch = (props: { form?: Form; disabled?: boolean }) => {
       update();
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+    [],
   );
 
   useSubscribe({

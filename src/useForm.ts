@@ -19,7 +19,7 @@ import { SumbitMiddlewareContext } from './useSubmitMiddleware';
 export const useForm = (
   props: CreateFormProps & {
     forceSubmitOnError?: boolean;
-  }
+  },
 ) => {
   const update = useUpdate();
   const { validateListSubmit, order } = useContext(SumbitMiddlewareContext);
@@ -42,63 +42,60 @@ export const useForm = (
 
   const handleSubmit = useCallback(
     (
-        onValid: (values: Record<string, any>) => Promise<void> | any,
-        onInvalid?: (
-          errors: Record<string, any>,
-          values: Record<string, any>,
-          type: 'SCHEMA' | 'CUSTOM'
-        ) => Promise<void> | any
-      ) =>
-      async (event: FormEvent) => {
-        event?.stopPropagation();
-        event?.preventDefault();
+      // eslint-disable-next-line no-unused-vars
+      onValid: (values: Record<string, any>) => Promise<void> | any,
+      // eslint-disable-next-line no-unused-vars
+      onInvalid?: (errors: Record<string, any>, values: Record<string, any>, type: 'SCHEMA' | 'CUSTOM') => Promise<void> | any,
+    ) => async (event: FormEvent) => {
+      event?.stopPropagation();
+      event?.preventDefault();
 
-        const form = getForm();
+      const form = getForm();
+
+      try {
+        updateFormState({
+          isSubmitting: true,
+          isSubmitted: true,
+        });
+        if (order === 'before') {
+          await validateListSubmit();
+        }
+
+        form.executeConfig();
+        if (form.hasError && !props.forceSubmitOnError) {
+          throw new Error('Error Schema');
+        } else {
+          await onValid(form.values);
+        }
+
+        if (order === 'after') {
+          await validateListSubmit();
+        }
+
+        updateFormState({
+          isSubmitting: false,
+          isSubmitSuccessful: true,
+        });
+      } catch (error: any) {
+        updateFormState({
+          isSubmitting: false,
+          isSubmitSuccessful: false,
+        });
 
         try {
-          updateFormState({
-            isSubmitting: true,
-            isSubmitted: true,
-          });
-          if (order === 'before') {
-            await validateListSubmit();
-          }
-
-          form.executeConfig();
-          if (form.hasError && !props.forceSubmitOnError) {
-            throw new Error('Error Schema');
-          } else {
-            await onValid(form.values);
-          }
-
-          if (order === 'after') {
-            await validateListSubmit();
-          }
-
-          updateFormState({
-            isSubmitting: false,
-            isSubmitSuccessful: true,
-          });
-        } catch (error: any) {
-          updateFormState({
-            isSubmitting: false,
-            isSubmitSuccessful: false,
-          });
-
-          try {
-            await onInvalid?.(
-              form.fields.error,
-              form.values,
-              error?.message === 'Error Schema' ? 'SCHEMA' : 'CUSTOM'
-            );
-          } catch (error) {
-            //
-          }
-        } finally {
-          _form.current.notifyWatch();
+          await onInvalid?.(
+            form.fields.error,
+            form.values,
+            error?.message === 'Error Schema' ? 'SCHEMA' : 'CUSTOM',
+          );
+        } catch (error) {
+          //
         }
-      },
-    [props.forceSubmitOnError, updateFormState, order, validateListSubmit]
+      } finally {
+        _form.current.notifyWatch();
+      }
+    },
+    [props.forceSubmitOnError, updateFormState, order, validateListSubmit],
   );
 
   useEffect(() => {

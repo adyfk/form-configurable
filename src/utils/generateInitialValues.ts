@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-syntax */
 import type { Schema } from '../types/schema';
 
 const initValueEachSchema = (schema: Schema[], values: Record<string, any>) => {
@@ -7,6 +8,7 @@ const initValueEachSchema = (schema: Schema[], values: Record<string, any>) => {
     } else if (config.variant === 'FIELD') {
       config.initialValue = values[config.fieldName];
     } else if (config.variant === 'VIEW') {
+      //
     }
   }
   return schema;
@@ -14,9 +16,7 @@ const initValueEachSchema = (schema: Schema[], values: Record<string, any>) => {
 
 export const generateInitialValues = (
   schema: Schema[],
-  values: Record<string, any>
-) => {
-  return initValueEachSchema([...schema], values);
-};
+  values: Record<string, any>,
+) => initValueEachSchema([...schema], values);
 
 export default generateInitialValues;

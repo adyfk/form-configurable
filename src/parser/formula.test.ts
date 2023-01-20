@@ -1,8 +1,9 @@
 import { init } from 'expressionparser';
-import formula from './formula_override';
 import type { ExpressionValue } from 'expressionparser/dist/ExpressionParser';
+import formula from './formula_override';
 
 const termVals: {
+  // eslint-disable-next-line no-unused-vars
   [key: string]: number | ((...args: any) => any);
 } = {
   a: 12,
@@ -25,46 +26,42 @@ const parser = init(
   (term: any) => {
     if (term in termVals) {
       return termVals[term];
-    } else {
-      return term;
     }
+    return term;
   },
   (term: any) => {
     if (term in termTypes) {
       return termTypes[term];
-    } else {
-      return term;
     }
-  }
+    return term;
+  },
 );
 
-const calc = (expression: string, terms?: Record<string, ExpressionValue>) => {
-  return parser.expressionToValue(expression, {
-    arrObject: [
-      { name: 'adi', age: 20 },
-      { name: 'fatk', age: 22 },
-    ],
-    x: 10,
-    y: -20,
+const calc = (expression: string, terms?: Record<string, ExpressionValue>) => parser.expressionToValue(expression, {
+  arrObject: [
+    { name: 'adi', age: 20 },
+    { name: 'fatk', age: 22 },
+  ],
+  x: 10,
+  y: -20,
+  booltrue: true,
+  boolfalse: false,
+  xstring: 'this is string',
+  xdate: new Date().toISOString(),
+  xobject: {
+    x: 5,
+    y: -4,
     booltrue: true,
     boolfalse: false,
-    xstring: 'this is string',
+    xstring: 'this is obect string',
     xdate: new Date().toISOString(),
-    xobject: {
-      x: 5,
-      y: -4,
-      booltrue: true,
-      boolfalse: false,
-      xstring: 'this is obect string',
-      xdate: new Date().toISOString(),
-      arrstring: ['tfirst', 'tsecond', 'tthird'],
-      arrsnumber: [5, 4, 1],
-    },
-    arrstring: ['first', 'second', 'third'],
+    arrstring: ['tfirst', 'tsecond', 'tthird'],
     arrsnumber: [5, 4, 1],
-    ...terms,
-  });
-};
+  },
+  arrstring: ['first', 'second', 'third'],
+  arrsnumber: [5, 4, 1],
+  ...terms,
+});
 
 describe('Infix Simple Arithmetic', () => {
   it('should result in 0', () => {
@@ -139,17 +136,17 @@ describe('Grouping', () => {
   it('should raise error', () => {
     expect(() => {
       calc('(TRUE AND FALSE');
-    }).toThrowError('Mismatched Grouping (unexpected "(")');
+    }).toThrow('Mismatched Grouping (unexpected "(")');
   });
   it('should raise error condition 1', () => {
     expect(() => {
       calc(')TRUE AND FALSE');
-    }).toThrowError('Mismatched Grouping (unexpected closing ")")');
+    }).toThrow('Mismatched Grouping (unexpected closing ")")');
   });
   it('should raise error condition 2', () => {
     expect(() => {
       calc('((TRUE) AND (FALSE)');
-    }).toThrowError('Mismatched Grouping (unexpected "(")');
+    }).toThrow('Mismatched Grouping (unexpected "(")');
   });
   it('should result in false', () => {
     expect(calc('((TRUE) AND (FALSE))')).toBe(false);
@@ -210,7 +207,7 @@ describe('Calls and Arrays', () => {
   it('should throw error', () => {
     expect(() => {
       calc('REDUCE("_TEST_", 0, [1, 2, 3])');
-    }).toThrowError('Unknown function: _TEST_');
+    }).toThrow('Unknown function: _TEST_');
   });
 });
 
@@ -228,7 +225,7 @@ describe('More Functions', () => {
   it('should result in 8 condition 2', () => {
     expect(() => {
       calc('IF(7 > 5, 8)');
-    }).toThrowError('Incorrect number of arguments. Expected 3');
+    }).toThrow('Incorrect number of arguments. Expected 3');
   });
 
   it('should result in 10 condition 2', () => {
@@ -338,19 +335,9 @@ describe('Dictionaries', () => {
 });
 
 describe('Maths', () => {
-  it('should be false', () => {
-    const result = calc('IS_NAN(1/0)');
-    expect(result).toBe(false);
-  });
-
   it('should be true', () => {
     const result = calc('(1/0) = INFINITY');
     expect(result).toBe(true);
-  });
-
-  it('should be false condition 2', () => {
-    const result = calc('IS_NAN(0)');
-    expect(result).toBe(false);
   });
 
   it('should be -1', () => {
@@ -408,19 +395,19 @@ describe('Exceptions', () => {
   it("should throw 'Expected array'", () => {
     expect(() => {
       calc('sort("ABC")');
-    }).toThrowError('Expected array, found: string');
+    }).toThrow('Expected array, found: string');
   });
 
   it("should throw 'Expected array or string'", () => {
     expect(() => {
       calc('index(1, 1)');
-    }).toThrowError('Expected array or string, found: number');
+    }).toThrow('Expected array or string, found: number');
   });
 
   it("should throw 'Expected char'", () => {
     expect(() => {
       calc('CODE("FOO")');
-    }).toThrowError('Expected char, found: string');
+    }).toThrow('Expected char, found: string');
   });
 });
 
@@ -462,9 +449,6 @@ describe('Every Function', () => {
 });
 
 describe('IS_Test', () => {
-  it('IS_NAN test', () => {
-    expect(calc('IS_NAN("x")')).toBe(true);
-  });
   it('IS_NUMBER test', () => {
     expect(calc('IS_NUMBER(5)')).toBe(true);
   });
@@ -481,6 +465,6 @@ describe('IS_Test', () => {
     expect(calc(`IS_DATE(${new Date().toISOString()})`)).toBe(true);
   });
   it('IS_EMAIL test', () => {
-    expect(calc(`IS_EMAIL("ady.fatk@gmail.com")`)).toBe(true);
+    expect(calc('IS_EMAIL("ady.fatk@gmail.com")')).toBe(true);
   });
 });

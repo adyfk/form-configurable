@@ -20,6 +20,7 @@ const schema: Schema[] = [
   },
   {
     variant: 'GROUP',
+    groupType: 'DEFAULT',
     child: [
       {
         fieldName: 'age',

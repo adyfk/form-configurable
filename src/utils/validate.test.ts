@@ -21,6 +21,8 @@ test('validate values', () => {
     },
     {
       variant: 'VIEW',
+      viewType: 'HELPER',
+      helperType: 'DIVIDER',
       meta: {
         title: 'View Title Information',
       },
@@ -28,6 +30,7 @@ test('validate values', () => {
     },
     {
       variant: 'GROUP',
+      groupType: 'CUSTOM',
       meta: {
         title: 'Group Title Information',
       },
@@ -45,6 +48,8 @@ test('validate values', () => {
         },
         {
           variant: 'VIEW',
+          viewType: 'HELPER',
+          helperType: 'DIVIDER',
           meta: {
             title: 'View Title Information',
           },

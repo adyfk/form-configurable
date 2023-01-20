@@ -1,32 +1,30 @@
 /* eslint-disable array-callback-return */
+
 import { FC } from 'react';
 
 import type {
-  Schema,
-  SchemaGroupType,
-  SchemaViewType,
-  SchemaFieldType,
-} from './types/schema';
+  Schema, SchemaGroup, SchemaView, SchemaField,
+} from './types';
 
 import type { Form } from './logic/createForm';
 
-export type GroupType = FC<{
+export type GroupProps = FC<{
   form?: Form;
-  config: SchemaGroupType;
+  config: SchemaGroup;
   child: any;
 }>;
 
-export type ViewType = FC<{
+export type ViewProps = FC<{
   form?: Form;
-  config: SchemaViewType;
+  config: SchemaView;
 }>;
 
-export type FieldType = FC<{
+export type FieldProps = FC<{
   form?: Form;
-  config: SchemaFieldType;
+  config: SchemaField;
 }>;
 
-export const FormContainer = ({
+export function FormContainer({
   form,
   schema,
   Group,
@@ -36,37 +34,35 @@ export const FormContainer = ({
 }: {
   schema: Schema[];
   form?: Form;
-  Group: GroupType;
-  View: ViewType;
-  Field: FieldType;
+  Group: GroupProps;
+  View: ViewProps;
+  Field: FieldProps;
   [key: string]: any;
-}) => {
+}) {
   return (
     <>
-      {schema.map(function (config) {
+      {schema.map((config) => {
         if (config.variant === 'GROUP') {
           return (
             <Group
               key={config.key}
               form={form}
               config={config}
-              child={(props: any) => {
-                return (
-                  <FormContainer
-                    Group={Group}
-                    View={View}
-                    Field={Field}
-                    schema={config.child}
-                    form={form}
-                    {...otherProps}
-                    {...props}
-                  />
-                );
-              }}
+              child={(props: any) => (
+                <FormContainer
+                  Group={Group}
+                  View={View}
+                  Field={Field}
+                  schema={config.child}
+                  form={form}
+                  {...otherProps}
+                  {...props}
+                />
+              )}
               {...otherProps}
             />
           );
-        } else if (config.variant === 'VIEW') {
+        } if (config.variant === 'VIEW') {
           return (
             <View
               key={config.key}
@@ -75,7 +71,7 @@ export const FormContainer = ({
               {...otherProps}
             />
           );
-        } else if (config.variant === 'FIELD') {
+        } if (config.variant === 'FIELD') {
           return (
             <Field
               key={config.key}
@@ -88,18 +84,16 @@ export const FormContainer = ({
       })}
     </>
   );
-};
+}
 
 const FormConfigurable: FC<{
   schema: Schema[];
   form: Form;
-  Group: GroupType;
-  View: ViewType;
-  Field: FieldType;
+  Group: GroupProps;
+  View: ViewProps;
+  Field: FieldProps;
   parent?: any;
   [key: string]: any;
-}> = (props) => {
-  return <FormContainer {...props} />;
-};
+}> = (props) => <FormContainer {...props} />;
 
 export default FormConfigurable;

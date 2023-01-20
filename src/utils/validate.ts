@@ -1,11 +1,14 @@
+/* eslint-disable no-restricted-syntax */
 import { expressionToValue } from '../parser';
-import { Schema } from '../types/schema';
+import { Schema } from '../types';
 
 const validateEachSchema = (
   schema: Schema[],
   values: Record<string, any>,
   errors: Record<string, any>,
-  configOptions: any
+  configOptions: Partial<{
+    onlyFirstError: boolean;
+  }>,
 ) => {
   for (const config of schema) {
     if (config.variant === 'GROUP') {
@@ -38,7 +41,7 @@ export const validate = (
     onlyFirstError: boolean;
   }> = {
     onlyFirstError: true,
-  }
+  },
 ) => {
   const errors: Record<string, any> = {};
   validateEachSchema(schema, values, errors, configOptions);

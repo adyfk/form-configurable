@@ -156,12 +156,6 @@
     "text": "Returns the value rounded to the nearest integer: ROUND(value)."
   },
   {
-    "op": "IS_NAN",
-    "fix": "prefix",
-    "sig": ["value", "Boolean"],
-    "text": "Returns TRUE if a value is not a number (e.g. the result of an invalid mathematical operation), otherwise returns FALSE: IS_NAN(value)."
-  },
-  {
     "op": "IF",
     "fix": "prefix",
     "sig": ["condition: Boolean", "then", "else", "result"],

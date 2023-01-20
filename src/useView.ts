@@ -1,7 +1,12 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { Schema } from './types/schema';
+/* eslint-disable no-underscore-dangle */
+import {
+  useCallback, useContext, useEffect, useRef, useState,
+} from 'react';
+import { Schema } from './types';
 import { FormContext } from './useForm';
-import { Fields, Form, FormValues, Props } from './logic/createForm';
+import {
+  Fields, Form, FormValues, Props,
+} from './logic/createForm';
 import useSubscribe from './useSubscribe';
 
 export const initializeView = ({
@@ -31,7 +36,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, config } = props;
   const _state = useRef<IStateInitializeView>(
-    initializeView({ props: form.props, config })
+    initializeView({ props: form.props, config }),
   );
   const [state, updateState] = useState<IStateInitializeView>({
     ..._state.current,
@@ -45,7 +50,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
         updateState(latestState);
       }
     },
-    [config]
+    [config],
   );
 
   useSubscribe({

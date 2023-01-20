@@ -1,12 +1,16 @@
-import {
+/* eslint-disable react/jsx-no-useless-fragment */
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-unused-vars */
+import React, {
   FC,
   createContext,
   useCallback,
   useContext,
   useEffect,
+  useMemo,
   useState,
 } from 'react';
-import { SchemaFieldType } from './types/schema';
+import { SchemaField } from './types';
 import { Form } from './logic/createForm';
 
 interface IFormRegisterContext {
@@ -32,38 +36,38 @@ export const SumbitMiddlewareContextProvider: FC<
     (callback: any) => {
       setListSubmit((prev) => [...prev, callback]);
     },
-    [setListSubmit]
+    [setListSubmit],
   );
 
   const removeListSubmit = useCallback(
     (callback: any) => {
       setListSubmit((prev) => prev.filter((func) => func !== callback));
     },
-    [setListSubmit]
+    [setListSubmit],
   );
 
   const validateListSubmit = useCallback(() => {
     if (!listSubmit.length) return Promise.resolve();
 
     const listSubmitWrapper = listSubmit.map(
-      (handleSubmit) =>
-        new Promise((resolve, reject) => {
-          return handleSubmit(resolve, reject)({});
-        })
+      // eslint-disable-next-line no-promise-executor-return
+      (handleSubmit) => new Promise((resolve, reject) => handleSubmit(resolve, reject)({})),
     );
 
     return Promise.race(listSubmitWrapper);
   }, [listSubmit]);
 
+  const submitMiddlewareContextValue = useMemo(() => ({
+    listSubmit,
+    addListSubmit,
+    removeListSubmit,
+    validateListSubmit,
+    order,
+  }), []);
+
   return (
     <SumbitMiddlewareContext.Provider
-      value={{
-        listSubmit,
-        addListSubmit,
-        removeListSubmit,
-        validateListSubmit,
-        order,
-      }}
+      value={submitMiddlewareContextValue}
     >
       {children}
     </SumbitMiddlewareContext.Provider>
@@ -76,7 +80,7 @@ interface IUserRegisterProps {
 
 export const useSubmitMiddleware = (props: IUserRegisterProps) => {
   const { addListSubmit, removeListSubmit } = useContext(
-    SumbitMiddlewareContext
+    SumbitMiddlewareContext,
   );
   useEffect(() => {
     addListSubmit(props.handleSubmit);
@@ -86,46 +90,44 @@ export const useSubmitMiddleware = (props: IUserRegisterProps) => {
 
 export function withSubmitMiddleware<T extends object>(
   Child: React.ComponentType<T>,
-  config: Pick<IFormRegisterContext, 'order'>
+  config: Pick<IFormRegisterContext, 'order'>,
 ) {
   const displayName = Child.displayName || Child.name || 'Component';
-  const Component = (props: T) => {
+  function Component(props: T) {
     return (
       <SumbitMiddlewareContextProvider order={config.order || 'before'}>
         <Child {...props} />
       </SumbitMiddlewareContextProvider>
     );
-  };
+  }
   Component.displayName = `withTheme(${displayName})`;
   return Component;
 }
 
-export const resolverMiddleware =
-  ({ resolver, form }: { resolver: any; form: Form }): any =>
-  async (values: any) => {
-    try {
-      return await resolver(
-        {
-          ...values,
-          parent: form.values,
-        },
-        {},
-        {}
-      );
-    } catch (error) {
-      return error;
-    }
-  };
+export const resolverMiddleware = ({ resolver, form }: { resolver: any; form: Form }): any => async (values: any) => {
+  try {
+    return await resolver(
+      {
+        ...values,
+        parent: form.values,
+      },
+      {},
+      {},
+    );
+  } catch (error) {
+    return error;
+  }
+};
 
-export const FormSyncReactHookForm = ({
+export function FormSyncReactHookForm({
   action,
   config,
   form,
 }: {
   action: any;
-  config: SchemaFieldType;
+  config: SchemaField;
   form: Form;
-}) => {
+}) {
   useSubmitMiddleware({
     handleSubmit: action.handleSubmit,
   });
@@ -137,6 +139,6 @@ export const FormSyncReactHookForm = ({
   }, [value, form, config]);
 
   return <></>;
-};
+}
 
 export default useSubmitMiddleware;

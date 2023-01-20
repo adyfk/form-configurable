@@ -1,9 +1,10 @@
-import { Schema } from 'src/types/schema';
+/* eslint-disable camelcase */
+import { Schema } from '../types';
 
 const executeEachConfig = (
   schema: Schema[],
   data: Record<any, any>,
-  extraData: Record<any, any>
+  extraData: Record<any, any>,
 ) => {
   for (const config of schema) {
     if (config.variant === 'FIELD') {
@@ -14,10 +15,10 @@ const executeEachConfig = (
   }
 };
 
-export const initialize_schema = (
+export const initializeSchema = (
   schema: Schema[],
   data: Record<any, any>,
-  extraData?: Record<any, any>
+  extraData?: Record<any, any>,
 ) => {
   const overrideSchema = [...schema];
   executeEachConfig(overrideSchema, data, extraData || {});
@@ -25,4 +26,4 @@ export const initialize_schema = (
   return overrideSchema;
 };
 
-export default initialize_schema;
+export default initializeSchema;

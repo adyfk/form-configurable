@@ -21,6 +21,7 @@ test('generate values', () => {
     },
     {
       variant: 'VIEW',
+      viewType: 'DEFAULT',
       meta: {
         title: 'View Title Information',
       },
@@ -28,6 +29,7 @@ test('generate values', () => {
     },
     {
       variant: 'GROUP',
+      groupType: 'DEFAULT',
       meta: {
         title: 'Group Title Information',
       },
@@ -45,6 +47,7 @@ test('generate values', () => {
         },
         {
           variant: 'VIEW',
+          viewType: 'DEFAULT',
           meta: {
             title: 'View Title Information',
           },
@@ -75,6 +78,7 @@ test('generate values', () => {
     },
     {
       variant: 'VIEW',
+      viewType: 'DEFAULT',
       meta: {
         title: 'View Title Information',
       },
@@ -82,6 +86,7 @@ test('generate values', () => {
     },
     {
       variant: 'GROUP',
+      groupType: 'DEFAULT',
       meta: {
         title: 'Group Title Information',
       },
@@ -99,6 +104,7 @@ test('generate values', () => {
         },
         {
           variant: 'VIEW',
+          viewType: 'DEFAULT',
           meta: {
             title: 'View Title Information',
           },

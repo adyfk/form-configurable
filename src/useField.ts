@@ -1,6 +1,10 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { SchemaFieldType } from './types/schema';
-import { Fields, Form, FormValues, Props } from './logic/createForm';
+import {
+  useCallback, useContext, useEffect, useRef, useState,
+} from 'react';
+import { SchemaField } from './types';
+import {
+  Fields, Form, FormValues, Props,
+} from './logic/createForm';
 import useSubscribe from './useSubscribe';
 import { FormContext } from './useForm';
 
@@ -13,7 +17,7 @@ export const initializeField = ({
   values: FormValues;
   fields: Fields;
   props: Props;
-  config: SchemaFieldType;
+  config: SchemaField;
 }) => {
   const field: {
     value: any;
@@ -39,12 +43,13 @@ export type IStateInitializeField = ReturnType<typeof initializeField>;
 
 export const useField = (props: {
   form?: Form;
-  config: SchemaFieldType;
-  log?: (config: SchemaFieldType, field: IStateInitializeField) => void;
+  config: SchemaField;
+  // eslint-disable-next-line no-unused-vars
+  log?: (config: SchemaField, field: IStateInitializeField) => void;
 }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, config, log } = props;
-  const formState = form.formState;
+  const { formState } = form;
   const _ref = useRef();
   const _state = useRef<IStateInitializeField>(
     initializeField({
@@ -52,7 +57,7 @@ export const useField = (props: {
       fields: form.fields,
       props: form.props,
       config,
-    })
+    }),
   );
 
   const [state, updateState] = useState<IStateInitializeField>({
@@ -61,14 +66,16 @@ export const useField = (props: {
 
   const latestState = useCallback(
     (values: FormValues, fields: Fields, props: Props) => {
-      const latestState = initializeField({ values, fields, props, config });
+      const latestState = initializeField({
+        values, fields, props, config,
+      });
 
       if (JSON.stringify(_state.current) !== JSON.stringify(latestState)) {
         _state.current = latestState;
         updateState(latestState);
       }
     },
-    [config]
+    [config],
   );
 
   useSubscribe({
@@ -88,7 +95,7 @@ export const useField = (props: {
     };
   }, [config.fieldName, form.refs]);
 
-  !!log && log(config, state);
+  log?.(config, state);
 
   return {
     form,
@@ -106,11 +113,11 @@ export const useField = (props: {
           form.setValue(config.fieldName, arg);
         }
       },
-      [config.fieldName, form]
+      [config.fieldName, form],
     ),
     onBlur: useCallback(
       () => form.updateTouch(config.fieldName),
-      [config.fieldName, form]
+      [config.fieldName, form],
     ),
   };
 };
