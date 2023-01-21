@@ -1,4 +1,5 @@
 import { ExpressionString, SchemaBase } from './core';
+import { Schema } from './schema';
 
 interface MetaField {
   placeholder: string;
@@ -155,6 +156,12 @@ export interface SchemaFieldFile extends BaseField {
   };
 }
 
+export interface SchemaFieldArray extends BaseField {
+  fieldType: 'ARRAY',
+  initialValue: [],
+  child: Schema[]
+}
+
 export interface SchemaFieldCustom extends BaseField {
   fieldType: 'CUSTOM';
   initialValue: any;
@@ -175,5 +182,6 @@ export type SchemaField =
   | SchemaFieldFile
   | SchemaFieldDate
   | SchemaFieldDateRange
+  | SchemaFieldArray
 
 // FORMNAME_VARIANT_FIELDNAME

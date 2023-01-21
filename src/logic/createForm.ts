@@ -1,6 +1,7 @@
 import generateId from '../utils/generateId';
 import { expressionToValue } from '../parser';
-import type { Schema, SchemaField } from '../types';
+import type { Schema, SchemaField, SchemaFieldArray } from '../types';
+import set from '../utils/set';
 
 export type Props = {
   show: Record<string, boolean>;
@@ -106,10 +107,11 @@ export const createForm = (props: CreateFormProps) => {
 
     if (config.override?.self) {
       try {
-        _values[config.fieldName] = expressionToValue(config.override.self, {
+        const result = expressionToValue(config.override.self, {
           ..._values,
           ...props.extraData,
         });
+        set(_values, config.fieldName, result);
       } catch (error) {
         //
       }
@@ -159,6 +161,11 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
+  // eslint-disable-next-line no-unused-vars
+  const executeExpressionRuleArray = (config: SchemaFieldArray) => {
+
+  };
+
   const clearErrorEachConfig = (schema: Schema[]) => {
     for (const config of schema) {
       if (config.variant === 'FIELD') {
@@ -185,7 +192,11 @@ export const createForm = (props: CreateFormProps) => {
         }
 
         if (!options.skipValidate) {
-          executeExpressionRule(config);
+          if (config.fieldType === 'ARRAY') {
+            executeExpressionRuleArray(config);
+          } else {
+            executeExpressionRule(config);
+          }
         }
       } else if (config.variant === 'GROUP') {
         executeExpressionProps(config);
@@ -226,7 +237,7 @@ export const createForm = (props: CreateFormProps) => {
     value: any,
     options?: { freeze: boolean },
   ) => {
-    _values[fieldName] = value;
+    set(_values, fieldName, value);
 
     if (options?.freeze) return;
 
@@ -280,7 +291,7 @@ export const createForm = (props: CreateFormProps) => {
   const initializeValues = (schema: Schema[]) => {
     for (const config of schema) {
       if (config.variant === 'FIELD') {
-        _values[config.fieldName] = config.initialValue;
+        set(_values, config.fieldName, config.initialValue);
       } else if (config.variant === 'GROUP') {
         initializeValues(config.child);
       }
