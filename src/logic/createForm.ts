@@ -2,6 +2,8 @@ import generateId from '../utils/generateId';
 import { expressionToValue } from '../parser';
 import type { Schema, SchemaField, SchemaFieldArray } from '../types';
 import set from '../utils/set';
+import unset from '../utils/unset';
+import get from '../utils/get';
 
 export type Props = {
   show: Record<string, boolean>;
@@ -90,8 +92,8 @@ export const createForm = (props: CreateFormProps) => {
   const hasError = () => !!Object.keys(_fields.error).length;
 
   const isPropsSkipExceute = (config: Schema) => {
-    const editable = _props.editable[config.key as string];
-    const show = _props.show[config.key as string];
+    const editable = _props.editable[config.key as string as string];
+    const show = _props.show[config.key as string as string];
     if (typeof editable !== 'undefined' && !editable) return true;
     if (typeof show !== 'undefined' && !show) return true;
     return false;
@@ -122,20 +124,18 @@ export const createForm = (props: CreateFormProps) => {
     if (!config.props) return;
 
     for (const { expression, name, value } of config.props) {
-      if (!_props[name]) _props[name] = {};
-
       if (expression) {
         try {
           const isValid = expressionToValue(expression, {
             ..._values,
             ...props.extraData,
           });
-          _props[name][config.key as string] = !!isValid as any;
+          set(_props[name], config.key as string, !!isValid);
         } catch (error) {
-          _props[name][config.key as string] = false as any;
+          set(_props[name], config.key as string, false);
         }
       } else {
-        _props[name][config.key as string] = value;
+        set(_props[name], config.key as string, value);
       }
     }
   };
@@ -143,7 +143,7 @@ export const createForm = (props: CreateFormProps) => {
   const executeExpressionRule = (config: SchemaField) => {
     if (!config.rules) return;
 
-    delete _fields.error[config.fieldName];
+    unset(_fields.error, config.fieldName);
 
     for (const rule of config.rules) {
       try {
@@ -156,7 +156,7 @@ export const createForm = (props: CreateFormProps) => {
           break;
         }
       } catch (e: any) {
-        delete _fields.error[config.fieldName];
+        unset(_fields.error, config.fieldName);
       }
     }
   };
@@ -169,8 +169,8 @@ export const createForm = (props: CreateFormProps) => {
   const clearErrorEachConfig = (schema: Schema[]) => {
     for (const config of schema) {
       if (config.variant === 'FIELD') {
-        delete _fields.error[config.key as string];
-        delete _fields.touched[config.key as string];
+        unset(_fields.error, config.fieldName);
+        unset(_fields.touched, config.fieldName);
       } else if (config.variant === 'GROUP') {
         clearErrorEachConfig(config.child);
       }
@@ -232,6 +232,10 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
+  const getValue = (fieldName: string) => get(_values, fieldName);
+  const getError = (fieldName: string) => get(_fields.error, fieldName);
+  const getTouch = (fieldName: string) => get(_fields.touched, fieldName);
+
   const setValue = (
     fieldName: string,
     value: any,
@@ -266,7 +270,7 @@ export const createForm = (props: CreateFormProps) => {
     options?: { freeze: boolean },
   ) => {
     if (value) _fields.error[fieldName] = value;
-    else delete _fields.error[fieldName];
+    else unset(_fields.error, fieldName);
 
     if (options?.freeze) return;
     notifyWatch();
@@ -310,10 +314,10 @@ export const createForm = (props: CreateFormProps) => {
 
   const reset = () => {
     for (const fieldName in _fields.error) {
-      delete _fields.error[fieldName];
+      unset(_fields.error, fieldName);
     }
     for (const fieldName in _fields.touched) {
-      delete _fields.touched[fieldName];
+      unset(_fields.touched, fieldName);
     }
     notifyWatch();
   };
@@ -333,6 +337,9 @@ export const createForm = (props: CreateFormProps) => {
     subscribeWatch,
     notifyWatch,
     updateTouch,
+    getValue,
+    getError,
+    getTouch,
     setValue,
     setValues,
     setError,
