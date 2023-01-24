@@ -12,6 +12,8 @@ interface MetaView {
 
 interface BaseView extends SchemaBase {
   variant: 'VIEW';
+  viewName?: string;
+  data?: any;
 }
 
 export interface SchemaViewField extends BaseView {
@@ -34,7 +36,7 @@ export interface SchemaViewField extends BaseView {
 
 export interface SchemaViewHelper extends BaseView {
   viewType: 'HELPER';
-  helperType: 'DIVIDER';
+  helperType: 'DIVIDER' | string;
   meta?: Partial<MetaView>;
 }
 

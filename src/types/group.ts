@@ -13,6 +13,8 @@ interface MetaGroup {
 interface BaseGroup extends SchemaBase {
   variant: 'GROUP';
   child: Schema[];
+  groupName?: string;
+  data?: any;
 }
 
 export interface SchemaGroupAccordion extends BaseGroup {

@@ -9,7 +9,14 @@ const executeEachConfig = (
   for (const config of schema) {
     if (config.variant === 'FIELD') {
       config.initialValue = data[config.fieldName];
+    } else if (config.variant === 'VIEW') {
+      if (config.viewName) {
+        config.data = data[config.viewName];
+      }
     } else if (config.variant === 'GROUP') {
+      if (config.groupName) {
+        config.data = data[config.groupName];
+      }
       executeEachConfig(config.child, data, extraData);
     }
   }
