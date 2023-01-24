@@ -1,5 +1,5 @@
 /* eslint-disable array-callback-return */
-import { FC } from 'react';
+import { FC } from "react";
 
 import {
   SchemaField,
@@ -9,16 +9,16 @@ import {
   SchemaFieldFile,
   SchemaFieldCheckbox,
   SchemaFieldDropdown,
-  SchemaFieldRadio
-} from 'form-configurable';
+  SchemaFieldRadio,
+} from "form-configurable";
 import {
   FieldProps,
-  mapConfigChildArray
-} from 'form-configurable/FormContainer';
+  mapConfigChildArray,
+} from "form-configurable/FormContainer";
 import {
   FormSyncReactHookForm,
   resolverMiddleware,
-} from 'form-configurable/useSubmitMiddleware';
+} from "form-configurable/useSubmitMiddleware";
 import {
   Box,
   Button,
@@ -35,37 +35,36 @@ import {
   Radio,
   RadioGroup,
   FormGroup,
-} from '@mui/material';
-import { Controller, useForm as useFormHook } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import InputCurrency from '../../components/input-currency';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
-import * as yup from 'yup';
-import { DevTool } from '@hookform/devtools';
-import FormContainer from 'form-configurable/FormContainer';
-import { FieldView } from './ViewContainer';
-import { FieldGroup } from './GroupContainer';
+} from "@mui/material";
+import { Controller, useForm as useFormHook } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import InputCurrency from "../../components/input-currency";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+import * as yup from "yup";
+import { DevTool } from "@hookform/devtools";
+import FormContainer from "form-configurable/FormContainer";
+import { FieldView } from "./ViewContainer";
+import { FieldGroup } from "./GroupContainer";
 
 function guidGenerator() {
-  var S4 =  () => {
+  var S4 = () => {
     return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
   };
   return (
     S4() +
     S4() +
-    '-' +
+    "-" +
     S4() +
-    '-' +
+    "-" +
     S4() +
-    '-' +
+    "-" +
     S4() +
-    '-' +
+    "-" +
     S4() +
     S4() +
     S4()
   );
 }
-
 
 const mockUploadFile = ({
   onProgress,
@@ -150,7 +149,7 @@ const FieldFile: FC<{
       uploadFile(file);
     }
 
-    e.target.value = '';
+    e.target.value = "";
   };
 
   return (
@@ -198,8 +197,8 @@ const FieldCustom: FC<{
       resolver: yupResolver(schema),
       form,
     }),
-    mode: 'onChange',
-    reValidateMode: 'onChange',
+    mode: "onChange",
+    reValidateMode: "onChange",
     defaultValues: value,
     shouldFocusError: true,
   });
@@ -212,23 +211,23 @@ const FieldCustom: FC<{
       <DevTool control={control} />
       <Box p={2} border="1px solid lightgray" borderRadius={2}>
         <Typography>
-          Sub Form Complex{' '}
+          Sub Form Complex{" "}
           <Button
             onClick={handleSubmit(
               (values) => {
-                console.log('valid', values);
+                console.log("valid", values);
               },
               (values) => {
-                console.log('invalid', values);
+                console.log("invalid", values);
               }
             )}
           >
             Validate Local
           </Button>
         </Typography>
-        <Box mt={1} display={'flex'} flexDirection={'column'} gap={2}>
+        <Box mt={1} display={"flex"} flexDirection={"column"} gap={2}>
           <Controller
-            name={'firstname'}
+            name={"firstname"}
             control={control}
             render={({ field, fieldState }) => {
               return (
@@ -244,7 +243,7 @@ const FieldCustom: FC<{
             }}
           ></Controller>
           <Controller
-            name={'lastname'}
+            name={"lastname"}
             control={control}
             render={({ field, fieldState }) => {
               return (
@@ -266,39 +265,20 @@ const FieldCustom: FC<{
 };
 
 const FieldText: FC<{
-    config: SchemaFieldText;
-  }> = ({ config }) => {
-    const {
-      value,
-      error,
-      touched,
-      fieldState: { editable, show },
-      onChange
-    } = useField({
-      config
-    });
-    if (!show) return <></>;
-  
-    if (config.valueType === 'NUMBER') {
-      return (
-        <Grid item {...(config.style?.container as any)}>
-          <TextField
-            fullWidth
-            disabled={!editable}
-            size="small"
-            label={config.meta?.label}
-            value={value}
-            onChange={onChange}
-            InputProps={{
-              inputComponent: InputCurrency as any,
-            }}
-            error={touched && !!error}
-            helperText={touched && error}
-          ></TextField>
-        </Grid>
-      );
-    }
-  
+  config: SchemaFieldText;
+}> = ({ config }) => {
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { editable, show },
+    onChange,
+  } = useField({
+    config,
+  });
+  if (!show) return <></>;
+
+  if (config.valueType === "NUMBER") {
     return (
       <Grid item {...(config.style?.container as any)}>
         <TextField
@@ -306,227 +286,247 @@ const FieldText: FC<{
           disabled={!editable}
           size="small"
           label={config.meta?.label}
-          value={value || null}
-          onChange={(e) => {
-            onChange(e.target.value);
+          value={value}
+          onChange={onChange}
+          InputProps={{
+            inputComponent: InputCurrency as any,
           }}
           error={touched && !!error}
           helperText={touched && error}
         ></TextField>
       </Grid>
     );
-  };
-  
-  const FieldDate: FC<{
-    config: SchemaFieldDate;
-  }> = ({ config }) => {
-    const {
-      value,
-      error,
-      touched,
-      fieldState: { show, editable },
-      onChange,
-    } = useField({
-      config,
-    });
-  
-    if (!show) return <></>;
-  
-    return (
-      <Grid item {...(config.style?.container as any)}>
-        <DesktopDatePicker
-          disabled={!editable}
-          label={config.meta?.label}
-          inputFormat={config.meta?.format}
-          value={value || null}
-          onChange={(date) => {
-            if (date && date?.isValid()) {
-              onChange(date.toISOString());
-            } else {
-              onChange('');
-            }
-          }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              size="small"
-              fullWidth
-              error={touched && !!error}
-              helperText={touched && error}
-            />
-          )}
-        />
-      </Grid>
-    );
-  };
-  
-  const FieldDropdown: FC<{
-    config: SchemaFieldDropdown;
-  }> = ({ config }) => {
-    const {
-      value,
-      error,
-      touched,
-      fieldState: { show, editable },
-      onChange,
-    } = useField({
-      config,
-    });
-  
-    if (!show) return <></>;
-  
-    return (
-      <Grid item {...(config.style?.container as any)}>
-        <FormControl fullWidth error={!!(touched && error)}>
-          <Select
-            size="small"
-            disabled={!editable}
-            value={value?.value}
-            displayEmpty
-            renderValue={(selected) => {
-              if (!selected) {
-                return <em>Placeholder</em>;
-              }
-              return selected;
-            }}
-          >
-            {config.meta?.options.map((option:any) => {
-              return (
-                <MenuItem
-                  key={option.value}
-                  value={option.value}
-                  onClick={() => onChange(option)}
-                >
-                  {option.label}
-                </MenuItem>
-              );
-            })}
-          </Select>
-          <FormHelperText>{touched && error}</FormHelperText>
-        </FormControl>
-      </Grid>
-    );
-  };
-  
-  interface IOption {
-    label: any;
-    value: any;
   }
-  
-  const FieldCheckbox: FC<{
-    config: SchemaFieldCheckbox;
-  }> = ({ config }) => {
-    const {
-      value,
-      error,
-      touched,
-      fieldState: { show, editable },
-      onChange,
-    } = useField({
-      config,
-    });
-  
-    const onChangeCheckbox = (indexSelected: number, option: IOption) => {
-      if (indexSelected >= 0) {
-        const tempValue = [...value];
-        tempValue.splice(indexSelected, 1);
-        onChange(tempValue);
-      } else {
-        onChange([...value, option]);
-      }
-    };
-  
-    if (!show) return <></>;
-  
-    return (
-      <Grid item {...(config.style?.container as any)}>
-        <FormControl
-          fullWidth
-          error={!!(touched && error)}
-          component="fieldset"
-          variant="standard"
-        >
-          <FormLabel component="legend">{config.meta?.label}</FormLabel>
-          <FormGroup>
-            {config.meta?.options.map((option:any) => {
-              const indexOfChecked = (value as any[])?.findIndex(
-                (selectedOption: IOption) => selectedOption.value === option.value
-              );
-  
-              const checked = indexOfChecked >= 0;
-              return (
-                <FormControlLabel
-                  key={option.value}
-                  disabled={!editable}
-                  control={
-                    <Checkbox
-                      size="small"
-                      checked={checked}
-                      onChange={() => onChangeCheckbox(indexOfChecked, option)}
-                      name={`${option.value}`}
-                    />
-                  }
-                  label={config.meta?.label}
-                />
-              );
-            })}
-          </FormGroup>
-          <FormHelperText>{touched && error}</FormHelperText>
-        </FormControl>
-      </Grid>
-    );
-  };
-  
-  const FieldRadio: FC<{
-    config: SchemaFieldRadio;
-  }> = ({ config }) => {
-    const {
-      value,
-      error,
-      touched,
-      fieldState: { show, editable },
-      onChange,
-    } = useField({
-      config,
-    });
-  
-    if (!show) return <></>;
-  
-    return (
-      <Grid item {...(config.style?.container as any)}>
-        <FormControl error={!!(touched && error)} variant="standard">
-          <FormLabel>{config.meta?.label}</FormLabel>
-          <RadioGroup row={config.meta?.row}>
-            {config.meta?.options.map((option: any) => {
-              return (
-                <FormControlLabel
-                  key={option.value}
-                  disabled={!editable}
-                  onChange={() => onChange(option)}
-                  control={<Radio size="small" />}
-                  checked={option.value === value?.value}
-                  label={option.label}
-                />
-              );
-            })}
-          </RadioGroup>
-          <FormHelperText>{touched && error}</FormHelperText>
-        </FormControl>
-      </Grid>
-    );
-  };
-  
 
-  const FieldArray: FC<any> = ({ form, config }) => {
-    const { value } = useField({ config });
-    return (
-      <Grid item {...(config.style?.container as any)}>
-      <Box border='1px solid gray' p={1}>
-        Array Field 
-        {value.map((_: any, index: any)=>{
-          return (
-            <Grid container key={index +" - "} spacing={2}>
-              <FormContainer
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      <TextField
+        fullWidth
+        disabled={!editable}
+        size="small"
+        label={config.meta?.label}
+        value={value || null}
+        onChange={(e) => {
+          onChange(e.target.value);
+        }}
+        error={touched && !!error}
+        helperText={touched && error}
+      ></TextField>
+    </Grid>
+  );
+};
+
+const FieldDate: FC<{
+  config: SchemaFieldDate;
+}> = ({ config }) => {
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
+    config,
+  });
+
+  if (!show) return <></>;
+
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      <DesktopDatePicker
+        disabled={!editable}
+        label={config.meta?.label}
+        inputFormat={config.meta?.format}
+        value={value || null}
+        onChange={(date) => {
+          if (date && date?.isValid()) {
+            onChange(date.toISOString());
+          } else {
+            onChange("");
+          }
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            size="small"
+            fullWidth
+            error={touched && !!error}
+            helperText={touched && error}
+          />
+        )}
+      />
+    </Grid>
+  );
+};
+
+const FieldDropdown: FC<{
+  config: SchemaFieldDropdown;
+}> = ({ config }) => {
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
+    config,
+  });
+
+  if (!show) return <></>;
+
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      <FormControl fullWidth error={!!(touched && error)}>
+        <Select
+          size="small"
+          disabled={!editable}
+          value={value?.value}
+          displayEmpty
+          renderValue={(selected) => {
+            if (!selected) {
+              return <em>Placeholder</em>;
+            }
+            return selected;
+          }}
+        >
+          {config.meta?.options.map((option: any) => {
+            return (
+              <MenuItem
+                key={option.value}
+                value={option.value}
+                onClick={() => onChange(option)}
+              >
+                {option.label}
+              </MenuItem>
+            );
+          })}
+        </Select>
+        <FormHelperText>{touched && error}</FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+interface IOption {
+  label: any;
+  value: any;
+}
+
+const FieldCheckbox: FC<{
+  config: SchemaFieldCheckbox;
+}> = ({ config }) => {
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
+    config,
+  });
+
+  const onChangeCheckbox = (indexSelected: number, option: IOption) => {
+    if (indexSelected >= 0) {
+      const tempValue = [...value];
+      tempValue.splice(indexSelected, 1);
+      onChange(tempValue);
+    } else {
+      onChange([...value, option]);
+    }
+  };
+
+  if (!show) return <></>;
+
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      <FormControl
+        fullWidth
+        error={!!(touched && error)}
+        component="fieldset"
+        variant="standard"
+      >
+        <FormLabel component="legend">{config.meta?.label}</FormLabel>
+        <FormGroup>
+          {config.meta?.options.map((option: any) => {
+            const indexOfChecked = (value as any[])?.findIndex(
+              (selectedOption: IOption) => selectedOption.value === option.value
+            );
+
+            const checked = indexOfChecked >= 0;
+            return (
+              <FormControlLabel
+                key={option.value}
+                disabled={!editable}
+                control={
+                  <Checkbox
+                    size="small"
+                    checked={checked}
+                    onChange={() => onChangeCheckbox(indexOfChecked, option)}
+                    name={`${option.value}`}
+                  />
+                }
+                label={config.meta?.label}
+              />
+            );
+          })}
+        </FormGroup>
+        <FormHelperText>{touched && error}</FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+const FieldRadio: FC<{
+  config: SchemaFieldRadio;
+}> = ({ config }) => {
+  const {
+    value,
+    error,
+    touched,
+    fieldState: { show, editable },
+    onChange,
+  } = useField({
+    config,
+  });
+
+  if (!show) return <></>;
+
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      <FormControl error={!!(touched && error)} variant="standard">
+        <FormLabel>{config.meta?.label}</FormLabel>
+        <RadioGroup row={config.meta?.row}>
+          {config.meta?.options.map((option: any) => {
+            return (
+              <FormControlLabel
+                key={option.value}
+                disabled={!editable}
+                onChange={() => onChange(option)}
+                control={<Radio size="small" />}
+                checked={option.value === value?.value}
+                label={option.label}
+              />
+            );
+          })}
+        </RadioGroup>
+        <FormHelperText>{touched && error}</FormHelperText>
+      </FormControl>
+    </Grid>
+  );
+};
+
+const FieldArray: FC<any> = ({ form, config }) => {
+  const { value } = useField({ config });
+  return (
+    <Grid item {...(config.style?.container as any)}>
+      {config.title}
+      <Box border="1px solid lightgray" p={2}>
+        Field Array Object
+        <Grid container spacing={2} mt={1}>
+          {value.map((_: any, index: any) => {
+            return (
+              <Grid container item xs={12} key={index + " - "} spacing={2}>
+                <FormContainer
                   Group={FieldGroup}
                   View={FieldView}
                   Field={FormFieldContainer}
@@ -534,37 +534,38 @@ const FieldText: FC<{
                   form={form}
                 />
               </Grid>
-          )
-        })}
+            );
+          })}
+        </Grid>
       </Box>
-      </Grid>
-    )
+    </Grid>
+  );
+};
+
+const FormFieldContainer: FieldProps = ({ form, config }) => {
+  if (config.fieldType === "TEXT") {
+    return <FieldText config={config} />;
+  } else if (config.fieldType === "DATE") {
+    return <FieldDate config={config} />;
+  } else if (config.fieldType === "DROPDOWN") {
+    return <FieldDropdown config={config} />;
+  } else if (config.fieldType === "CHECKBOX") {
+    return <FieldCheckbox config={config} />;
+  } else if (config.fieldType === "RADIO") {
+    return <FieldRadio config={config} />;
+  } else if (config.fieldType === "TEXTAREA") {
+    return <></>;
+  } else if (config.fieldType === "WYSWYG") {
+    return <></>;
+  } else if (config.fieldType === "FILE") {
+    return <FieldFile config={config}></FieldFile>;
+  } else if (config.fieldType === "CUSTOM") {
+    return <FieldCustom config={config} />;
+  } else if (config.fieldType === "ARRAY") {
+    return <FieldArray config={config} form={form} />;
   }
 
-  const FormFieldContainer: FieldProps = ({ form, config }) => {
-    if (config.fieldType === 'TEXT') {
-      return <FieldText config={config} />;
-    } else if (config.fieldType === 'DATE') {
-      return <FieldDate config={config} />;
-    } else if (config.fieldType === 'DROPDOWN') {
-      return <FieldDropdown config={config} />;
-    } else if (config.fieldType === 'CHECKBOX') {
-      return <FieldCheckbox config={config} />;
-    } else if (config.fieldType === 'RADIO') {
-      return <FieldRadio config={config} />;
-    } else if (config.fieldType === 'TEXTAREA') {
-      return <></>;
-    } else if (config.fieldType === 'WYSWYG') {
-      return <></>;
-    } else if (config.fieldType === 'FILE') {
-      return <FieldFile config={config}></FieldFile>;
-    } else if (config.fieldType === 'CUSTOM') {
-      return <FieldCustom config={config} />;
-    } else if(config.fieldType === 'ARRAY') {
-      return <FieldArray config={config} form={form} />
-    }
-  
-    return <></>;
-  };
+  return <></>;
+};
 
-  export default FormFieldContainer;
+export default FormFieldContainer;

@@ -1,23 +1,14 @@
 /* eslint-disable array-callback-return */
-import { FC } from 'react';
+import { FC } from "react";
 
-import {
-  Schema,
-  useForm,
-  FormContext,
-} from 'form-configurable';
-import FormContainer from 'form-configurable/FormContainer';
-import {
-  withSubmitMiddleware,
-} from 'form-configurable/useSubmitMiddleware';
-import {
-  Box,
-  Button,
-  Grid,
-} from '@mui/material';
-import FormFieldContainer from './FieldContainer';
-import { FieldGroup } from './GroupContainer';
-import { FieldView } from './ViewContainer';
+import { Schema, useForm, FormContext } from "form-configurable";
+import FormContainer from "form-configurable/FormContainer";
+import { withSubmitMiddleware } from "form-configurable/useSubmitMiddleware";
+import { Box, Button, Grid } from "@mui/material";
+import FormFieldContainer from "./FieldContainer";
+import { FieldGroup } from "./GroupContainer";
+import { FieldView } from "./ViewContainer";
+import { FieldArray } from "./FieldArrayContainer";
 
 const FormExample: FC<{
   config: {
@@ -36,6 +27,7 @@ const FormExample: FC<{
               Group={FieldGroup}
               View={FieldView}
               Field={FormFieldContainer}
+              FieldArray={FieldArray}
               schema={schema}
               form={form}
             />
@@ -51,4 +43,4 @@ const FormExample: FC<{
   );
 };
 
-export default withSubmitMiddleware(FormExample, { order: 'before' });
+export default withSubmitMiddleware(FormExample, { order: "before" });

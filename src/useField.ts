@@ -33,7 +33,7 @@ export const initializeField = ({
   };
 
   for (const key in props) {
-    const value = props[key]?.[config.key as string];
+    const value = props[key]?.[config.fieldName as string];
     field.fieldState[key] = typeof value === 'undefined' ? true : value;
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-use-before-define */
 /* eslint-disable array-callback-return */
 
@@ -30,13 +31,15 @@ export type FieldProps = FC<{
 export type FieldArrayProps = FC<{
   form?: Form;
   config: SchemaField;
+  // eslint-disable-next-line no-unused-vars
+  child: (args:{ value: any[], container: any; }) => any;
 }>
 
 export const mapConfigChildArray = ({ config, index }: {
   config: SchemaFieldArray;
   index: number | string;
 }) => config.child.map((childConfig) => {
-  const childConfigOverride = childConfig;
+  const childConfigOverride = { ...childConfig };
   Object.assign(childConfigOverride, {
     key: `${childConfigOverride.key}_${index}`,
   });
@@ -59,6 +62,7 @@ export function FormContainer({
   Group,
   View,
   Field,
+  FieldArray,
   ...otherProps
 }: {
   schema: Schema[];
@@ -66,6 +70,7 @@ export function FormContainer({
   Group: GroupProps;
   View: ViewProps;
   Field: FieldProps;
+  FieldArray?: FieldArrayProps;
   [key: string]: any;
 }) {
   return (
@@ -102,6 +107,29 @@ export function FormContainer({
           );
         }
         if (config.variant === 'FIELD') {
+          if (config.fieldType === 'ARRAY' && !!FieldArray) {
+            return (
+              <FieldArray
+                key={config.key}
+                form={form}
+                config={config}
+                child={({ value, container: Container }) => value.map((_: any, index: any) => (
+                  <Container>
+                    <FormContainer
+                      Group={Group}
+                      View={View}
+                      Field={Field}
+                      FieldArray={FieldArray}
+                      schema={mapConfigChildArray({ config, index })}
+                      form={form}
+                      {...otherProps}
+                    />
+                  </Container>
+                ))}
+              />
+            );
+          }
+
           return (
             <Field
               key={config.key}

@@ -1,12 +1,12 @@
-import { Navigate, Route, Routes } from 'react-router-dom';
-import ParserDemo from './pages/parser';
-import FormDemo from './pages/form';
-import Header from './components/header';
-import Container from '@mui/material/Container';
-import { Helmet } from 'react-helmet';
-import ErrorBoundary from './components/error';
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { Navigate, Route, Routes } from "react-router-dom";
+import ParserDemo from "./pages/parser";
+import FormDemo from "./pages/form";
+import Header from "./components/header";
+import Container from "@mui/material/Container";
+import { Helmet } from "react-helmet";
+import ErrorBoundary from "./components/error";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const AppDemo = () => {
   return (

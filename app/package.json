@@ -12,7 +12,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
-    "form-configurable": "^1.4.10",
+    "form-configurable": "^1.4.11",
     "@types/jest": "^29.2.5",
     "@types/node": "^18.11.18",
     "@types/react": "^18.0.26",
@@ -37,7 +37,7 @@
   },
   "scripts": {
     "rebuild:lib": "cd ../ && npm run build && cd ./dist && npm pack && cd ../app",
-    "install:lib": "npm run rebuild:lib && npm cache clean -f && npm unlink form-configurable && rm -rf ./node_modules/form-configurable && npm rm --global form-configurable && npm install ../dist/form-configurable-0.0.0-development.tgz --no-save",
+    "install:lib": "npm run rebuild:lib && npm cache clean -f && npm unlink form-configurable && rm -rf ./node_modules/form-configurable && npm rm --global form-configurable && npm install ../dist/form-configurable-3.3.3-development.tgz --no-save",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

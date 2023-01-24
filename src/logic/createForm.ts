@@ -96,20 +96,26 @@ export const createForm = (props: CreateFormProps) => {
   function getValue(fieldName: string) { return get(_values, fieldName); }
   function getError(fieldName: string) { return _fields.error[fieldName]; }
   function getTouch(fieldName: string) { return _fields.touched[fieldName]; }
+  function getProp(name: string, key: string) {
+    const value = _props[name][key];
+    return (typeof value === 'undefined' || value);
+  }
   // function unsetValue(fieldName: string) { unset(_values, fieldName); }
   function unsetError(fieldName: string) { delete _fields.error[fieldName]; }
   function unsetTouch(fieldName: string) { delete _fields.touched[fieldName]; }
+  // function unsetProp(name: string, key: string) { delete _props[name][key]; }
   function initValue(fieldName: string, value: any) { set(_values, fieldName, value); }
   function initError(fieldName: string, value: any) { _fields.error[fieldName] = value; }
   function initTouched(fieldName: string, value: any) { _fields.touched[fieldName] = value; }
+  function initProp(name: string, key: string, value: any) { _props[name][key] = value; }
 
   const isPropsSkipExceute = (config: Schema, options: IOptionsEachSchema = {}) => {
-    const path = options.path || config.key;
+    const path = options.path || ((config as any).fieldName || config.key);
 
-    const editable = _props.editable[path as any];
-    const show = _props.show[path as any];
-    if (typeof editable !== 'undefined' && !editable) return true;
-    if (typeof show !== 'undefined' && !show) return true;
+    const editable = getProp('editable', path as string);
+    const show = getProp('show', path as string);
+    if (!editable) return true;
+    if (!show) return true;
     return false;
   };
 
@@ -144,7 +150,7 @@ export const createForm = (props: CreateFormProps) => {
   ) => {
     if (!config.props) return;
 
-    const path = options.path || config.key;
+    const path = options.path || ((config as any).fieldName || config.key);
 
     for (const { expression, name, value } of config.props) {
       if (!_props[name]) _props[name] = {};
@@ -154,13 +160,14 @@ export const createForm = (props: CreateFormProps) => {
           const isValid = expressionToValue(expression, {
             ..._values,
             ...props.extraData,
+            ...options.extraData,
           });
-          _props[name][path as string] = !!isValid;
+          initProp(name, path, !!isValid);
         } catch (error) {
-          _props[name][path as string] = false;
+          initProp(name, path, false);
         }
       } else {
-        _props[name][path as string] = value;
+        initProp(name, path, value);
       }
     }
   };
@@ -169,7 +176,6 @@ export const createForm = (props: CreateFormProps) => {
     if (!config.rules) return;
 
     const path = options?.path || config.fieldName;
-    unsetError(path);
 
     for (const rule of config.rules) {
       try {
@@ -188,17 +194,6 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const clearErrorEachConfig = (schema: Schema[]) => {
-    for (const config of schema) {
-      if (config.variant === 'FIELD') {
-        unsetError(config.fieldName);
-        unsetTouch(config.fieldName);
-      } else if (config.variant === 'GROUP') {
-        clearErrorEachConfig(config.child);
-      }
-    }
-  };
-
   // eslint-disable-next-line no-unused-vars
   const executeExpressionEachArray = (
     config: SchemaFieldArray,
@@ -209,44 +204,31 @@ export const createForm = (props: CreateFormProps) => {
     if (hasError) return;
 
     const value = getValue(path) || [];
-
     for (let index = 0; index < value.length; index++) {
       for (const childConfig of config.child) {
-        const eachKeyOptions = {
+        const eachOptions = {
           path: createPath({
             parent: path,
             index,
-            child: childConfig.key,
+            child: (childConfig as any).fieldName || childConfig.key,
           }),
           extraData: {
             __INDEX__: index,
           },
         };
-
         if (childConfig.variant === 'FIELD') {
-          const eachFieldNameOptions = {
-            path: createPath({
-              parent: path,
-              index,
-              child: childConfig.fieldName,
-            }),
-            extraData: {
-              __INDEX__: index,
-            },
-          };
-          executeExpressionOverride(childConfig, options.fieldName, eachFieldNameOptions);
-          executeExpressionProps(childConfig, eachKeyOptions);
-          if (isPropsSkipExceute(childConfig, eachKeyOptions)) {
-            clearErrorEachConfig([childConfig]);
-            continue;
-          }
+          executeExpressionOverride(childConfig, options.fieldName, eachOptions);
+          executeExpressionProps(childConfig, eachOptions);
+
+          if (isPropsSkipExceute(childConfig, eachOptions)) { continue; }
+
           if (!options.skipValidate) {
-            executeExpressionRule(childConfig, eachFieldNameOptions);
+            executeExpressionRule(childConfig, eachOptions);
           }
         } else if (childConfig.variant === 'GROUP') {
           //
         } else {
-          executeExpressionProps(childConfig, eachKeyOptions);
+          executeExpressionProps(childConfig, eachOptions);
         }
       }
     }
@@ -261,10 +243,7 @@ export const createForm = (props: CreateFormProps) => {
       if (config.variant === 'FIELD') {
         executeExpressionOverride(config, fieldName);
         executeExpressionProps(config);
-        if (isPropsSkipExceute(config)) {
-          clearErrorEachConfig([config]);
-          continue;
-        }
+        if (isPropsSkipExceute(config)) continue;
 
         if (!options.skipValidate) {
           executeExpressionRule(config);
@@ -279,7 +258,6 @@ export const createForm = (props: CreateFormProps) => {
       } else if (config.variant === 'GROUP') {
         executeExpressionProps(config);
         if (isPropsSkipExceute(config)) {
-          clearErrorEachConfig(config.child);
           continue;
         }
 
@@ -294,6 +272,9 @@ export const createForm = (props: CreateFormProps) => {
     fieldName?: string,
     options: { skipValidate: boolean } = { skipValidate: false },
   ) => {
+    _fields.error = {};
+    _props.editable = {};
+    _props.show = {};
     executeEachConfig(_schema, fieldName, options);
   };
 
