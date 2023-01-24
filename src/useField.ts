@@ -7,6 +7,7 @@ import {
 } from './logic/createForm';
 import useSubscribe from './useSubscribe';
 import { FormContext } from './useForm';
+import get from './utils/get';
 
 export const initializeField = ({
   values,
@@ -25,7 +26,7 @@ export const initializeField = ({
     touched: any;
     fieldState: Record<string, any>;
   } = {
-    value: values[config.fieldName],
+    value: get(values, config.fieldName),
     error: fields.error[config.fieldName],
     touched: fields.touched[config.fieldName],
     fieldState: {},

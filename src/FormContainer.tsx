@@ -1,12 +1,15 @@
+/* eslint-disable no-use-before-define */
 /* eslint-disable array-callback-return */
 
 import { FC } from 'react';
 
 import type {
-  Schema, SchemaGroup, SchemaView, SchemaField,
+  Schema, SchemaGroup, SchemaView, SchemaField, SchemaFieldArray,
 } from './types';
 
 import type { Form } from './logic/createForm';
+import createPath from './utils/createPath';
+// import useField from './useField';
 
 export type GroupProps = FC<{
   form?: Form;
@@ -23,6 +26,32 @@ export type FieldProps = FC<{
   form?: Form;
   config: SchemaField;
 }>;
+
+export type FieldArrayProps = FC<{
+  form?: Form;
+  config: SchemaField;
+}>
+
+export const mapConfigChildArray = ({ config, index }: {
+  config: SchemaFieldArray;
+  index: number | string;
+}) => config.child.map((childConfig) => {
+  const childConfigOverride = childConfig;
+  Object.assign(childConfigOverride, {
+    key: `${childConfigOverride.key}_${index}`,
+  });
+
+  if (childConfig.variant === 'FIELD') {
+    Object.assign(childConfigOverride, {
+      fieldName: createPath({
+        parent: config.fieldName,
+        index,
+        child: childConfig.fieldName,
+      }),
+    });
+  }
+  return childConfigOverride as Schema;
+});
 
 export function FormContainer({
   form,
@@ -71,7 +100,8 @@ export function FormContainer({
               {...otherProps}
             />
           );
-        } if (config.variant === 'FIELD') {
+        }
+        if (config.variant === 'FIELD') {
           return (
             <Field
               key={config.key}
@@ -86,14 +116,4 @@ export function FormContainer({
   );
 }
 
-const FormConfigurable: FC<{
-  schema: Schema[];
-  form: Form;
-  Group: GroupProps;
-  View: ViewProps;
-  Field: FieldProps;
-  parent?: any;
-  [key: string]: any;
-}> = (props) => <FormContainer {...props} />;
-
-export default FormConfigurable;
+export default FormContainer;

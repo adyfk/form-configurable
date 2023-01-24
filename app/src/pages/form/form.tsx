@@ -6,7 +6,7 @@ import {
   useForm,
   FormContext,
 } from 'form-configurable';
-import FormConfigurable from 'form-configurable/FormConfigurable';
+import FormContainer from 'form-configurable/FormContainer';
 import {
   withSubmitMiddleware,
 } from 'form-configurable/useSubmitMiddleware';
@@ -18,10 +18,6 @@ import {
 import FormFieldContainer from './FieldContainer';
 import { FieldGroup } from './GroupContainer';
 import { FieldView } from './ViewContainer';
-
-
-
-
 
 const FormExample: FC<{
   config: {
@@ -36,7 +32,7 @@ const FormExample: FC<{
       <form onSubmit={handleSubmit(console.log, console.error)}>
         <FormContext.Provider value={context}>
           <Grid container spacing={2}>
-            <FormConfigurable
+            <FormContainer
               Group={FieldGroup}
               View={FieldView}
               Field={FormFieldContainer}

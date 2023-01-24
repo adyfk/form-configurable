@@ -157,9 +157,10 @@ export interface SchemaFieldFile extends BaseField {
 }
 
 export interface SchemaFieldArray extends BaseField {
-  fieldType: 'ARRAY',
-  initialValue: [],
-  child: Schema[]
+  fieldType: 'ARRAY';
+  initialValue: any[];
+  child: Schema[];
+  meta?: Partial<MetaField>;
 }
 
 export interface SchemaFieldCustom extends BaseField {
@@ -182,6 +183,6 @@ export type SchemaField =
   | SchemaFieldFile
   | SchemaFieldDate
   | SchemaFieldDateRange
-  | SchemaFieldArray
+  | SchemaFieldArray;
 
 // FORMNAME_VARIANT_FIELDNAME

@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import { GroupProps } from 'form-configurable/FormConfigurable';
+import { GroupProps } from 'form-configurable/FormContainer';
 import { useView } from 'form-configurable';
 
 
@@ -19,10 +19,10 @@ export const FieldGroup: GroupProps = ({ config, form, child: Child }) => {
     );
   };
 
-  const GroupContainer = () => {
-    return (
-      <div>GroupContainer</div>
-    )
-  }
+const GroupContainer = () => {
+  return (
+    <div>GroupContainer</div>
+  )
+}
 
 export default GroupContainer

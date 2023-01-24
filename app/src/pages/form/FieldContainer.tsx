@@ -13,7 +13,8 @@ import {
 } from 'form-configurable';
 import {
   FieldProps,
-} from 'form-configurable/FormConfigurable';
+  mapConfigChildArray
+} from 'form-configurable/FormContainer';
 import {
   FormSyncReactHookForm,
   resolverMiddleware,
@@ -41,6 +42,9 @@ import InputCurrency from '../../components/input-currency';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import * as yup from 'yup';
 import { DevTool } from '@hookform/devtools';
+import FormContainer from 'form-configurable/FormContainer';
+import { FieldView } from './ViewContainer';
+import { FieldGroup } from './GroupContainer';
 
 function guidGenerator() {
   var S4 =  () => {
@@ -269,11 +273,10 @@ const FieldText: FC<{
       error,
       touched,
       fieldState: { editable, show },
-      onChange,
+      onChange
     } = useField({
-      config,
+      config
     });
-  
     if (!show) return <></>;
   
     if (config.valueType === 'NUMBER') {
@@ -514,7 +517,31 @@ const FieldText: FC<{
   };
   
 
-  const FormFieldContainer: FieldProps = ({ config }) => {
+  const FieldArray: FC<any> = ({ form, config }) => {
+    const { value } = useField({ config });
+    return (
+      <Grid item {...(config.style?.container as any)}>
+      <Box border='1px solid gray' p={1}>
+        Array Field 
+        {value.map((_: any, index: any)=>{
+          return (
+            <Grid container key={index +" - "} spacing={2}>
+              <FormContainer
+                  Group={FieldGroup}
+                  View={FieldView}
+                  Field={FormFieldContainer}
+                  schema={mapConfigChildArray({ config, index: index })}
+                  form={form}
+                />
+              </Grid>
+          )
+        })}
+      </Box>
+      </Grid>
+    )
+  }
+
+  const FormFieldContainer: FieldProps = ({ form, config }) => {
     if (config.fieldType === 'TEXT') {
       return <FieldText config={config} />;
     } else if (config.fieldType === 'DATE') {
@@ -533,6 +560,8 @@ const FieldText: FC<{
       return <FieldFile config={config}></FieldFile>;
     } else if (config.fieldType === 'CUSTOM') {
       return <FieldCustom config={config} />;
+    } else if(config.fieldType === 'ARRAY') {
+      return <FieldArray config={config} form={form} />
     }
   
     return <></>;

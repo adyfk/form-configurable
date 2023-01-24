@@ -1,5 +1,5 @@
 import { Grid, Typography } from '@mui/material';
-import { ViewProps } from 'form-configurable/FormConfigurable';
+import { ViewProps } from 'form-configurable/FormContainer';
 import { useView } from 'form-configurable';
 
 export const FieldView: ViewProps = ({ config, form }) => {
