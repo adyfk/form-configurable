@@ -3,7 +3,7 @@ import initializeSchema from './initialize-schema';
 
 const schema: Schema[] = [
   {
-    fieldName: 'firstName',
+    name: 'firstName',
     fieldType: 'TEXT',
     valueType: 'STRING',
     initialValue: '',
@@ -11,7 +11,7 @@ const schema: Schema[] = [
     rules: [{ error: 'FirstName Is Required', expression: '!firstName' }],
   },
   {
-    fieldName: 'lastName',
+    name: 'lastName',
     fieldType: 'TEXT',
     valueType: 'STRING',
     initialValue: '',
@@ -23,7 +23,7 @@ const schema: Schema[] = [
     groupType: 'DEFAULT',
     child: [
       {
-        fieldName: 'age',
+        name: 'age',
         fieldType: 'TEXT',
         valueType: 'NUMBER',
         variant: 'FIELD',
@@ -46,7 +46,7 @@ test('initialize test error field', () => {
 
   expect(result).toEqual([
     {
-      fieldName: 'firstName',
+      name: 'firstName',
       fieldType: 'TEXT',
       valueType: 'STRING',
       initialValue: 'value of firstname',
@@ -59,7 +59,7 @@ test('initialize test error field', () => {
       ],
     },
     {
-      fieldName: 'lastName',
+      name: 'lastName',
       fieldType: 'TEXT',
       valueType: 'STRING',
       initialValue: 'value of lastname',
@@ -76,7 +76,7 @@ test('initialize test error field', () => {
       groupType: 'DEFAULT',
       child: [
         {
-          fieldName: 'age',
+          name: 'age',
           fieldType: 'TEXT',
           valueType: 'NUMBER',
           variant: 'FIELD',

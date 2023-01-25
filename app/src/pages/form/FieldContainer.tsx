@@ -107,7 +107,7 @@ const FieldFile: FC<{
     try {
       mockUploadFile({
         onProgress: (progress: number) => {
-          const pureValue = [...form.values[config.fieldName]];
+          const pureValue = [...form.values[config.name]];
           const foundIndex = pureValue.findIndex(
             (file) => file.fileId === fileId
           );
@@ -115,7 +115,7 @@ const FieldFile: FC<{
           onChange(pureValue);
         },
         onSuccess: () => {
-          const pureValue = [...form.values[config.fieldName]];
+          const pureValue = [...form.values[config.name]];
           const foundIndex = pureValue.findIndex(
             (file) => file.fileId === fileId
           );

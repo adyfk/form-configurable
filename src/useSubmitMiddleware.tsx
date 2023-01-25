@@ -135,7 +135,7 @@ export function FormSyncReactHookForm({
   const value = action.watch();
 
   useEffect(() => {
-    form.setValue(config.fieldName, value, { freeze: true });
+    form.setValue(config.name, value, { freeze: true });
   }, [value, form, config]);
 
   return <></>;

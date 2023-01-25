@@ -46,10 +46,10 @@ export const mapConfigChildArray = ({ config, index }: {
 
   if (childConfig.variant === 'FIELD') {
     Object.assign(childConfigOverride, {
-      fieldName: createPath({
-        parent: config.fieldName,
+      name: createPath({
+        parent: config.name,
         index,
-        child: childConfig.fieldName,
+        child: childConfig.name,
       }),
     });
   }

@@ -5,7 +5,7 @@ test('generate values', () => {
   const schema: Schema[] = [
     {
       variant: 'FIELD',
-      fieldName: 'name',
+      name: 'name',
       initialValue: '',
       fieldType: 'TEXT',
       valueType: 'STRING',
@@ -37,7 +37,7 @@ test('generate values', () => {
       child: [
         {
           variant: 'FIELD',
-          fieldName: 'address',
+          name: 'address',
           initialValue: '',
           fieldType: 'TEXT',
           valueType: 'STRING',
@@ -62,7 +62,7 @@ test('generate values', () => {
   expect(result).toEqual([
     {
       variant: 'FIELD',
-      fieldName: 'name',
+      name: 'name',
       initialValue: 'Test Name',
       fieldType: 'TEXT',
       valueType: 'STRING',
@@ -94,7 +94,7 @@ test('generate values', () => {
       child: [
         {
           variant: 'FIELD',
-          fieldName: 'address',
+          name: 'address',
           initialValue: 'Test Address',
           fieldType: 'TEXT',
           valueType: 'STRING',

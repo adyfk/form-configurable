@@ -12,7 +12,7 @@ interface MetaView {
 
 interface BaseView extends SchemaBase {
   variant: 'VIEW';
-  viewName?: string;
+  name?: string;
   data?: any;
 }
 

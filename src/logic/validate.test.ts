@@ -5,7 +5,7 @@ const schema: Schema[] = [
   {
     variant: 'FIELD',
     fieldType: 'ARRAY',
-    fieldName: 'myarray',
+    name: 'myarray',
     initialValue: [
       { name: '', last: '' },
       { name: '1', last: '1' },
@@ -13,7 +13,7 @@ const schema: Schema[] = [
     child: [
       {
         variant: 'FIELD',
-        fieldName: 'name',
+        name: 'name',
         initialValue: '',
         fieldType: 'TEXT',
         valueType: 'STRING',
@@ -26,7 +26,7 @@ const schema: Schema[] = [
       },
       {
         variant: 'FIELD',
-        fieldName: 'last',
+        name: 'last',
         initialValue: '',
         fieldType: 'TEXT',
         valueType: 'STRING',
@@ -40,7 +40,7 @@ const schema: Schema[] = [
     ],
   },
   {
-    fieldName: 'firstName',
+    name: 'firstName',
     fieldType: 'TEXT',
     valueType: 'STRING',
     initialValue: '',
@@ -48,7 +48,7 @@ const schema: Schema[] = [
     rules: [{ error: 'FirstName Is Required', expression: '!firstName' }],
   },
   {
-    fieldName: 'lastName',
+    name: 'lastName',
     fieldType: 'TEXT',
     valueType: 'STRING',
     initialValue: '',
@@ -60,7 +60,7 @@ const schema: Schema[] = [
     groupType: 'DEFAULT',
     child: [
       {
-        fieldName: 'age',
+        name: 'age',
         fieldType: 'TEXT',
         valueType: 'NUMBER',
         variant: 'FIELD',

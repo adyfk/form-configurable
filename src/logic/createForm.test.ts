@@ -8,7 +8,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_array',
         variant: 'FIELD',
         fieldType: 'ARRAY',
-        fieldName: 'arrayobjectfield',
+        name: 'arrayobjectfield',
         initialValue: [],
         style: {
           container: {
@@ -23,7 +23,7 @@ test('create-form', () => {
             variant: 'FIELD',
             fieldType: 'TEXT',
             valueType: 'STRING',
-            fieldName: 'field_text_string_1',
+            name: 'field_text_string_1',
             initialValue: '',
             rules: [
               { error: 'Harus Terisi', expression: '!GET("field_text_string_1", INDEX(arrayobjectfield, __INDEX__))' },
@@ -44,7 +44,7 @@ test('create-form', () => {
             variant: 'FIELD',
             fieldType: 'TEXT',
             valueType: 'STRING',
-            fieldName: 'field_text_string_2',
+            name: 'field_text_string_2',
             initialValue: '',
             rules: [
               { error: 'Harus Terisi', expression: '!GET("field_text_string_2", INDEX(arrayobjectfield, __INDEX__))' },
@@ -70,7 +70,7 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'TEXT',
         valueType: 'STRING',
-        fieldName: 'field_text_string',
+        name: 'field_text_string',
         initialValue: '',
         rules: [
           { error: 'Harus Terisi', expression: '!field_text_string' },
@@ -91,7 +91,7 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'TEXT',
         valueType: 'NUMBER',
-        fieldName: 'field_text_number',
+        name: 'field_text_number',
         initialValue: 0,
         rules: [
           { error: 'Harus > 20', expression: 'field_text_number < 20' },
@@ -116,7 +116,7 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'TEXTAREA',
         valueType: 'STRING',
-        fieldName: 'field_textarea_string',
+        name: 'field_textarea_string',
         initialValue: '',
         rules: [
           { error: 'Harus terisi', expression: '!field_textarea_string' },
@@ -140,7 +140,7 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'WYSWYG',
         valueType: 'STRING',
-        fieldName: 'field_wyswyg_string',
+        name: 'field_wyswyg_string',
         initialValue: '',
         rules: [
           { error: 'Harus terisi', expression: '!field_wyswyg_string' },
@@ -163,7 +163,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_checkbox_1',
         variant: 'FIELD',
         fieldType: 'CHECKBOX',
-        fieldName: 'field_checkbox_1',
+        name: 'field_checkbox_1',
         initialValue: [],
         meta: {
           label: 'INPUT FIELD CHECKBOX 1',
@@ -184,7 +184,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_checkbox_2',
         variant: 'FIELD',
         fieldType: 'CHECKBOX',
-        fieldName: 'field_checkbox_2',
+        name: 'field_checkbox_2',
         initialValue: [],
         meta: {
           label: 'INPUT FIELD CHECKBOX 2',
@@ -206,7 +206,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_checkbox_3',
         variant: 'FIELD',
         fieldType: 'CHECKBOX',
-        fieldName: 'field_checkbox_3',
+        name: 'field_checkbox_3',
         initialValue: [],
         meta: {
           label: 'INPUT FIELD CHECKBOX 3',
@@ -228,7 +228,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_radio_1',
         variant: 'FIELD',
         fieldType: 'RADIO',
-        fieldName: 'field_radio_1',
+        name: 'field_radio_1',
         initialValue: { value: '', label: '' },
         meta: {
           label: 'INPUT FIELD RADIO 1',
@@ -249,7 +249,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_radio_2',
         variant: 'FIELD',
         fieldType: 'RADIO',
-        fieldName: 'field_radio_2',
+        name: 'field_radio_2',
         initialValue: { value: '', label: '' },
         meta: {
           label: 'INPUT FIELD RADIO 2',
@@ -271,7 +271,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_radio_3',
         variant: 'FIELD',
         fieldType: 'RADIO',
-        fieldName: 'field_radio_3',
+        name: 'field_radio_3',
         initialValue: { value: '', label: '' },
         meta: {
           label: 'INPUT FIELD RADIO 3',
@@ -293,7 +293,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_dropdown_1',
         variant: 'FIELD',
         fieldType: 'DROPDOWN',
-        fieldName: 'field_dropdown_1',
+        name: 'field_dropdown_1',
         initialValue: { value: '', label: '' },
         meta: {
           label: 'INPUT FIELD DROPDOWN 1',
@@ -314,7 +314,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_dropdown_2',
         variant: 'FIELD',
         fieldType: 'DROPDOWN',
-        fieldName: 'field_dropdown_2',
+        name: 'field_dropdown_2',
         initialValue: { value: '', label: '' },
         meta: {
           label: 'INPUT FIELD DROPDOWN 2',
@@ -336,7 +336,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_dropdown_async_1',
         variant: 'FIELD',
         fieldType: 'DROPDOWN-ASYNC',
-        fieldName: 'field_dropdown_async_1',
+        name: 'field_dropdown_async_1',
         initialValue: { value: '', label: '' },
         meta: {
           label: 'INPUT FIELD DROPDOWN ASYNC 1',
@@ -354,7 +354,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_dropdown_async_2',
         variant: 'FIELD',
         fieldType: 'DROPDOWN-ASYNC',
-        fieldName: 'field_dropdown_async_2',
+        name: 'field_dropdown_async_2',
         initialValue: { value: '', label: '' },
         meta: {
           label: 'INPUT FIELD DROPDOWN ASYNC 2',
@@ -366,7 +366,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_counter',
         variant: 'FIELD',
         fieldType: 'COUNTER',
-        fieldName: 'field_counter',
+        name: 'field_counter',
         initialValue: 0,
         meta: {
           label: 'INPUT FIELD COUNTER',
@@ -378,7 +378,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_switch',
         variant: 'FIELD',
         fieldType: 'SWITCH',
-        fieldName: 'field_switch',
+        name: 'field_switch',
         initialValue: false,
       },
       {
@@ -386,7 +386,7 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'DATE',
         valueType: 'DATE',
-        fieldName: 'field_date',
+        name: 'field_date',
         initialValue: '2023-01-20T07:46:34.558Z',
         meta: {
           format: 'DD/MM/YYYY',
@@ -398,7 +398,7 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'DATERANGE',
         valueType: 'DATE',
-        fieldName: 'field_daterange',
+        name: 'field_daterange',
         initialValue: {
           start: '',
           end: '',
@@ -412,7 +412,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_file',
         variant: 'FIELD',
         fieldType: 'FILE',
-        fieldName: 'field_file',
+        name: 'field_file',
         initialValue: [],
         meta: {
           description: 'Desc',
@@ -425,7 +425,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_custom',
         variant: 'FIELD',
         fieldType: 'CUSTOM',
-        fieldName: 'field_custom',
+        name: 'field_custom',
         initialValue: {},
       },
     ],

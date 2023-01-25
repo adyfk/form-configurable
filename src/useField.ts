@@ -26,14 +26,14 @@ export const initializeField = ({
     touched: any;
     fieldState: Record<string, any>;
   } = {
-    value: get(values, config.fieldName),
-    error: fields.error[config.fieldName],
-    touched: fields.touched[config.fieldName],
+    value: get(values, config.name),
+    error: fields.error[config.name],
+    touched: fields.touched[config.name],
     fieldState: {},
   };
 
   for (const key in props) {
-    const value = props[key]?.[config.fieldName as string];
+    const value = props[key]?.[config.name as string];
     field.fieldState[key] = typeof value === 'undefined' ? true : value;
   }
 
@@ -90,11 +90,11 @@ export const useField = (props: {
   }, [config]);
 
   useEffect(() => {
-    form.refs[config.fieldName] = _ref;
+    form.refs[config.name] = _ref;
     return () => {
-      delete form.refs[config.fieldName];
+      delete form.refs[config.name];
     };
-  }, [config.fieldName, form.refs]);
+  }, [config.name, form.refs]);
 
   log?.(config, state);
 
@@ -109,16 +109,16 @@ export const useField = (props: {
     onChange: useCallback(
       (arg: any) => {
         if (typeof arg === 'function') {
-          form.setValue(config.fieldName, arg(form.values));
+          form.setValue(config.name, arg(form.values));
         } else {
-          form.setValue(config.fieldName, arg);
+          form.setValue(config.name, arg);
         }
       },
-      [config.fieldName, form],
+      [config.name, form],
     ),
     onBlur: useCallback(
-      () => form.updateTouch(config.fieldName),
-      [config.fieldName, form],
+      () => form.updateTouch(config.name),
+      [config.name, form],
     ),
   };
 };

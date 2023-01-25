@@ -93,27 +93,27 @@ export const createForm = (props: CreateFormProps) => {
 
   const hasError = () => !!Object.keys(_fields.error).length;
 
-  function getValue(fieldName: string) { return get(_values, fieldName); }
-  function getError(fieldName: string) { return _fields.error[fieldName]; }
-  function getTouch(fieldName: string) { return _fields.touched[fieldName]; }
+  function getValue(name: string) { return get(_values, name); }
+  function getError(name: string) { return _fields.error[name]; }
+  function getTouch(name: string) { return _fields.touched[name]; }
   function getProp(name: string, key: string) {
     const value = _props[name][key];
     return (typeof value === 'undefined' || value);
   }
-  // function unsetValue(fieldName: string) { unset(_values, fieldName); }
-  function unsetError(fieldName: string) { delete _fields.error[fieldName]; }
-  function unsetTouch(fieldName: string) { delete _fields.touched[fieldName]; }
+  // function unsetValue(name: string) { unset(_values, name); }
+  function unsetError(name: string) { delete _fields.error[name]; }
+  function unsetTouch(name: string) { delete _fields.touched[name]; }
   // function unsetProp(name: string, key: string) { delete _props[name][key]; }
-  function initValue(fieldName: string, value: any) { set(_values, fieldName, value); }
-  function initError(fieldName: string, value: any) { _fields.error[fieldName] = value; }
-  function initTouched(fieldName: string, value: any) { _fields.touched[fieldName] = value; }
+  function initValue(name: string, value: any) { set(_values, name, value); }
+  function initError(name: string, value: any) { _fields.error[name] = value; }
+  function initTouched(name: string, value: any) { _fields.touched[name] = value; }
   function initProp(name: string, key: string, value: any) { _props[name][key] = value; }
 
   const isPropsSkipExceute = (config: Schema, options: IOptionsEachSchema = {}) => {
-    const path = options.path || ((config as any).fieldName || config.key);
+    const path = (options.path || config.name || config.key) as string;
 
-    const editable = getProp('editable', path as string);
-    const show = getProp('show', path as string);
+    const editable = getProp('editable', path);
+    const show = getProp('show', path);
     if (!editable) return true;
     if (!show) return true;
     return false;
@@ -121,12 +121,12 @@ export const createForm = (props: CreateFormProps) => {
 
   const executeExpressionOverride = (
     config: SchemaField,
-    fieldName?: string,
+    name?: string,
     options: IOptionsEachSchema = {},
   ) => {
-    const path = options.path || config.fieldName;
+    const path = options.path || config.name;
 
-    if (typeof fieldName === 'string' && path.includes(fieldName) && config.override?.others) {
+    if (typeof name === 'string' && path.includes(name) && config.override?.others) {
       Object.assign(_values, config.override?.others);
     }
 
@@ -150,7 +150,7 @@ export const createForm = (props: CreateFormProps) => {
   ) => {
     if (!config.props) return;
 
-    const path = options.path || ((config as any).fieldName || config.key);
+    const path = (options.path || config.name || config.key) as string;
 
     for (const { expression, name, value } of config.props) {
       if (!_props[name]) _props[name] = {};
@@ -175,7 +175,7 @@ export const createForm = (props: CreateFormProps) => {
   const executeExpressionRule = (config: SchemaField, options: IOptionsEachSchema = {}) => {
     if (!config.rules) return;
 
-    const path = options?.path || config.fieldName;
+    const path = options?.path || config.name;
 
     for (const rule of config.rules) {
       try {
@@ -197,9 +197,9 @@ export const createForm = (props: CreateFormProps) => {
   // eslint-disable-next-line no-unused-vars
   const executeExpressionEachArray = (
     config: SchemaFieldArray,
-    options: { skipValidate?: boolean; fieldName?: string; parent?: string } = {},
+    options: { skipValidate?: boolean; name?: string; parent?: string } = {},
   ) => {
-    const path = (options.parent || '') + (options.fieldName || config.fieldName);
+    const path = (options.parent || '') + (options.name || config.name);
     const hasError = getError(path);
     if (hasError) return;
 
@@ -210,14 +210,14 @@ export const createForm = (props: CreateFormProps) => {
           path: createPath({
             parent: path,
             index,
-            child: (childConfig as any).fieldName || childConfig.key,
+            child: (childConfig as any).name || childConfig.key,
           }),
           extraData: {
             __INDEX__: index,
           },
         };
         if (childConfig.variant === 'FIELD') {
-          executeExpressionOverride(childConfig, options.fieldName, eachOptions);
+          executeExpressionOverride(childConfig, options.name, eachOptions);
           executeExpressionProps(childConfig, eachOptions);
 
           if (isPropsSkipExceute(childConfig, eachOptions)) { continue; }
@@ -236,12 +236,12 @@ export const createForm = (props: CreateFormProps) => {
 
   const executeEachConfig = (
     schema: Schema[],
-    fieldName?: string,
+    name?: string,
     options: { skipValidate: boolean; parent?: string } = { skipValidate: false },
   ) => {
     for (const config of schema) {
       if (config.variant === 'FIELD') {
-        executeExpressionOverride(config, fieldName);
+        executeExpressionOverride(config, name);
         executeExpressionProps(config);
         if (isPropsSkipExceute(config)) continue;
 
@@ -251,7 +251,7 @@ export const createForm = (props: CreateFormProps) => {
 
         if (config.fieldType === 'ARRAY') {
           executeExpressionEachArray(config, {
-            fieldName: config.fieldName,
+            name: config.name,
             skipValidate: options.skipValidate,
           });
         }
@@ -261,7 +261,7 @@ export const createForm = (props: CreateFormProps) => {
           continue;
         }
 
-        executeEachConfig(config.child, fieldName, options);
+        executeEachConfig(config.child, name, options);
       } else {
         executeExpressionProps(config);
       }
@@ -269,13 +269,13 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   const executeConfig = (
-    fieldName?: string,
+    name?: string,
     options: { skipValidate: boolean } = { skipValidate: false },
   ) => {
     _fields.error = {};
     _props.editable = {};
     _props.show = {};
-    executeEachConfig(_schema, fieldName, options);
+    executeEachConfig(_schema, name, options);
   };
 
   const updateTouch = (
@@ -292,16 +292,16 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   const setValue = (
-    fieldName: string,
+    name: string,
     value: any,
     options?: { freeze: boolean },
   ) => {
-    initValue(fieldName, value);
+    initValue(name, value);
 
     if (options?.freeze) return;
 
-    updateTouch(fieldName, true, false);
-    executeConfig(fieldName);
+    updateTouch(name, true, false);
+    executeConfig(name);
     notifyWatch();
   };
 
@@ -320,12 +320,12 @@ export const createForm = (props: CreateFormProps) => {
   }
 
   function setError(
-    fieldName: string,
+    name: string,
     value?: any,
     options?: { freeze: boolean },
   ) {
-    if (value) initError(fieldName, value);
-    else unsetError(fieldName);
+    if (value) initError(name, value);
+    else unsetError(name);
 
     if (options?.freeze) return;
     notifyWatch();
@@ -350,7 +350,7 @@ export const createForm = (props: CreateFormProps) => {
   const initializeValues = (schema: Schema[]) => {
     for (const config of schema) {
       if (config.variant === 'FIELD') {
-        set(_values, config.fieldName, config.initialValue);
+        set(_values, config.name, config.initialValue);
       } else if (config.variant === 'GROUP') {
         initializeValues(config.child);
       }
@@ -368,11 +368,11 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   const reset = () => {
-    for (const fieldName in _fields.error) {
-      unsetError(fieldName);
+    for (const name in _fields.error) {
+      unsetError(name);
     }
-    for (const fieldName in _fields.touched) {
-      unsetTouch(fieldName);
+    for (const name in _fields.touched) {
+      unsetTouch(name);
     }
     notifyWatch();
   };

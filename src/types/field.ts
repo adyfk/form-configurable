@@ -33,7 +33,7 @@ export interface IOption {
 interface BaseField extends SchemaBase {
   variant: 'FIELD';
   initialValue: any;
-  fieldName: string;
+  name: string;
   override?: Partial<BaseOverride>;
   rules?: BaseRule[];
 }

@@ -23,7 +23,7 @@ export const initializeView = ({
   };
 
   for (const key in props) {
-    const value = props[key]?.[config.key as string];
+    const value = props[key]?.[(config.name || config.key) as string];
     field.viewState[key] = typeof value === 'undefined' ? true : value;
   }
 

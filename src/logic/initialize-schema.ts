@@ -8,14 +8,14 @@ const executeEachConfig = (
 ) => {
   for (const config of schema) {
     if (config.variant === 'FIELD') {
-      config.initialValue = data[config.fieldName];
+      config.initialValue = data[config.name];
     } else if (config.variant === 'VIEW') {
-      if (config.viewName) {
-        config.data = data[config.viewName];
+      if (config.name) {
+        config.data = data[config.name];
       }
     } else if (config.variant === 'GROUP') {
-      if (config.groupName) {
-        config.data = data[config.groupName];
+      if (config.name) {
+        config.data = data[config.name];
       }
       executeEachConfig(config.child, data, extraData);
     }
