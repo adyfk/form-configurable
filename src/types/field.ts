@@ -163,6 +163,12 @@ export interface SchemaFieldArray extends BaseField {
   meta?: Partial<MetaField>;
 }
 
+export interface SchemaFieldPhone extends BaseField {
+  fieldType: 'PHONE';
+  initialValue: '';
+  meta?: Partial<MetaField>;
+}
+
 export interface SchemaFieldCustom extends BaseField {
   fieldType: 'CUSTOM';
   initialValue: any;
@@ -182,6 +188,7 @@ export type SchemaField =
   | SchemaFieldSwitch
   | SchemaFieldFile
   | SchemaFieldDate
+  | SchemaFieldPhone
   | SchemaFieldDateRange
   | SchemaFieldArray;
 
