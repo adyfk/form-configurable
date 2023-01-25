@@ -7,7 +7,6 @@ export const validate = (
   extraData?: Record<any, any>,
 ) => {
   const form = createForm({ schema });
-
   form.setValues({ ...data, ...extraData });
 
   return form.fields.error;

@@ -442,7 +442,6 @@ test('create-form', () => {
       },
     ],
   });
-
   form.setValue('arrayobjectfield[0].field_text_string_2', 'test 123');
 
   expect(form.props).toEqual({

@@ -31,7 +31,7 @@ export interface RootFormState {
 export type FormValues = Record<string, any>;
 
 export interface CreateFormProps {
-  schema: Schema[];
+  schema?: Schema[];
   extraData?: FormValues;
   // eslint-disable-next-line no-unused-vars
   log?: (...arg: any) => void;
@@ -53,7 +53,13 @@ const autoGenerateIdConfig = (schema: Schema[]): Schema[] => schema.map((config)
 });
 
 export const createForm = (props: CreateFormProps) => {
-  const _schema: Schema[] = [];
+  const _config: {
+    schema: Schema[];
+    extraData: FormValues;
+  } = {
+    schema: [],
+    extraData: {},
+  };
   const _values: FormValues = {};
   const _props: Props = {
     show: {},
@@ -99,6 +105,7 @@ export const createForm = (props: CreateFormProps) => {
   }
   // function unsetValue(name: string) { unset(_values, name); }
   function unsetError(name: string) { delete _fields.error[name]; }
+  // eslint-disable-next-line no-unused-vars
   function unsetTouch(name: string) { delete _fields.touched[name]; }
   // function unsetProp(name: string, key: string) { delete _props[name][key]; }
   function initValue(name: string, value: any) { set(_values, name, value); }
@@ -135,7 +142,7 @@ export const createForm = (props: CreateFormProps) => {
       try {
         const result = expressionToValue(config.override.self, {
           ..._values,
-          ...props.extraData,
+          ..._config.extraData,
           ...options.extraData,
         });
         initValue(path, result);
@@ -158,7 +165,7 @@ export const createForm = (props: CreateFormProps) => {
           try {
             const isValid = expressionToValue(expression, {
               ..._values,
-              ...props.extraData,
+              ..._config.extraData,
               ...options.extraData,
             });
             initProp(name, path, !!isValid);
@@ -190,7 +197,7 @@ export const createForm = (props: CreateFormProps) => {
       try {
         const isTrue = expressionToValue(rule.expression, {
           ..._values,
-          ...props.extraData,
+          ..._config.extraData,
           ...options.extraData,
         });
         if (isTrue) {
@@ -289,7 +296,7 @@ export const createForm = (props: CreateFormProps) => {
     _fields.error = {};
     _props.editable = {};
     _props.show = {};
-    executeEachConfig(_schema, name, options);
+    executeEachConfig(_config.schema, name, options);
   };
 
   const updateTouch = (
@@ -376,12 +383,18 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   // initialize default values
-  const initialize = () => {
+  const initialize = (arg: CreateFormProps = { }) => {
     try {
-      // generate key
-      Object.assign(_schema, autoGenerateIdConfig(props.schema));
-      initializeValues(_schema);
+      _fields.error = {};
+      _fields.touched = {};
+      _formState.isSubmitSuccessful = false;
+      _formState.isSubmitted = false;
+      _formState.isSubmitting = false;
+      _formState.isValidating = false;
+      _config.schema = autoGenerateIdConfig((arg.schema || props.schema) || []);
+      _config.extraData = arg.extraData || props.extraData || {};
 
+      initializeValues(_config.schema);
       executeConfig();
       notifyWatch();
     } catch (error) {
@@ -389,20 +402,12 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const reset = () => {
-    for (const name in _fields.error) {
-      unsetError(name);
-    }
-    for (const name in _fields.touched) {
-      unsetTouch(name);
-    }
-    notifyWatch();
-  };
+  const reset = initialize;
 
   initialize();
 
   return {
-    schema: _schema,
+    schema: _config.schema,
     props: _props,
     values: _values,
     fields: _fields,

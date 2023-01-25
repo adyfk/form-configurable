@@ -13,19 +13,20 @@ import {
   CreateFormProps,
   RootFormState,
 } from './logic/createForm';
-import useUpdate from './hooks/useUpdate';
+// import useUpdate from './hooks/useUpdate';
 import { SumbitMiddlewareContext } from './useSubmitMiddleware';
+import { Schema } from './types';
 
 export const useForm = (
   props: CreateFormProps & {
     forceSubmitOnError?: boolean;
   },
 ) => {
-  const update = useUpdate();
   const { validateListSubmit, order } = useContext(SumbitMiddlewareContext);
   const _form = useRef<Form>(createForm(props));
 
   const [formState, setFormState] = useState<RootFormState>({} as any);
+  const [schema, setSchema] = useState<Schema[]>([]);
 
   const getForm = () => _form.current;
 
@@ -99,13 +100,16 @@ export const useForm = (
   );
 
   useEffect(() => {
-    _form.current = createForm(props);
-    update();
+    _form.current.reset({
+      schema: props.schema,
+      extraData: props.extraData,
+    });
+    setSchema(_form.current.schema);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.schema, props.extraData]);
 
   return {
-    schema: _form.current.schema,
+    schema,
     form: _form.current,
     formState,
     handleSubmit,
