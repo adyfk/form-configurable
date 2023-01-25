@@ -86,9 +86,6 @@ export const createForm = (props: CreateFormProps) => {
     for (const fn of _subjects.watchs) {
       fn(_values, _fields, _props);
     }
-    props.log?.({
-      _values, _fields, _props, _formState,
-    });
   };
 
   const hasError = () => !!Object.keys(_fields.error).length;
@@ -411,6 +408,7 @@ export const createForm = (props: CreateFormProps) => {
     fields: _fields,
     refs: _refs,
     formState: _formState,
+    subjects: _subjects,
     get hasError() {
       return hasError();
     },
