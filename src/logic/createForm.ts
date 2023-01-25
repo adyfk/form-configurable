@@ -34,7 +34,7 @@ export interface CreateFormProps {
   schema: Schema[];
   extraData?: FormValues;
   // eslint-disable-next-line no-unused-vars
-  log?: (arg: { _values: FormValues; _fields: Fields; _props: Props; _formState: RootFormState; }) => void;
+  log?: (...arg: any) => void;
 }
 
 type IOptionsEachSchema = { path?: string; extraData?: Record<string, any> }
@@ -97,7 +97,7 @@ export const createForm = (props: CreateFormProps) => {
   function getError(name: string) { return _fields.error[name]; }
   function getTouch(name: string) { return _fields.touched[name]; }
   function getProp(name: string, key: string) {
-    const value = _props[name][key];
+    const value = _props[name]?.[key];
     return (typeof value === 'undefined' || value);
   }
   // function unsetValue(name: string) { unset(_values, name); }
@@ -107,7 +107,11 @@ export const createForm = (props: CreateFormProps) => {
   function initValue(name: string, value: any) { set(_values, name, value); }
   function initError(name: string, value: any) { _fields.error[name] = value; }
   function initTouched(name: string, value: any) { _fields.touched[name] = value; }
-  function initProp(name: string, key: string, value: any) { _props[name][key] = value; }
+  function initProp(name: string, key: string, value: any) {
+    if (!_props[name]) _props[name] = {};
+
+    _props[name][key] = value;
+  }
 
   const isPropsSkipExceute = (config: Schema, options: IOptionsEachSchema = {}) => {
     const path = (options.path || config.name || config.key) as string;
@@ -151,24 +155,32 @@ export const createForm = (props: CreateFormProps) => {
     if (!config.props) return;
 
     const path = (options.path || config.name || config.key) as string;
-
-    for (const { expression, name, value } of config.props) {
-      if (!_props[name]) _props[name] = {};
-
-      if (expression) {
-        try {
-          const isValid = expressionToValue(expression, {
-            ..._values,
-            ...props.extraData,
-            ...options.extraData,
-          });
-          initProp(name, path, !!isValid);
-        } catch (error) {
-          initProp(name, path, false);
+    try {
+      for (const { expression, name, value } of config.props) {
+        if (expression) {
+          try {
+            const isValid = expressionToValue(expression, {
+              ..._values,
+              ...props.extraData,
+              ...options.extraData,
+            });
+            initProp(name, path, !!isValid);
+          } catch (error) {
+            initProp(name, path, false);
+          }
+        } else {
+          initProp(name, path, value);
         }
-      } else {
-        initProp(name, path, value);
       }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      props.log?.('error on executeExpressionProps', error, {
+        info: {
+          path,
+          option: options,
+          config,
+        },
+      });
     }
   };
 
@@ -239,32 +251,37 @@ export const createForm = (props: CreateFormProps) => {
     name?: string,
     options: { skipValidate: boolean; parent?: string } = { skipValidate: false },
   ) => {
-    for (const config of schema) {
-      if (config.variant === 'FIELD') {
-        executeExpressionOverride(config, name);
-        executeExpressionProps(config);
-        if (isPropsSkipExceute(config)) continue;
+    try {
+      for (const config of schema) {
+        if (config.variant === 'FIELD') {
+          executeExpressionOverride(config, name);
+          executeExpressionProps(config);
+          if (isPropsSkipExceute(config)) continue;
 
-        if (!options.skipValidate) {
-          executeExpressionRule(config);
-        }
+          if (!options.skipValidate) {
+            executeExpressionRule(config);
+          }
 
-        if (config.fieldType === 'ARRAY') {
-          executeExpressionEachArray(config, {
-            name: config.name,
-            skipValidate: options.skipValidate,
-          });
-        }
-      } else if (config.variant === 'GROUP') {
-        executeExpressionProps(config);
-        if (isPropsSkipExceute(config)) {
-          continue;
-        }
+          if (config.fieldType === 'ARRAY') {
+            executeExpressionEachArray(config, {
+              name: config.name,
+              skipValidate: options.skipValidate,
+            });
+          }
+        } else if (config.variant === 'GROUP') {
+          executeExpressionProps(config);
+          if (isPropsSkipExceute(config)) {
+            continue;
+          }
 
-        executeEachConfig(config.child, name, options);
-      } else {
-        executeExpressionProps(config);
+          executeEachConfig(config.child, name, options);
+        } else {
+          executeExpressionProps(config);
+        }
       }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      props.log?.('error on executeEachConfig', error);
     }
   };
 
@@ -348,23 +365,31 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   const initializeValues = (schema: Schema[]) => {
-    for (const config of schema) {
-      if (config.variant === 'FIELD') {
-        set(_values, config.name, config.initialValue);
-      } else if (config.variant === 'GROUP') {
-        initializeValues(config.child);
+    try {
+      for (const config of schema) {
+        if (config.variant === 'FIELD') {
+          set(_values, config.name, config.initialValue);
+        } else if (config.variant === 'GROUP') {
+          initializeValues(config.child);
+        }
       }
+    } catch (error) {
+      props.log?.('error on initializeValues', error);
     }
   };
 
   // initialize default values
   const initialize = () => {
-    // generate key
-    Object.assign(_schema, autoGenerateIdConfig(props.schema));
-    initializeValues(_schema);
+    try {
+      // generate key
+      Object.assign(_schema, autoGenerateIdConfig(props.schema));
+      initializeValues(_schema);
 
-    executeConfig();
-    notifyWatch();
+      executeConfig();
+      notifyWatch();
+    } catch (error) {
+      props.log?.('error on initialize', error);
+    }
   };
 
   const reset = () => {
