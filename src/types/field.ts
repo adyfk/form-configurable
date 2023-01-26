@@ -6,9 +6,6 @@ interface MetaField {
   label: string;
   suffix: string;
   prefix: string;
-  tooltip: string;
-  hint: string;
-  badge: string;
   optional: boolean;
   required: boolean;
   [key: string]: any;

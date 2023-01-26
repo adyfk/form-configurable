@@ -3,10 +3,6 @@ import { SchemaBase } from './core';
 interface MetaView {
   title: string;
   subtitle: string;
-  value: any;
-  tooltip: string;
-  hint: string;
-  badge: string;
   [key: string]: any;
 }
 

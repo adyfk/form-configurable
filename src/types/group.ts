@@ -4,9 +4,6 @@ import { Schema } from './schema';
 interface MetaGroup {
   title: string;
   subtitle: string;
-  tooltip: string;
-  hint: string;
-  badge: string;
   [key: string]: any;
 }
 
