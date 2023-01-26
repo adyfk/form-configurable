@@ -194,18 +194,34 @@ export const createForm = (props: CreateFormProps) => {
     const path = options?.path || config.name;
 
     for (const rule of config.rules) {
-      try {
-        const isTrue = expressionToValue(rule.expression, {
-          ..._values,
-          ..._config.extraData,
-          ...options.extraData,
-        });
-        if (isTrue) {
-          initError(path, rule.error);
-          break;
+      if (rule.catch) {
+        try {
+          const isTrue = expressionToValue(rule.expression, {
+            ..._values,
+            ..._config.extraData,
+            ...options.extraData,
+          });
+          if (!isTrue) {
+            initError(path, rule.catch);
+            break;
+          }
+        } catch (e: any) {
+          initError(path, rule.catch);
         }
-      } catch (e: any) {
-        unsetError(path);
+      } else {
+        try {
+          const isTrue = expressionToValue(rule.expression, {
+            ..._values,
+            ..._config.extraData,
+            ...options.extraData,
+          });
+          if (isTrue) {
+            initError(path, rule.error);
+            break;
+          }
+        } catch (e: any) {
+          //
+        }
       }
     }
   };

@@ -16,7 +16,8 @@ interface MetaField {
 
 interface BaseRule {
   expression: ExpressionString;
-  error: string;
+  error?: string;
+  catch?: string;
 }
 
 interface BaseOverride {
