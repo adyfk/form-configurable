@@ -281,6 +281,17 @@ export const formula = function (
         return false;
       }
     },
+    IS_HTML_EMPTY: (arg) => {
+      try {
+        const value = string(arg());
+        if (!value) return true;
+        if (value === '<div></div>') return true;
+        if (value === '<span></span>') return true;
+        return false;
+      } catch (error) {
+        return false;
+      }
+    },
 
     DATE_MIN: (date1, date2) => {
       try {
