@@ -30,6 +30,7 @@ export interface SchemaGroupCounter extends BaseGroup {
 
 export interface SchemaGroupCustom extends BaseGroup {
   groupType: 'CUSTOM';
+  component: string;
   meta: Partial<MetaGroup>;
 }
 

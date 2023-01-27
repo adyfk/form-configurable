@@ -43,6 +43,7 @@ export interface SchemaViewDefault extends BaseView {
 
 export interface SchemaViewCustom extends BaseView {
   viewType: 'CUSTOM';
+  component: string;
   meta?: Partial<MetaView>;
 }
 

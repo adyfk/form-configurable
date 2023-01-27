@@ -170,6 +170,7 @@ export interface SchemaFieldPhone extends BaseField {
 export interface SchemaFieldCustom extends BaseField {
   fieldType: 'CUSTOM';
   initialValue: any;
+  component: string;
   meta?: Partial<MetaField>;
 }
 

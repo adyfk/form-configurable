@@ -426,6 +426,7 @@ test('create-form', () => {
         key: 'FORMNAME_FIELD_field_custom',
         variant: 'FIELD',
         fieldType: 'CUSTOM',
+        component: 'CUSTOM',
         name: 'field_custom',
         initialValue: {},
       },
