@@ -8,6 +8,11 @@ interface MetaField {
   prefix: string;
   optional: boolean;
   required: boolean;
+  infoTooltip: string;
+  warningTooltip: string;
+  dangerTooltip: string;
+  htmlTooltip: string;
+  helperText: string;
   [key: string]: any;
 }
 

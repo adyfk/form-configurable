@@ -5,11 +5,7 @@ export interface BaseStyle {
   container: any;
   content: any;
   badge: any[];
-  infoTooltip: string;
-  warningTooltip: string;
-  dangerTooltip: string;
-  htmlTooltip: string;
-  hint: string;
+
   [key: string]: any;
 }
 

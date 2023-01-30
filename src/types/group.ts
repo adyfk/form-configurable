@@ -4,6 +4,11 @@ import { Schema } from './schema';
 interface MetaGroup {
   title: string;
   subtitle: string;
+  infoTooltip: string;
+  warningTooltip: string;
+  dangerTooltip: string;
+  htmlTooltip: string;
+  helperText: string;
   [key: string]: any;
 }
 
