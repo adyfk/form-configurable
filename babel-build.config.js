@@ -1,3 +1,4 @@
+/* eslint-disable import/newline-after-import */
 const path = require('path');
 const productionPlugins = [
   // ['babel-plugin-react-remove-properties'],
@@ -9,7 +10,7 @@ module.exports = function getBabelConfig(api) {
   function resolveAliasPath(relativeToBabelConf) {
     const resolvedPath = path.relative(
       process.cwd(),
-      path.resolve(__dirname, relativeToBabelConf)
+      path.resolve(__dirname, relativeToBabelConf),
     );
     return `./${resolvedPath.replace('\\', '/')}`;
   }
