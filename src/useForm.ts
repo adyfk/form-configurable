@@ -64,6 +64,10 @@ export const useForm = (
 
         form.executeConfig();
         if (form.hasError && !props.forceSubmitOnError) {
+          if (props.shouldFocusError) {
+            const name = Object.keys(form.fields.error)[0];
+            form.setFocus(name);
+          }
           throw new Error('Error Schema');
         } else {
           await onValid(form.values);

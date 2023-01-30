@@ -35,6 +35,7 @@ export interface CreateFormProps {
   extraData?: FormValues;
   // eslint-disable-next-line no-unused-vars
   log?: (...arg: any) => void;
+  shouldFocusError?: boolean;
 }
 
 type IOptionsEachSchema = { path?: string; extraData?: Record<string, any> }
@@ -380,6 +381,18 @@ export const createForm = (props: CreateFormProps) => {
     notifyWatch();
   };
 
+  const setFocus = (name: string, options: { shouldSelect?: boolean; } = {}) => {
+    const field = _refs[name];
+
+    if (field) {
+      if (field.focus) {
+        field.focus();
+        // eslint-disable-next-line no-unused-expressions
+        options.shouldSelect && field.select?.();
+      }
+    }
+  };
+
   const setFormState = (key: keyof RootFormState, value: boolean) => {
     _formState[key] = value;
   };
@@ -445,6 +458,7 @@ export const createForm = (props: CreateFormProps) => {
     setErrors,
     setFormState,
     executeConfig,
+    setFocus,
     reset,
   };
 };
