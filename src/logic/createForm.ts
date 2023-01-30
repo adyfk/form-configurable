@@ -382,15 +382,12 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   const setFocus = (name: string, options: { shouldSelect?: boolean; } = {}) => {
-    const field = _refs[name];
+    const field = _refs[name]?.current;
+    if (!field) return;
 
-    if (field) {
-      if (field.focus) {
-        field.focus();
-        // eslint-disable-next-line no-unused-expressions
-        options.shouldSelect && field.select?.();
-      }
-    }
+    field.focus?.();
+    // eslint-disable-next-line no-unused-expressions
+    options.shouldSelect && field.select?.();
   };
 
   const setFormState = (key: keyof RootFormState, value: boolean) => {
