@@ -408,9 +408,13 @@ export const createForm = (props: CreateFormProps) => {
         isSubmitting: false,
         isValidating: false,
       });
-      _config.schema = (arg.schema || props.schema) || [];
-      _config.extraData = (arg.extraData || props.extraData) || {};
-      _config.initialValues = (arg.initialValues || props.initialValues) || {};
+
+      props.log?.('initialize arg', arg);
+      props.log?.('initialize props', props);
+
+      _config.schema = arg.schema || props.schema || [];
+      _config.extraData = arg.extraData || props.extraData || {};
+      _config.initialValues = arg.initialValues || props.initialValues || {};
 
       initializeValues(_config.schema);
       executeConfig();

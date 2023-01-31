@@ -9,6 +9,7 @@ interface MetaGroup {
   dangerTooltip: string;
   htmlTooltip: string;
   helperText: string;
+  badge: string;
   [key: string]: any;
 }
 

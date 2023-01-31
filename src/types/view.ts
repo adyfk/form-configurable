@@ -8,6 +8,7 @@ interface MetaView {
   dangerTooltip: string;
   htmlTooltip: string;
   helperText: string;
+  badge: string;
   [key: string]: any;
 }
 

@@ -4,7 +4,7 @@ export type ClassName = string;
 export interface BaseStyle {
   container: any;
   content: any;
-  badge: any[];
+  badge: any;
 
   [key: string]: any;
 }
