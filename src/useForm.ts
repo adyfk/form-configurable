@@ -25,7 +25,13 @@ interface IUserFormProps extends CreateFormProps {
 
 export const useForm = (props: IUserFormProps) => {
   const { validateListSubmit, order } = useContext(SumbitMiddlewareContext);
-  const _form = useRef<Form>(createForm(props));
+  const _form = useRef<Form>(null as any);
+
+  if (!_form.current) {
+    _form.current = {
+      ...createForm(props),
+    };
+  }
 
   const [formState, setFormState] = useState<RootFormState>({} as any);
   const [schema, setSchema] = useState<Schema[]>([]);
@@ -119,7 +125,9 @@ export const useForm = (props: IUserFormProps) => {
 
   return {
     schema,
-    form: _form.current,
+    get form() {
+      return getForm();
+    },
     formState,
     handleSubmit,
   };

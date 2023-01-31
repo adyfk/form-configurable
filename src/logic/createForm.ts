@@ -399,6 +399,9 @@ export const createForm = (props: CreateFormProps) => {
 
   // initialize default values
   const initialize = (arg: CreateFormProps = { }) => {
+    props.log?.('initialize arg', arg);
+    props.log?.('initialize props', props);
+
     try {
       _fields.error = {};
       _fields.touched = {};
@@ -408,9 +411,6 @@ export const createForm = (props: CreateFormProps) => {
         isSubmitting: false,
         isValidating: false,
       });
-
-      props.log?.('initialize arg', arg);
-      props.log?.('initialize props', props);
 
       _config.schema = arg.schema || props.schema || [];
       _config.extraData = arg.extraData || props.extraData || {};
@@ -427,6 +427,8 @@ export const createForm = (props: CreateFormProps) => {
   const reset = initialize;
 
   initialize();
+
+  props.log?.('createForm');
 
   return {
     schema: _config.schema,
