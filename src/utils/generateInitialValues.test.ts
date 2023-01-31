@@ -60,5 +60,6 @@ test('generate values', () => {
     name: 'Test Name',
     address: 'Test Address',
   });
+  // eslint-disable-next-line no-console
   console.log(result);
 });

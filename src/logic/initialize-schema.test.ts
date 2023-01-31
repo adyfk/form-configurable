@@ -45,5 +45,6 @@ test('initialize test error field', () => {
     age: 20,
   });
 
+  // eslint-disable-next-line no-console
   console.log(result);
 });

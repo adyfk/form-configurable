@@ -387,11 +387,7 @@ export const createForm = (props: CreateFormProps) => {
     try {
       for (const config of schema) {
         if (config.variant === 'FIELD') {
-          if (_config.initialValues) {
-            set(_values, config.name, get(_config.initialValues, config.name));
-          } else {
-            set(_values, config.name, config.initialValue);
-          }
+          set(_values, config.name, get(_config.initialValues, config.name) || config.initialValue);
         } else if (config.variant === 'GROUP') {
           initializeValues(config.child);
         }
