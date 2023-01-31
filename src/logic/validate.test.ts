@@ -57,7 +57,7 @@ const schema: Schema[] = [
   },
   {
     variant: 'GROUP',
-    groupType: 'DEFAULT',
+    groupType: 'ACCORDION',
     child: [
       {
         name: 'age',

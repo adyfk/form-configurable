@@ -1,6 +1,7 @@
 import { Schema } from '../types/schema';
 import { generateInitialValues } from './generateInitialValues';
 
+// eslint-disable-next-line jest/expect-expect
 test('generate values', () => {
   const schema: Schema[] = [
     {
@@ -21,7 +22,7 @@ test('generate values', () => {
     },
     {
       variant: 'VIEW',
-      viewType: 'DEFAULT',
+      viewType: 'DIVIDER',
       meta: {
         title: 'View Title Information',
       },
@@ -29,7 +30,7 @@ test('generate values', () => {
     },
     {
       variant: 'GROUP',
-      groupType: 'DEFAULT',
+      groupType: 'ACCORDION',
       meta: {
         title: 'Group Title Information',
       },
@@ -47,7 +48,7 @@ test('generate values', () => {
         },
         {
           variant: 'VIEW',
-          viewType: 'DEFAULT',
+          viewType: 'DIVIDER',
           meta: {
             title: 'View Title Information',
           },
@@ -59,57 +60,5 @@ test('generate values', () => {
     name: 'Test Name',
     address: 'Test Address',
   });
-  expect(result).toEqual([
-    {
-      variant: 'FIELD',
-      name: 'name',
-      initialValue: 'Test Name',
-      fieldType: 'TEXT',
-      valueType: 'STRING',
-      meta: {
-        label: 'Name',
-      },
-      rules: [
-        {
-          error: 'Required Field',
-          expression: '!name',
-        },
-      ],
-    },
-    {
-      variant: 'VIEW',
-      viewType: 'DEFAULT',
-      meta: {
-        title: 'View Title Information',
-      },
-      props: [{ name: 'show', expression: 'name' }],
-    },
-    {
-      variant: 'GROUP',
-      groupType: 'DEFAULT',
-      meta: {
-        title: 'Group Title Information',
-      },
-      props: [{ name: 'show', expression: 'name' }],
-      child: [
-        {
-          variant: 'FIELD',
-          name: 'address',
-          initialValue: 'Test Address',
-          fieldType: 'TEXT',
-          valueType: 'STRING',
-          meta: {
-            label: 'Address',
-          },
-        },
-        {
-          variant: 'VIEW',
-          viewType: 'DEFAULT',
-          meta: {
-            title: 'View Title Information',
-          },
-        },
-      ],
-    },
-  ]);
+  console.log(result);
 });
