@@ -24,13 +24,12 @@ export interface SchemaGroupAccordion extends BaseGroup {
   meta: Partial<MetaGroup>;
 }
 
-export interface SchemaGroupDefault extends BaseGroup {
-  groupType: 'DEFAULT';
-  meta: Partial<MetaGroup>;
-}
-export interface SchemaGroupCounter extends BaseGroup {
-  groupType: 'COUNTER';
-  meta: Partial<MetaGroup>;
+export interface SchemaGroupCard extends BaseGroup {
+  groupType: 'CARD';
+  meta: Partial<MetaGroup> & {
+    border?: boolean;
+    shadow?: boolean;
+  };
 }
 
 export interface SchemaGroupCustom extends BaseGroup {
@@ -39,4 +38,4 @@ export interface SchemaGroupCustom extends BaseGroup {
   meta: Partial<MetaGroup>;
 }
 
-export type SchemaGroup = SchemaGroupDefault | SchemaGroupCustom | SchemaGroupAccordion;
+export type SchemaGroup = SchemaGroupCustom | SchemaGroupAccordion | SchemaGroupCard;

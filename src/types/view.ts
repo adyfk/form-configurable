@@ -17,32 +17,30 @@ interface BaseView extends SchemaBase {
   data?: any;
 }
 
-export interface SchemaViewField extends BaseView {
-  viewType: 'FIELD';
-  fieldType:
-    | 'TEXT'
-    | 'NUMBER'
-    | 'CURRENCY'
-    | 'WYSWYG'
-    | 'TEXTAREA'
-    | 'CHECKBOX'
-    | 'RADIO'
-    | 'DROPDOWN'
-    | 'DATE'
-    | 'FILE'
-    | 'SWITCH'
-    | 'CUSTOM'
+export interface SchemaViewFieldText extends BaseView {
+  viewType: 'FIELD-TEXT';
+  meta?: Partial<MetaView> & Partial<{
+    prefix: string;
+    suffix: string;
+  }>;
+}
+
+export interface SchemaViewFieldDate extends BaseView {
+  viewType: 'FIELD-DATE',
+  meta?: Partial<MetaView> & Partial<{
+    format: string;
+  }>;
+}
+
+export interface SchemaViewFieldCurrency extends BaseView {
+  viewType: 'FIELD-CURRENCY',
   meta?: Partial<MetaView>;
 }
+
+type SchemaViewField = SchemaViewFieldText | SchemaViewFieldDate | SchemaViewFieldCurrency;
 
 export interface SchemaViewHelper extends BaseView {
-  viewType: 'HELPER';
-  helperType: 'DIVIDER' | string;
-  meta?: Partial<MetaView>;
-}
-
-export interface SchemaViewDefault extends BaseView {
-  viewType: 'DEFAULT';
+  viewType: 'DIVIDER';
   meta?: Partial<MetaView>;
 }
 
@@ -52,4 +50,4 @@ export interface SchemaViewCustom extends BaseView {
   meta?: Partial<MetaView>;
 }
 
-export type SchemaView = SchemaViewField | SchemaViewHelper | SchemaViewCustom | SchemaViewDefault;
+export type SchemaView = SchemaViewField | SchemaViewHelper | SchemaViewCustom;
