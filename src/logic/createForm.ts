@@ -402,13 +402,15 @@ export const createForm = (props: CreateFormProps) => {
     try {
       _fields.error = {};
       _fields.touched = {};
-      _formState.isSubmitSuccessful = false;
-      _formState.isSubmitted = false;
-      _formState.isSubmitting = false;
-      _formState.isValidating = false;
+      Object.assign(_formState, {
+        isSubmitSuccessful: false,
+        isSubmitted: false,
+        isSubmitting: false,
+        isValidating: false,
+      });
       _config.schema = (arg.schema || props.schema) || [];
-      _config.extraData = arg.extraData || props.extraData || {};
-      _config.initialValues = arg.initialValues || props.initialValues || {};
+      _config.extraData = (arg.extraData || props.extraData) || {};
+      _config.initialValues = (arg.initialValues || props.initialValues) || {};
 
       initializeValues(_config.schema);
       executeConfig();

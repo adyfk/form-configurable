@@ -17,11 +17,13 @@ import {
 import { SumbitMiddlewareContext } from './useSubmitMiddleware';
 import { Schema } from './types';
 
-export const useForm = (
-  props: CreateFormProps & {
-    forceSubmitOnError?: boolean;
-  },
-) => {
+interface IUserFormProps extends CreateFormProps {
+  forceSubmitOnError?: boolean;
+  // eslint-disable-next-line no-unused-vars
+  log?: (...arg: any) => void;
+}
+
+export const useForm = (props: IUserFormProps) => {
   const { validateListSubmit, order } = useContext(SumbitMiddlewareContext);
   const _form = useRef<Form>(createForm(props));
 
@@ -104,12 +106,14 @@ export const useForm = (
   );
 
   useEffect(() => {
+    props.log?.('useForm - useEffect - (schema, extraData, initialValues)');
     _form.current.reset({
       schema: props.schema,
       extraData: props.extraData,
       initialValues: props.initialValues,
     });
-    setSchema(_form.current.schema);
+    setSchema([..._form.current.schema]);
+    setFormState({ ..._form.current.formState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.schema, props.extraData, props.initialValues]);
 
