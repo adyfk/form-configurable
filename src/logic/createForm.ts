@@ -431,7 +431,7 @@ export const createForm = (props: CreateFormProps) => {
   props.log?.('createForm');
 
   return {
-    schema: _config.schema,
+    config: _config,
     props: _props,
     values: _values,
     fields: _fields,

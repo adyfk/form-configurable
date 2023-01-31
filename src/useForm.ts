@@ -112,13 +112,15 @@ export const useForm = (props: IUserFormProps) => {
   );
 
   useEffect(() => {
+    if (!_form.current) return;
+
     props.log?.('useForm - useEffect - (schema, extraData, initialValues)');
     _form.current.reset({
       schema: props.schema,
       extraData: props.extraData,
       initialValues: props.initialValues,
     });
-    setSchema([..._form.current.schema]);
+    setSchema([..._form.current.config.schema]);
     setFormState({ ..._form.current.formState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.schema, props.extraData, props.initialValues]);
