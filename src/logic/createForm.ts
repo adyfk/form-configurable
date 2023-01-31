@@ -1,5 +1,4 @@
 import createPath from '../utils/createPath';
-import generateId from '../utils/generateId';
 import { expressionToValue } from '../parser';
 import type { Schema, SchemaField, SchemaFieldArray } from '../types';
 import set from '../utils/set';
@@ -35,31 +34,21 @@ export interface CreateFormProps {
   extraData?: FormValues;
   // eslint-disable-next-line no-unused-vars
   log?: (...arg: any) => void;
+  initialValues?: Record<string, any>,
   shouldFocusError?: boolean;
 }
 
 type IOptionsEachSchema = { path?: string; extraData?: Record<string, any> }
 
-const autoGenerateIdConfig = (schema: Schema[]): Schema[] => schema.map((config) => {
-  const tempConfig: Schema = {
-    ...config,
-  };
-
-  if (!tempConfig.key) tempConfig.key = generateId();
-
-  if (tempConfig.variant === 'GROUP') {
-    tempConfig.child = autoGenerateIdConfig(tempConfig.child);
-  }
-  return tempConfig;
-});
-
 export const createForm = (props: CreateFormProps) => {
   const _config: {
     schema: Schema[];
     extraData: FormValues;
+    initialValues: Record<string, any>
   } = {
     schema: [],
     extraData: {},
+    initialValues: {},
   };
   const _values: FormValues = {};
   const _props: Props = {
@@ -398,7 +387,11 @@ export const createForm = (props: CreateFormProps) => {
     try {
       for (const config of schema) {
         if (config.variant === 'FIELD') {
-          set(_values, config.name, config.initialValue);
+          if (_config.initialValues) {
+            set(_values, config.name, get(_config.initialValues, config.name));
+          } else {
+            set(_values, config.name, config.initialValue);
+          }
         } else if (config.variant === 'GROUP') {
           initializeValues(config.child);
         }
@@ -417,8 +410,9 @@ export const createForm = (props: CreateFormProps) => {
       _formState.isSubmitted = false;
       _formState.isSubmitting = false;
       _formState.isValidating = false;
-      _config.schema = autoGenerateIdConfig((arg.schema || props.schema) || []);
+      _config.schema = (arg.schema || props.schema) || [];
       _config.extraData = arg.extraData || props.extraData || {};
+      _config.initialValues = arg.initialValues || props.initialValues || {};
 
       initializeValues(_config.schema);
       executeConfig();

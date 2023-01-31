@@ -107,10 +107,11 @@ export const useForm = (
     _form.current.reset({
       schema: props.schema,
       extraData: props.extraData,
+      initialValues: props.initialValues,
     });
     setSchema(_form.current.schema);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.schema, props.extraData]);
+  }, [props.schema, props.extraData, props.initialValues]);
 
   return {
     schema,
