@@ -27,7 +27,7 @@ test('create-form', () => {
             initialValue: '',
             rules: [
               { error: 'Harus Terisi', expression: '!GET("field_text_string_1", INDEX(arrayobjectfield, __INDEX__))' },
-              { catch: 'Harus Terisi', expression: 'GET("field_text_string_1", INDEX(arrayobjectfield, __INDEX__))' },
+              { catch: 'Harus Terisi', expression: 'GET("field_text_string_1", __SELF__)' },
             ],
             meta: {
               label: 'INPUT FIELD TEXT STRING REQUIRED',

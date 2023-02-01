@@ -76,10 +76,11 @@ export function FormContainer({
   return (
     <>
       {schema.map((config) => {
+        const key = config.name || config.key;
         if (config.variant === 'GROUP') {
           return (
             <Group
-              key={config.key}
+              key={key}
               form={form}
               config={config}
               child={(props: any) => (
@@ -99,7 +100,7 @@ export function FormContainer({
         } if (config.variant === 'VIEW') {
           return (
             <View
-              key={config.key}
+              key={key}
               form={form}
               config={config}
               {...otherProps}
@@ -110,11 +111,11 @@ export function FormContainer({
           if (config.fieldType === 'ARRAY' && !!FieldArray) {
             return (
               <FieldArray
-                key={config.key}
+                key={key}
                 form={form}
                 config={config}
                 child={({ value, container: Container }) => value.map((_: any, index: any) => (
-                  <Container>
+                  <Container key={key + index}>
                     <FormContainer
                       Group={Group}
                       View={View}
@@ -132,7 +133,7 @@ export function FormContainer({
 
           return (
             <Field
-              key={config.key}
+              key={key}
               form={form}
               config={config}
               {...otherProps}

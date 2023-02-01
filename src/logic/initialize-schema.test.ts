@@ -37,7 +37,6 @@ const schema: Schema[] = [
   },
 ];
 
-// eslint-disable-next-line jest/expect-expect
 test('initialize test error field', () => {
   const result = initializeSchema(schema, {
     firstName: 'value of firstname',
@@ -46,5 +45,31 @@ test('initialize test error field', () => {
   });
 
   // eslint-disable-next-line no-console
-  console.log(result);
+  expect(result).toEqual([{
+    name: 'firstName',
+    fieldType: 'TEXT',
+    valueType: 'STRING',
+    initialValue: 'value of firstname',
+    variant: 'FIELD',
+    rules: [{ error: 'FirstName Is Required', expression: '!firstName' }],
+  }, {
+    name: 'lastName',
+    fieldType: 'TEXT',
+    valueType: 'STRING',
+    initialValue: 'value of lastname',
+    variant: 'FIELD',
+    rules: [{ error: 'LastName Is Required', expression: '!lastName' }],
+  }, {
+    variant: 'GROUP',
+    groupType: 'ACCORDION',
+    child: [{
+      name: 'age',
+      fieldType: 'TEXT',
+      valueType: 'NUMBER',
+      variant: 'FIELD',
+      initialValue: 20,
+      rules: [{ error: 'Age Should Higher Than 21', expression: '!(age > 20)' }],
+    }],
+    meta: {},
+  }]);
 });

@@ -221,7 +221,8 @@ export const createForm = (props: CreateFormProps) => {
     config: SchemaFieldArray,
     options: { skipValidate?: boolean; name?: string; parent?: string } = {},
   ) => {
-    const path = (options.parent || '') + (options.name || config.name);
+    const path = (options.parent ? `${options.parent}.` : '')
+    + (options.name || config.name);
     const hasError = getError(path);
     if (hasError) return;
 
@@ -236,6 +237,7 @@ export const createForm = (props: CreateFormProps) => {
           }),
           extraData: {
             __INDEX__: index,
+            __SELF__: getValue(`${path}[${index}]`),
           },
         };
         if (childConfig.variant === 'FIELD') {
@@ -259,7 +261,7 @@ export const createForm = (props: CreateFormProps) => {
   const executeEachConfig = (
     schema: Schema[],
     name?: string,
-    options: { skipValidate: boolean; parent?: string } = { skipValidate: false },
+    options: { skipValidate: boolean; } = { skipValidate: false },
   ) => {
     try {
       for (const config of schema) {
