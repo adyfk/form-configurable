@@ -162,6 +162,7 @@ export interface SchemaFieldFile extends BaseField {
 
 export interface SchemaFieldArray extends BaseField {
   fieldType: 'ARRAY';
+  component: string;
   initialValue?: any[];
   child: Schema[];
   meta?: Partial<MetaField>;

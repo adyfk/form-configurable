@@ -9,6 +9,7 @@ interface MetaView {
   htmlTooltip: string;
   helperText: string;
   badge: string;
+  children: string;
   [key: string]: any;
 }
 
