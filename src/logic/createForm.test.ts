@@ -9,6 +9,7 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'ARRAY',
         name: 'arrayobjectfield',
+        component: 'FIELD-ARRAY-COUNTER',
         initialValue: [],
         style: {
           container: {

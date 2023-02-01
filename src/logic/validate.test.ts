@@ -5,6 +5,7 @@ const schema: Schema[] = [
   {
     variant: 'FIELD',
     fieldType: 'ARRAY',
+    component: 'FIELD-ARRAY-COUNTER',
     name: 'myarray',
     initialValue: [
       { name: '', last: '' },
