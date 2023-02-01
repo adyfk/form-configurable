@@ -84,7 +84,7 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const hasError = () => !!Object.keys(_fields.error).length;
+  function hasError() { return !!Object.keys(_fields.error).length; }
 
   function getValue(name: string) { return get(_values, name); }
   function getError(name: string) { return _fields.error[name]; }
@@ -440,9 +440,7 @@ export const createForm = (props: CreateFormProps) => {
     refs: _refs,
     formState: _formState,
     subjects: _subjects,
-    get hasError() {
-      return hasError();
-    },
+    hasError,
     subscribeWatch,
     notifyWatch,
     updateTouch,

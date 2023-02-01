@@ -56,6 +56,7 @@ export const useForm = (props: IUserFormProps) => {
       // eslint-disable-next-line no-unused-vars
       onInvalid?: (errors: Record<string, any>, values: Record<string, any>, type: 'SCHEMA' | 'CUSTOM') => Promise<void> | any,
     ) => async (event: FormEvent) => {
+      props.log?.('handleSubmit triggered');
       event?.stopPropagation();
       event?.preventDefault();
 
@@ -67,14 +68,17 @@ export const useForm = (props: IUserFormProps) => {
           isSubmitted: true,
         });
         if (order === 'before') {
+          props.log?.('run (before) validate list submit');
           await validateListSubmit();
+          props.log?.('success (before) validate list submit');
         }
 
         form.executeConfig();
-        if (form.hasError && !props.forceSubmitOnError) {
+        if (form.hasError() && !props.forceSubmitOnError) {
           if (props.shouldFocusError) {
             const name = Object.keys(form.fields.error)[0];
             form.setFocus(name);
+            props.log?.(`trigger focus ${name}`);
           }
           throw new Error('Error Schema');
         } else {
@@ -82,7 +86,9 @@ export const useForm = (props: IUserFormProps) => {
         }
 
         if (order === 'after') {
+          props.log?.('run (after) validate list submit');
           await validateListSubmit();
+          props.log?.('success (after) validate list submit');
         }
 
         updateFormState({
