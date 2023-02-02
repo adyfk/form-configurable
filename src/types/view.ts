@@ -41,9 +41,14 @@ export interface SchemaViewFieldCurrency extends BaseView {
 
 type SchemaViewField = SchemaViewFieldText | SchemaViewFieldDate | SchemaViewFieldCurrency;
 
-export interface SchemaViewHelper extends BaseView {
+export interface SchemaViewDivider extends BaseView {
   viewType: 'DIVIDER';
-  meta?: Partial<MetaView>;
+  meta?: Partial<MetaView> & Partial<{
+    textAlign: string;
+    children: string;
+    variant: string;
+    orientation: string;
+  }>;
 }
 
 export interface SchemaViewCustom extends BaseView {
@@ -52,4 +57,4 @@ export interface SchemaViewCustom extends BaseView {
   meta?: Partial<MetaView>;
 }
 
-export type SchemaView = SchemaViewField | SchemaViewHelper | SchemaViewCustom;
+export type SchemaView = SchemaViewField | SchemaViewDivider | SchemaViewCustom;
