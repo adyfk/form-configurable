@@ -10,29 +10,40 @@ import type {
 
 import type { Form } from './logic/createForm';
 import createPath from './utils/createPath';
+import generateId from './utils/generateId';
 // import useField from './useField';
 
 export type GroupProps = FC<{
   form?: Form;
   config: SchemaGroup;
   child: any;
+  [key: string]: any;
 }>;
 
 export type ViewProps = FC<{
   form?: Form;
   config: SchemaView;
+  [key: string]: any;
 }>;
 
 export type FieldProps = FC<{
   form?: Form;
   config: SchemaField;
+  [key: string]: any;
+}>;
+
+export type FieldArrayChildProps = FC<{
+  value: any[];
+  container: FC<{ item: number; data: any; children: any; }>;
+  children?: any
 }>;
 
 export type FieldArrayProps = FC<{
   form?: Form;
-  config: SchemaField;
+  config: SchemaFieldArray;
   // eslint-disable-next-line no-unused-vars
-  child: (args:{ value: any[], container: any; }) => any;
+  child: FieldArrayChildProps;
+  [key: string]: any;
 }>
 
 export const mapConfigChildArray = ({ config, index }: {
@@ -44,13 +55,22 @@ export const mapConfigChildArray = ({ config, index }: {
     key: `${childConfigOverride.key}_${index}`,
   });
 
-  if (childConfig.variant === 'FIELD') {
+  if (childConfigOverride.variant === 'FIELD') {
     Object.assign(childConfigOverride, {
       name: createPath({
         parent: config.name,
         index,
         child: childConfig.name,
       }),
+      meta: {
+        ...childConfigOverride.meta,
+        label: childConfigOverride.meta?.label?.replace('__ITEM__', `${+index + 1}`),
+      },
+    });
+  }
+  if (childConfigOverride.variant === 'GROUP') {
+    Object.assign(childConfigOverride, {
+      child: mapConfigChildArray({ config, index }),
     });
   }
   return childConfigOverride as Schema;
@@ -76,7 +96,7 @@ export function FormContainer({
   return (
     <>
       {schema.map((config) => {
-        const key = config.name || config.key;
+        const key = config.name || config.key || generateId();
         if (config.variant === 'GROUP') {
           return (
             <Group
@@ -88,6 +108,7 @@ export function FormContainer({
                   Group={Group}
                   View={View}
                   Field={Field}
+                  FieldArray={FieldArray}
                   schema={config.child}
                   form={form}
                   {...otherProps}
@@ -114,19 +135,23 @@ export function FormContainer({
                 key={key}
                 form={form}
                 config={config}
-                child={({ value, container: Container }) => value.map((_: any, index: any) => (
-                  <Container key={key + index}>
-                    <FormContainer
-                      Group={Group}
-                      View={View}
-                      Field={Field}
-                      FieldArray={FieldArray}
-                      schema={mapConfigChildArray({ config, index })}
-                      form={form}
-                      {...otherProps}
-                    />
-                  </Container>
-                ))}
+                child={({ value, container: Container }) => (
+                  <>
+                    {value.map((data: any, index: number) => (
+                      <Container key={key + index} item={index} data={data}>
+                        <FormContainer
+                          Group={Group}
+                          View={View}
+                          Field={Field}
+                          FieldArray={FieldArray}
+                          schema={mapConfigChildArray({ config, index })}
+                          form={form}
+                          {...otherProps}
+                        />
+                      </Container>
+                    ))}
+                  </>
+                )}
               />
             );
           }

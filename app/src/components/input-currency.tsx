@@ -7,10 +7,9 @@ import InputCurrencyField, {
 import InputBase, { InputBaseProps } from '@mui/material/InputBase';
 import { transformToNumber } from '../utils/number';
 
-export type IInputCurrencyProps = CurrencyInputProps &
-  InputBaseProps & {
+export type IInputCurrencyProps = CurrencyInputProps & InputBaseProps & {
     empty?: string | number;
-  };
+};
 
 type Ref = HTMLInputElement | any;
 
