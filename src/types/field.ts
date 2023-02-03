@@ -122,6 +122,13 @@ export interface SchemaFieldDate extends BaseField {
   valueType: 'DATE';
   meta?: Partial<MetaField> & {
     format: string;
+    variant: 'date' |
+     'month' |
+     'year' |
+     'time' |
+     'month-year' |
+     'date-month-year' |
+     'date-month-year-time'
   };
 }
 
