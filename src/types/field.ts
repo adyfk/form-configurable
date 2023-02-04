@@ -178,7 +178,9 @@ export interface SchemaFieldArray extends BaseField {
 export interface SchemaFieldPhone extends BaseField {
   fieldType: 'PHONE';
   initialValue?: '';
-  meta?: Partial<MetaField>;
+  meta?: Partial<MetaField> & Partial<{
+    country: string;
+  }>
 }
 
 export interface SchemaFieldCustom extends BaseField {

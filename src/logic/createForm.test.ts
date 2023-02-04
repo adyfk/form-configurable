@@ -392,7 +392,7 @@ test('create-form', () => {
         initialValue: '2023-01-20T07:46:34.558Z',
         meta: {
           format: 'DD/MM/YYYY',
-          view: ['month', 'year'],
+          variant: 'date-month-year',
         },
       },
       {
