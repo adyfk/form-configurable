@@ -1,7 +1,7 @@
 import { ExpressionString, SchemaBase } from './core';
 import { Schema } from './schema';
 
-interface MetaField {
+export interface MetaField {
   placeholder: string;
   label: string;
   suffix: string;

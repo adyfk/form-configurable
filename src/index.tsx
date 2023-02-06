@@ -7,3 +7,4 @@ export * from './logic/createForm';
 export * from './logic/transform';
 export * from './logic/validate';
 export * from './logic/initialize-schema';
+export * from './useSubmitMiddleware';

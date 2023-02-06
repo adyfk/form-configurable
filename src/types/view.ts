@@ -1,6 +1,6 @@
 import { SchemaBase } from './core';
 
-interface MetaView {
+export interface MetaView {
   title: string;
   subtitle: string;
   infoTooltip: string;

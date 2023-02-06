@@ -33,6 +33,7 @@ export type FieldProps = FC<{
 }>;
 
 export type FieldArrayChildProps = FC<{
+  form?: Form;
   value: any[];
   container: FC<{ item: number; data: any; children: any; }>;
   children?: any

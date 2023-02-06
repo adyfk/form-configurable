@@ -63,7 +63,7 @@ export const SumbitMiddlewareContextProvider: FC<
     removeListSubmit,
     validateListSubmit,
     order,
-  }), []);
+  }), [listSubmit, order]);
 
   return (
     <SumbitMiddlewareContext.Provider
@@ -83,8 +83,9 @@ export const useSubmitMiddleware = (props: IUserRegisterProps) => {
     SumbitMiddlewareContext,
   );
   useEffect(() => {
-    addListSubmit(props.handleSubmit);
-    return () => removeListSubmit(props.handleSubmit);
+    const { handleSubmit } = props;
+    addListSubmit(handleSubmit);
+    return () => removeListSubmit(handleSubmit);
   }, [props.handleSubmit, addListSubmit, removeListSubmit]);
 };
 

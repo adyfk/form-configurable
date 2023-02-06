@@ -1,7 +1,7 @@
 import { SchemaBase } from './core';
 import { Schema } from './schema';
 
-interface MetaGroup {
+export interface MetaGroup {
   title: string;
   subtitle: string;
   infoTooltip: string;
