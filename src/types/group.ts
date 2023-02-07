@@ -33,10 +33,15 @@ export interface SchemaGroupCard extends BaseGroup {
   };
 }
 
+export interface SchemaGroupDefault extends BaseGroup {
+  groupType: 'DEFAULT';
+  meta: Partial<MetaGroup>;
+}
+
 export interface SchemaGroupCustom extends BaseGroup {
   groupType: 'CUSTOM';
   component: string;
   meta: Partial<MetaGroup>;
 }
 
-export type SchemaGroup = SchemaGroupCustom | SchemaGroupAccordion | SchemaGroupCard;
+export type SchemaGroup = SchemaGroupCustom | SchemaGroupAccordion | SchemaGroupCard | SchemaGroupDefault;
