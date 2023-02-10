@@ -17,7 +17,6 @@ import {
 import { SumbitMiddlewareContext } from './useSubmitMiddleware';
 import { Schema } from './types';
 import useUpdate from './hooks/useUpdate';
-import useSubscribe from './useSubscribe';
 
 interface IUserFormProps extends CreateFormProps {
   forceSubmitOnError?: boolean;
@@ -58,25 +57,7 @@ export const useForm = (props: IUserFormProps) => {
 
   const [schema, setSchema] = useState<Schema[]>([]);
 
-  const latestState = useCallback(
-    (rootFormState: RootFormState) => {
-      const latestState = initializeRootFormState(rootFormState);
-
-      if (JSON.stringify(_rootFormState.current) !== JSON.stringify(latestState)) {
-        _rootFormState.current = latestState;
-        update();
-      }
-    },
-    [],
-  );
-
   const getForm = () => _form.current;
-
-  useSubscribe({
-    form: getForm(),
-    callback: latestState,
-    subject: 'container',
-  });
 
   const handleSubmit = useCallback(
     (
@@ -160,6 +141,22 @@ export const useForm = (props: IUserFormProps) => {
     form.setFormState({ ..._form.current.formState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.schema, props.extraData, props.initialValues]);
+
+  useEffect(() => {
+    const form = getForm();
+
+    const latestState = (rootFormState: RootFormState) => {
+      const latestState = initializeRootFormState(rootFormState);
+
+      if (JSON.stringify(_rootFormState.current) !== JSON.stringify(latestState)) {
+        _rootFormState.current = latestState;
+        update();
+      }
+    };
+
+    const unsubscribe = form.subscribeWatch(latestState, 'container');
+    return unsubscribe;
+  }, [schema]);
 
   return {
     schema,

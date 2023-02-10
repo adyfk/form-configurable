@@ -35,7 +35,7 @@ const useSubscribe = (props: IUseSubscribeProps) => {
     // eslint-disable-next-line consistent-return
     return unsubscribe;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [disabled]);
+  }, [disabled, form]);
 };
 
 export default useSubscribe;
