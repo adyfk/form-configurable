@@ -20,6 +20,7 @@ export const useWatch = (props: { form?: Form; disabled?: boolean }) => {
 
   useSubscribe({
     form,
+    subject: 'state',
     callback: latestState,
     disabled,
   });

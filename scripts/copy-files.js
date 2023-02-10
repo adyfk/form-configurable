@@ -23,49 +23,48 @@ async function createModulePackages({ from, to }) {
         types: './index.d.ts',
       };
 
-      const [typingsEntryExist, moduleEntryExists, mainEntryExists] =
-        await Promise.all([
-          fse.pathExists(
-            path.resolve(path.dirname(packageJsonPath), packageJson.types)
-          ),
-          fse.pathExists(
-            path.resolve(path.dirname(packageJsonPath), packageJson.module)
-          ),
-          fse.pathExists(
-            path.resolve(path.dirname(packageJsonPath), packageJson.main)
-          ),
-          fse.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2)),
-        ]);
+      const [typingsEntryExist, moduleEntryExists, mainEntryExists] = await Promise.all([
+        fse.pathExists(
+          path.resolve(path.dirname(packageJsonPath), packageJson.types),
+        ),
+        fse.pathExists(
+          path.resolve(path.dirname(packageJsonPath), packageJson.module),
+        ),
+        fse.pathExists(
+          path.resolve(path.dirname(packageJsonPath), packageJson.main),
+        ),
+        fse.writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2)),
+      ]);
 
       const manifestErrorMessages = [];
       if (!typingsEntryExist) {
         manifestErrorMessages.push(
-          `'types' entry '${packageJson.types}' does not exist`
+          `'types' entry '${packageJson.types}' does not exist`,
         );
       }
       if (!moduleEntryExists) {
         manifestErrorMessages.push(
-          `'module' entry '${packageJson.module}' does not exist`
+          `'module' entry '${packageJson.module}' does not exist`,
         );
       }
       if (!mainEntryExists) {
         manifestErrorMessages.push(
-          `'main' entry '${packageJson.main}' does not exist`
+          `'main' entry '${packageJson.main}' does not exist`,
         );
       }
       if (manifestErrorMessages.length > 0) {
         // TODO: AggregateError
         throw new Error(
-          `${packageJsonPath}:\n${manifestErrorMessages.join('\n')}`
+          `${packageJsonPath}:\n${manifestErrorMessages.join('\n')}`,
         );
       }
 
       return packageJsonPath;
-    })
+    }),
   );
 }
 
-const packageIncludes = ['expressionparser', '@babel/runtime'];
+const packageIncludes = ['expressionparser', '@babel/runtime', 'lodash.isequal'];
 
 async function includeFileInBuild(file) {
   const sourcePath = path.resolve(packagePath, file);
@@ -90,10 +89,11 @@ async function includeFileInBuild(file) {
 async function createPackageFile() {
   const packageData = await fse.readFile(
     path.resolve(packagePath, './package.json'),
-    'utf8'
+    'utf8',
   );
-  const { nyc, scripts, devDependencies, workspaces, ...packageDataOther } =
-    JSON.parse(packageData);
+  const {
+    nyc, scripts, devDependencies, workspaces, ...packageDataOther
+  } = JSON.parse(packageData);
 
   const { dependencies } = packageDataOther;
   const newPackageData = {
@@ -105,9 +105,9 @@ async function createPackageFile() {
     private: false,
     ...(packageDataOther.main
       ? {
-          main: './index.js',
-          module: './index.js',
-        }
+        main: './index.js',
+        module: './index.js',
+      }
       : {}),
     types: './index.d.ts',
   };
@@ -119,7 +119,7 @@ async function createPackageFile() {
   await fse.writeFile(
     targetPath,
     JSON.stringify(newPackageData, null, 2),
-    'utf8'
+    'utf8',
   );
   console.log(`Created package.json in ${targetPath}`);
 
@@ -149,7 +149,7 @@ async function addLicense(packageData) {
           throw err;
         }
       }
-    })
+    }),
   );
 }
 
@@ -162,7 +162,7 @@ async function run() {
         './README.md',
         // './CHANGELOG.md',
         // './LICENSE',
-      ].map((file) => includeFileInBuild(file))
+      ].map((file) => includeFileInBuild(file)),
     );
 
     await addLicense(packageData);

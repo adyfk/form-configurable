@@ -82,6 +82,7 @@ export const useField = (props: {
   useSubscribe({
     form,
     callback: latestState,
+    subject: 'state',
   });
 
   useEffect(() => {

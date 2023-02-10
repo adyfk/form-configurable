@@ -16,6 +16,8 @@ import {
 // import useUpdate from './hooks/useUpdate';
 import { SumbitMiddlewareContext } from './useSubmitMiddleware';
 import { Schema } from './types';
+import useUpdate from './hooks/useUpdate';
+import useSubscribe from './useSubscribe';
 
 interface IUserFormProps extends CreateFormProps {
   forceSubmitOnError?: boolean;
@@ -23,31 +25,58 @@ interface IUserFormProps extends CreateFormProps {
   log?: (...arg: any) => void;
 }
 
+export const initializeRootFormState = ({
+  isDirty,
+  isSubmitSuccessful,
+  isSubmitted,
+  isValid,
+  isSubmitting,
+  isValidating,
+}:RootFormState) => ({
+  isDirty,
+  isSubmitSuccessful,
+  isSubmitted,
+  isValid,
+  isSubmitting,
+  isValidating,
+});
+
 export const useForm = (props: IUserFormProps) => {
+  const update = useUpdate();
   const { validateListSubmit, order } = useContext(SumbitMiddlewareContext);
   const _form = useRef<Form>(null as any);
+  const _rootFormState = useRef<RootFormState>(null as any);
 
   if (!_form.current) {
     _form.current = {
       ...createForm(props),
     };
+    _rootFormState.current = initializeRootFormState({
+      ..._form.current.formState,
+    });
   }
 
-  const [formState, setFormState] = useState<RootFormState>({} as any);
   const [schema, setSchema] = useState<Schema[]>([]);
+
+  const latestState = useCallback(
+    (rootFormState: RootFormState) => {
+      const latestState = initializeRootFormState(rootFormState);
+
+      if (JSON.stringify(_rootFormState.current) !== JSON.stringify(latestState)) {
+        _rootFormState.current = latestState;
+        update();
+      }
+    },
+    [],
+  );
 
   const getForm = () => _form.current;
 
-  const updateFormState = useCallback((values: Partial<RootFormState>) => {
-    setFormState((prev) => {
-      const latestFormState = {
-        ...prev,
-        ...values,
-      };
-      _form.current.formState = latestFormState;
-      return latestFormState;
-    });
-  }, []);
+  useSubscribe({
+    form: getForm(),
+    callback: latestState,
+    subject: 'container',
+  });
 
   const handleSubmit = useCallback(
     (
@@ -63,7 +92,7 @@ export const useForm = (props: IUserFormProps) => {
       const form = getForm();
 
       try {
-        updateFormState({
+        form.setFormState({
           isSubmitting: true,
           isSubmitted: true,
         });
@@ -91,12 +120,12 @@ export const useForm = (props: IUserFormProps) => {
           props.log?.('success (after) validate list submit');
         }
 
-        updateFormState({
+        form.setFormState({
           isSubmitting: false,
           isSubmitSuccessful: true,
         });
       } catch (error: any) {
-        updateFormState({
+        form.setFormState({
           isSubmitting: false,
           isSubmitSuccessful: false,
         });
@@ -111,23 +140,24 @@ export const useForm = (props: IUserFormProps) => {
           //
         }
       } finally {
-        _form.current.notifyWatch();
+        form.notifyWatch();
       }
     },
-    [props.forceSubmitOnError, updateFormState, order, validateListSubmit],
+    [props.forceSubmitOnError, order, validateListSubmit],
   );
 
   useEffect(() => {
     if (!_form.current) return;
-
     props.log?.('useForm - useEffect - (schema, extraData, initialValues)');
-    _form.current.reset({
+    const form = getForm();
+
+    form.reset({
       schema: props.schema,
       extraData: props.extraData,
       initialValues: props.initialValues,
     });
     setSchema([..._form.current.config.schema]);
-    setFormState({ ..._form.current.formState });
+    form.setFormState({ ..._form.current.formState });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.schema, props.extraData, props.initialValues]);
 
@@ -136,7 +166,9 @@ export const useForm = (props: IUserFormProps) => {
     get form() {
       return getForm();
     },
-    formState,
+    get formState() {
+      return _rootFormState.current;
+    },
     handleSubmit,
   };
 };

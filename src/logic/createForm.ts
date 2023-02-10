@@ -1,3 +1,4 @@
+import isEqual from 'lodash.isequal';
 import createPath from '../utils/createPath';
 import { expressionToValue } from '../parser';
 import type { Schema, SchemaField, SchemaFieldArray } from '../types';
@@ -25,6 +26,8 @@ export interface RootFormState {
   isSubmitted: boolean;
   isSubmitSuccessful: boolean;
   isValidating: boolean;
+  isValid: boolean;
+  isDirty: boolean;
 }
 
 export type FormValues = Record<string, any>;
@@ -64,24 +67,47 @@ export const createForm = (props: CreateFormProps) => {
     isSubmitSuccessful: false,
     isSubmitting: false,
     isValidating: false,
+    isValid: true,
+    isDirty: false,
   };
   const _refs: Record<string, any> = {};
 
-  const _subjects: { watchs: any[] } = {
+  const _subjects: { watchs: any[]; watchContainer: any[]; } = {
     watchs: [],
+    watchContainer: [],
   };
 
-  const subscribeWatch = (callback: any) => {
-    _subjects.watchs.push(callback);
-    return () => {
-      _subjects.watchs = _subjects.watchs.filter((fn) => fn !== callback);
-    };
-  };
-
-  const notifyWatch = () => {
-    for (const fn of _subjects.watchs) {
-      fn(_values, _fields, _props);
+  const subscribeWatch = (callback: any, subject: 'state' | 'container' = 'state') => {
+    if (subject === 'state') {
+      _subjects.watchs.push(callback);
+      return () => {
+        _subjects.watchs = _subjects.watchs.filter((fn) => fn !== callback);
+      };
     }
+
+    if (subject === 'container') {
+      _subjects.watchContainer = _subjects.watchContainer.filter((fn) => fn !== callback);
+      return () => {
+        _subjects.watchContainer.push(callback);
+      };
+    }
+  };
+
+  const notifyWatch = (subject: 'state' | 'container' = 'state') => {
+    if (subject === 'state') {
+      for (const fn of _subjects.watchs) {
+        fn(_values, _fields, _props);
+      }
+    } else {
+      for (const fn of _subjects.watchContainer) {
+        fn(_formState);
+      }
+    }
+  };
+
+  const setFormState = (formStateValue: Partial<RootFormState>) => {
+    Object.assign(_formState, formStateValue);
+    notifyWatch('container');
   };
 
   function hasError() { return !!Object.keys(_fields.error).length; }
@@ -297,6 +323,15 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
+  const setIsDirty = () => {
+    if (!_formState.isDirty) {
+      setFormState({
+        isDirty: !isEqual(props.initialValues, _values),
+      });
+      notifyWatch('container');
+    }
+  };
+
   const executeConfig = (
     name?: string,
     options: { skipValidate: boolean } = { skipValidate: false },
@@ -332,6 +367,7 @@ export const createForm = (props: CreateFormProps) => {
     updateTouch(name, true, false);
     executeConfig(name);
     notifyWatch();
+    setIsDirty();
   };
 
   function setValues(
@@ -346,6 +382,7 @@ export const createForm = (props: CreateFormProps) => {
 
     executeConfig();
     notifyWatch();
+    setIsDirty();
   }
 
   function setError(
@@ -379,10 +416,6 @@ export const createForm = (props: CreateFormProps) => {
     field.focus?.();
     // eslint-disable-next-line no-unused-expressions
     options.shouldSelect && field.select?.();
-  };
-
-  const setFormState = (key: keyof RootFormState, value: boolean) => {
-    _formState[key] = value;
   };
 
   const initializeValues = (schema: Schema[]) => {

@@ -63,6 +63,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   );
 
   useSubscribe({
+    subject: 'state',
     form,
     callback: latestState,
     disabled: !config.props?.length && !config.name,
