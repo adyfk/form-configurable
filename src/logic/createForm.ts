@@ -77,6 +77,39 @@ export const createForm = (props: CreateFormProps) => {
     watchContainer: [],
   };
 
+  function hasError() { return !!Object.keys(_fields.error).length; }
+
+  function getValue(name: string) { return get(_values, name); }
+  function getError(name: string) { return _fields.error[name]; }
+  function getTouch(name: string) { return _fields.touched[name]; }
+  function getProp(name: string, key: string) {
+    const value = _props[name]?.[key];
+    return (typeof value === 'undefined' || value);
+  }
+  // function unsetValue(name: string) { unset(_values, name); }
+  function unsetError(name: string) { delete _fields.error[name]; }
+  // eslint-disable-next-line no-unused-vars
+  function unsetTouch(name: string) { delete _fields.touched[name]; }
+  // function unsetProp(name: string, key: string) { delete _props[name][key]; }
+  function initValue(name: string, value: any) { set(_values, name, value); }
+  function initError(name: string, value: any) { _fields.error[name] = value; }
+  function initTouched(name: string, value: any) { _fields.touched[name] = value; }
+  function initProp(name: string, key: string, value: any) {
+    if (!_props[name]) _props[name] = {};
+
+    _props[name][key] = value;
+  }
+
+  const isPropsSkipExceute = (config: Schema, options: IOptionsEachSchema = {}) => {
+    const path = (options.path || config.name || config.key) as string;
+
+    const editable = getProp('editable', path);
+    const show = getProp('show', path);
+    if (!editable) return true;
+    if (!show) return true;
+    return false;
+  };
+
   const subscribeWatch = (callback: any, subject: 'state' | 'container' = 'state') => {
     if (subject === 'state') {
       _subjects.watchs.push(callback);
@@ -110,37 +143,12 @@ export const createForm = (props: CreateFormProps) => {
     notifyWatch('container');
   };
 
-  function hasError() { return !!Object.keys(_fields.error).length; }
+  const checkFormStateValid = () => {
+    const isValid = !hasError();
 
-  function getValue(name: string) { return get(_values, name); }
-  function getError(name: string) { return _fields.error[name]; }
-  function getTouch(name: string) { return _fields.touched[name]; }
-  function getProp(name: string, key: string) {
-    const value = _props[name]?.[key];
-    return (typeof value === 'undefined' || value);
-  }
-  // function unsetValue(name: string) { unset(_values, name); }
-  function unsetError(name: string) { delete _fields.error[name]; }
-  // eslint-disable-next-line no-unused-vars
-  function unsetTouch(name: string) { delete _fields.touched[name]; }
-  // function unsetProp(name: string, key: string) { delete _props[name][key]; }
-  function initValue(name: string, value: any) { set(_values, name, value); }
-  function initError(name: string, value: any) { _fields.error[name] = value; }
-  function initTouched(name: string, value: any) { _fields.touched[name] = value; }
-  function initProp(name: string, key: string, value: any) {
-    if (!_props[name]) _props[name] = {};
-
-    _props[name][key] = value;
-  }
-
-  const isPropsSkipExceute = (config: Schema, options: IOptionsEachSchema = {}) => {
-    const path = (options.path || config.name || config.key) as string;
-
-    const editable = getProp('editable', path);
-    const show = getProp('show', path);
-    if (!editable) return true;
-    if (!show) return true;
-    return false;
+    if (isValid !== _formState.isValid) {
+      setFormState({ isValid });
+    }
   };
 
   const executeExpressionOverride = (
@@ -368,6 +376,7 @@ export const createForm = (props: CreateFormProps) => {
     executeConfig(name);
     notifyWatch();
     setIsDirty();
+    checkFormStateValid();
   };
 
   function setValues(
@@ -383,6 +392,7 @@ export const createForm = (props: CreateFormProps) => {
     executeConfig();
     notifyWatch();
     setIsDirty();
+    checkFormStateValid();
   }
 
   function setError(
@@ -454,6 +464,7 @@ export const createForm = (props: CreateFormProps) => {
       initializeValues(_config.schema);
       executeConfig();
       notifyWatch();
+      checkFormStateValid();
     } catch (error) {
       props.log?.('error on initialize', error);
     }
