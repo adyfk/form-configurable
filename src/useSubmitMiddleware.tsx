@@ -110,7 +110,7 @@ export const resolverMiddleware = ({ resolver, form }: { resolver: any; form: Fo
     return await resolver(
       {
         ...values,
-        parent: form.values,
+        parent: form.config.values,
       },
       {},
       {},

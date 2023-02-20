@@ -45,7 +45,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, config } = props;
   const _state = useRef<IStateInitializeView>(
-    initializeView({ values: form.values, props: form.props, config }),
+    initializeView({ values: form.config.values, props: form.props, config }),
   );
   const [state, updateState] = useState<IStateInitializeView>({
     ..._state.current,
@@ -70,7 +70,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   });
 
   useEffect(() => {
-    latestState(form.values, form.fields, form.props);
+    latestState(form.config.values, form.fields, form.props);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config]);
 

@@ -26,7 +26,7 @@ export const useWatch = (props: { form?: Form; disabled?: boolean }) => {
   });
 
   return {
-    values: form.values,
+    values: form.config.values,
     formState: form.formState,
     fields: form.fields,
   };

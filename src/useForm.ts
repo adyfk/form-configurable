@@ -31,7 +31,7 @@ export const initializeRootFormState = ({
   isValid,
   isSubmitting,
   isValidating,
-}:RootFormState) => ({
+}: RootFormState) => ({
   isDirty,
   isSubmitSuccessful,
   isSubmitted,
@@ -92,7 +92,7 @@ export const useForm = (props: IUserFormProps) => {
           }
           throw new Error('Error Schema');
         } else {
-          await onValid(form.values);
+          await onValid(form.config.values);
         }
 
         if (order === 'after') {
@@ -114,7 +114,7 @@ export const useForm = (props: IUserFormProps) => {
         try {
           await onInvalid?.(
             form.fields.error,
-            form.values,
+            form.config.values,
             error?.message === 'Error Schema' ? 'SCHEMA' : 'CUSTOM',
           );
         } catch (error) {

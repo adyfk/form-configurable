@@ -54,7 +54,7 @@ export const useField = (props: {
   const _ref = useRef();
   const _state = useRef<IStateInitializeField>(
     initializeField({
-      values: form.values,
+      values: form.config.values,
       fields: form.fields,
       props: form.props,
       config,
@@ -86,7 +86,7 @@ export const useField = (props: {
   });
 
   useEffect(() => {
-    latestState(form.values, form.fields, form.props);
+    latestState(form.config.values, form.fields, form.props);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [config]);
 
@@ -110,7 +110,7 @@ export const useField = (props: {
     onChange: useCallback(
       (arg: any) => {
         if (typeof arg === 'function') {
-          form.setValue(config.name, arg(form.values));
+          form.setValue(config.name, arg(form.config.values));
         } else {
           form.setValue(config.name, arg);
         }

@@ -482,7 +482,6 @@ export const createForm = (props: CreateFormProps) => {
   return {
     config: _config,
     props: _props,
-    values: _config.values,
     fields: _fields,
     refs: _refs,
     formState: _formState,
