@@ -256,7 +256,7 @@ export const createForm = (props: CreateFormProps) => {
     options: { skipValidate?: boolean; name?: string; parent?: string } = {},
   ) => {
     const path = (options.parent ? `${options.parent}.` : '')
-    + (options.name || config.name);
+      + (options.name || config.name);
     const hasError = getError(path);
     if (hasError) return;
 
@@ -443,7 +443,7 @@ export const createForm = (props: CreateFormProps) => {
   };
 
   // initialize default values
-  const initialize = (arg: CreateFormProps = { }) => {
+  const initialize = (arg: CreateFormProps = {}) => {
     props.log?.('initialize arg', arg);
     props.log?.('initialize props', props);
 
@@ -463,7 +463,8 @@ export const createForm = (props: CreateFormProps) => {
 
       initializeValues(_config.schema);
       executeConfig();
-      notifyWatch();
+      notifyWatch('container');
+      notifyWatch('state');
       checkFormStateValid();
     } catch (error) {
       props.log?.('error on initialize', error);
