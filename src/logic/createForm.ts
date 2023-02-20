@@ -47,13 +47,14 @@ export const createForm = (props: CreateFormProps) => {
   const _config: {
     schema: Schema[];
     extraData: FormValues;
+    values: FormValues;
     initialValues: Record<string, any>
   } = {
     schema: [],
     extraData: {},
     initialValues: {},
+    values: {},
   };
-  const _values: FormValues = {};
   const _props: Props = {
     show: {},
     editable: {},
@@ -79,19 +80,19 @@ export const createForm = (props: CreateFormProps) => {
 
   function hasError() { return !!Object.keys(_fields.error).length; }
 
-  function getValue(name: string) { return get(_values, name); }
+  function getValue(name: string) { return get(_config.values, name); }
   function getError(name: string) { return _fields.error[name]; }
   function getTouch(name: string) { return _fields.touched[name]; }
   function getProp(name: string, key: string) {
     const value = _props[name]?.[key];
     return (typeof value === 'undefined' || value);
   }
-  // function unsetValue(name: string) { unset(_values, name); }
+  // function unsetValue(name: string) { unset(_config.values, name); }
   function unsetError(name: string) { delete _fields.error[name]; }
   // eslint-disable-next-line no-unused-vars
   function unsetTouch(name: string) { delete _fields.touched[name]; }
   // function unsetProp(name: string, key: string) { delete _props[name][key]; }
-  function initValue(name: string, value: any) { set(_values, name, value); }
+  function initValue(name: string, value: any) { set(_config.values, name, value); }
   function initError(name: string, value: any) { _fields.error[name] = value; }
   function initTouched(name: string, value: any) { _fields.touched[name] = value; }
   function initProp(name: string, key: string, value: any) {
@@ -129,7 +130,7 @@ export const createForm = (props: CreateFormProps) => {
   const notifyWatch = (subject: 'state' | 'container' = 'state') => {
     if (subject === 'state') {
       for (const fn of _subjects.watchs) {
-        fn(_values, _fields, _props);
+        fn(_config.values, _fields, _props);
       }
     } else {
       for (const fn of _subjects.watchContainer) {
@@ -159,13 +160,13 @@ export const createForm = (props: CreateFormProps) => {
     const path = options.path || config.name;
 
     if (typeof name === 'string' && path.includes(name) && config.override?.others) {
-      Object.assign(_values, config.override?.others);
+      Object.assign(_config.values, config.override?.others);
     }
 
     if (config.override?.self) {
       try {
         const result = expressionToValue(config.override.self, {
-          ..._values,
+          ..._config.values,
           ..._config.extraData,
           ...options.extraData,
         });
@@ -188,7 +189,7 @@ export const createForm = (props: CreateFormProps) => {
         if (expression) {
           try {
             const isValid = expressionToValue(expression, {
-              ..._values,
+              ..._config.values,
               ..._config.extraData,
               ...options.extraData,
             });
@@ -221,7 +222,7 @@ export const createForm = (props: CreateFormProps) => {
       if (rule.catch) {
         try {
           const isTrue = expressionToValue(rule.expression, {
-            ..._values,
+            ..._config.values,
             ..._config.extraData,
             ...options.extraData,
           });
@@ -235,7 +236,7 @@ export const createForm = (props: CreateFormProps) => {
       } else {
         try {
           const isTrue = expressionToValue(rule.expression, {
-            ..._values,
+            ..._config.values,
             ..._config.extraData,
             ...options.extraData,
           });
@@ -334,7 +335,7 @@ export const createForm = (props: CreateFormProps) => {
   const setIsDirty = () => {
     if (!_formState.isDirty) {
       setFormState({
-        isDirty: !isEqual(props.initialValues, _values),
+        isDirty: !isEqual(props.initialValues, _config.values),
       });
       notifyWatch('container');
     }
@@ -432,7 +433,7 @@ export const createForm = (props: CreateFormProps) => {
     try {
       for (const config of schema) {
         if (config.variant === 'FIELD') {
-          set(_values, config.name, get(_config.initialValues, config.name) || config.initialValue);
+          set(_config.values, config.name, get(_config.initialValues, config.name) || config.initialValue);
         } else if (config.variant === 'GROUP') {
           initializeValues(config.child);
         }
@@ -457,6 +458,7 @@ export const createForm = (props: CreateFormProps) => {
         isValidating: false,
       });
 
+      _config.values = {};
       _config.schema = arg.schema || props.schema || [];
       _config.extraData = arg.extraData || props.extraData || {};
       _config.initialValues = arg.initialValues || props.initialValues || {};
@@ -480,7 +482,7 @@ export const createForm = (props: CreateFormProps) => {
   return {
     config: _config,
     props: _props,
-    values: _values,
+    values: _config.values,
     fields: _fields,
     refs: _refs,
     formState: _formState,
