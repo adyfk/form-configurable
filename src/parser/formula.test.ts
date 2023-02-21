@@ -121,9 +121,9 @@ describe('Simple Boolean Expression', () => {
   });
 });
 
-describe('Boolean Expression', () => {});
+describe('Boolean Expression', () => { });
 
-describe('Case Insensitive Expression', () => {});
+describe('Case Insensitive Expression', () => { });
 
 describe('Terminal', () => {
   it('should result in 42', () => {
@@ -154,6 +154,11 @@ describe('Grouping', () => {
 });
 
 describe('Calls and Arrays', () => {
+  it('test includes array', () => {
+    const result = calc('INCLUDES("x",["x",5,6])');
+    expect(result).toBe(true);
+  });
+
   it('should result in 5 condition 1', () => {
     const result = calc('AVERAGE([4,5,6])');
     expect(result).toBe(5);

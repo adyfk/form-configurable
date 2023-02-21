@@ -314,6 +314,12 @@ export const formula = function (
       }
     },
 
+    INCLUDES: (arg1, arg2) => {
+      const item = arg1();
+      const arr = evalArray(arg2());
+      return arr.includes(item);
+    },
+
     NEG: (arg) => -num(arg()),
     MOD: (a, b) => num(a()) % num(b()),
     NOT: (arg) => !arg(),
