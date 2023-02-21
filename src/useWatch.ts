@@ -49,7 +49,7 @@ export const useWatch = (props: { form?: Form; name: string[] }) => {
     callback: latestState,
   });
 
-  return _state;
+  return _state.current;
 };
 
 export default useWatch;
