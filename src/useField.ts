@@ -1,5 +1,5 @@
 import {
-  useCallback, useContext, useEffect, useRef, useState,
+  useCallback, useContext, useEffect, useRef,
 } from 'react';
 import { SchemaField } from './types';
 import {
@@ -8,6 +8,7 @@ import {
 import useSubscribe from './useSubscribe';
 import { FormContext } from './useForm';
 import get from './utils/get';
+import useUpdate from './hooks/useUpdate';
 
 export const initializeField = ({
   values,
@@ -60,10 +61,7 @@ export const useField = (props: {
       config,
     }),
   );
-
-  const [state, updateState] = useState<IStateInitializeField>({
-    ..._state.current,
-  });
+  const update = useUpdate();
 
   const latestState = useCallback(
     (values: FormValues, fields: Fields, props: Props) => {
@@ -73,7 +71,7 @@ export const useField = (props: {
 
       if (JSON.stringify(_state.current) !== JSON.stringify(latestState)) {
         _state.current = latestState;
-        updateState(latestState);
+        update();
       }
     },
     [config],
@@ -97,16 +95,16 @@ export const useField = (props: {
     };
   }, [config.name, form.refs]);
 
-  log?.(config, state);
+  log?.(config, _state.current);
 
   return {
     form,
     formState,
-    fieldState: state.fieldState,
+    fieldState: _state.current.fieldState,
     ref: _ref,
-    value: state.value,
-    error: state.error,
-    touched: formState.isSubmitted || state.touched,
+    value: _state.current.value,
+    error: _state.current.error,
+    touched: formState.isSubmitted || _state.current.touched,
     onChange: useCallback(
       (arg: any) => {
         if (typeof arg === 'function') {

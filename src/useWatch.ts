@@ -1,35 +1,55 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useRef } from 'react';
 import { FormContext } from './useForm';
-import { Form } from './logic/createForm';
+import { Form, FormValues } from './logic/createForm';
 import useSubscribe from './useSubscribe';
 import useUpdate from './hooks/useUpdate';
+import get from './utils/get';
 
-export const useWatch = (props: { form?: Form; disabled?: boolean }) => {
+interface IStateInitializeWatch {
+  values: FormValues;
+  name: string[];
+}
+
+export const initializeWatch = ({
+  values,
+  name,
+}: IStateInitializeWatch) => {
+  const data: any[] = [];
+
+  for (const key of name) {
+    data.push(get(values, key));
+  }
+
+  return data;
+};
+
+export const useWatch = (props: { form?: Form; name: string[] }) => {
   const { form: formContext } = useContext(FormContext);
-  const { form = formContext, disabled } = props;
+  const { form = formContext, name } = props;
   const update = useUpdate();
+  const _state = useRef<any[]>(
+    initializeWatch({ values: form.config.values, name }),
+  );
 
   const latestState = useCallback(
-    () => {
-      update();
+    (values: FormValues) => {
+      const latestState = initializeWatch({ values, name });
+      if (JSON.stringify(_state.current) !== JSON.stringify(latestState)) {
+        _state.current = latestState;
+        update();
+      }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [name],
   );
 
   useSubscribe({
     form,
     subject: 'state',
     callback: latestState,
-    disabled,
   });
 
-  return {
-    values: form.config.values,
-    formState: form.formState,
-    fields: form.fields,
-  };
+  return _state;
 };
 
 export default useWatch;

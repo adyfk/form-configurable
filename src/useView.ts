@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import {
-  useCallback, useContext, useEffect, useRef, useState,
+  useCallback, useContext, useEffect, useRef,
 } from 'react';
 import { Schema } from './types';
 import { FormContext } from './useForm';
@@ -9,6 +9,7 @@ import {
 } from './logic/createForm';
 import useSubscribe from './useSubscribe';
 import get from './utils/get';
+import useUpdate from './hooks/useUpdate';
 
 export const initializeView = ({
   values,
@@ -47,16 +48,14 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   const _state = useRef<IStateInitializeView>(
     initializeView({ values: form.config.values, props: form.props, config }),
   );
-  const [state, updateState] = useState<IStateInitializeView>({
-    ..._state.current,
-  });
+  const update = useUpdate();
 
   const latestState = useCallback(
     (values: FormValues, _: Fields, props: Props) => {
       const latestState = initializeView({ values, props, config });
       if (JSON.stringify(_state.current) !== JSON.stringify(latestState)) {
         _state.current = latestState;
-        updateState(latestState);
+        update();
       }
     },
     [config],
@@ -75,8 +74,8 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   }, [config]);
 
   return {
-    data: state.data,
-    viewState: state.viewState,
+    data: _state.current.data,
+    viewState: _state.current.viewState,
   };
 };
 
