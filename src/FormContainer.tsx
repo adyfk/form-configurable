@@ -97,7 +97,7 @@ export function FormContainer({
   return (
     <>
       {schema.map((config) => {
-        const key = config.name || config.key || generateId();
+        const key = config.variant + (config.name || config.key || generateId());
         if (config.variant === 'GROUP') {
           return (
             <Group
