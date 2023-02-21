@@ -27,10 +27,10 @@ export const initializeWatch = ({
 export const useWatch = (props: { form?: Form; name: string[] }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, name } = props;
-  const update = useUpdate();
   const _state = useRef<any[]>(
     initializeWatch({ values: form.config.values, name }),
   );
+  const update = useUpdate();
 
   const latestState = useCallback(
     (values: FormValues) => {
@@ -40,7 +40,7 @@ export const useWatch = (props: { form?: Form; name: string[] }) => {
         update();
       }
     },
-    [name],
+    [name.length],
   );
 
   useSubscribe({
