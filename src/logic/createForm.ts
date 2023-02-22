@@ -458,10 +458,10 @@ export const createForm = (props: CreateFormProps) => {
         isValidating: false,
       });
 
-      _config.values = {};
       _config.schema = arg.schema || props.schema || [];
       _config.extraData = arg.extraData || props.extraData || {};
       _config.initialValues = arg.initialValues || props.initialValues || {};
+      _config.values = { ..._config.initialValues };
 
       initializeValues(_config.schema);
       executeConfig();
