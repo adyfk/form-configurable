@@ -74,6 +74,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   }, [config]);
 
   return {
+    form,
     data: _state.current.data,
     viewState: _state.current.viewState,
   };
