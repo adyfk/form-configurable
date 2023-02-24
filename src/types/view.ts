@@ -57,4 +57,24 @@ export interface SchemaViewCustom extends BaseView {
   meta?: Partial<MetaView>;
 }
 
-export type SchemaView = SchemaViewField | SchemaViewDivider | SchemaViewCustom;
+export interface SchemaViewFieldOption extends BaseView {
+  viewType: 'FIELD-OPTION';
+  meta?: Partial<MetaView> & Partial<{
+    prefix: string;
+    suffix: string;
+  }>;
+}
+
+export interface SchemaViewFieldMultipleOption extends BaseView {
+  viewType: 'FIELD-MULTIPLE-OPTION';
+  meta?: Partial<MetaView> & Partial<{
+    prefix: string;
+    suffix: string;
+  }>;
+}
+
+export type SchemaView = SchemaViewField |
+  SchemaViewDivider |
+  SchemaViewCustom |
+  SchemaViewFieldOption |
+  SchemaViewFieldMultipleOption;
