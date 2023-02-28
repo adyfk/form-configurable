@@ -10,6 +10,7 @@ export interface MetaView {
   helperText: string;
   badge: string;
   children: string;
+  variant: string;
   [key: string]: any;
 }
 
@@ -17,6 +18,14 @@ interface BaseView extends SchemaBase {
   variant: 'VIEW';
   name?: string;
   data?: any;
+}
+
+export interface SchemaViewText extends BaseView {
+  viewType: 'TEXT';
+  meta?: Partial<MetaView> & Partial<{
+    prefix: string;
+    suffix: string;
+  }>;
 }
 
 export interface SchemaViewFieldText extends BaseView {
