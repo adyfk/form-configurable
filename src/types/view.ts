@@ -82,7 +82,8 @@ export interface SchemaViewFieldMultipleOption extends BaseView {
   }>;
 }
 
-export type SchemaView = SchemaViewField |
+export type SchemaView = SchemaViewText |
+  SchemaViewField |
   SchemaViewDivider |
   SchemaViewCustom |
   SchemaViewFieldOption |
