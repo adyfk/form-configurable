@@ -123,12 +123,12 @@ export interface SchemaFieldDate extends BaseField {
   meta?: Partial<MetaField> & {
     format: string;
     variant: 'date' |
-     'month' |
-     'year' |
-     'time' |
-     'month-year' |
-     'date-month-year' |
-     'date-month-year-time'
+    'month' |
+    'year' |
+    'time' |
+    'month-year' |
+    'date-month-year' |
+    'date-month-year-time'
   };
 }
 
@@ -143,7 +143,14 @@ export interface SchemaFieldDateRange extends BaseField {
 
 export interface SchemaFieldFile extends BaseField {
   fieldType: 'FILE';
-  initialValue?: [];
+  initialValue?: Partial<{
+    fileId: string;
+    fileName: string;
+    fileUrl: string;
+    fileSize: number | string;
+    fileCategory: string;
+    fileExtension: string;
+  }>[];
   meta?: Partial<MetaField> & {
     description?: string;
     uploadUrl?: string;
