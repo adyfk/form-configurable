@@ -144,6 +144,7 @@ export interface SchemaFieldDateRange extends BaseField {
 export interface SchemaFieldFile extends BaseField {
   fieldType: 'FILE';
   initialValue?: Partial<{
+    [key: string]: any;
     fileId: string;
     fileName: string;
     fileUrl: string;
