@@ -381,7 +381,10 @@ test('create-form', () => {
         variant: 'FIELD',
         fieldType: 'SWITCH',
         name: 'field_switch',
-        initialValue: false,
+        initialValue: {
+          label: 'Label',
+          value: false,
+        },
       },
       {
         key: 'FORMNAME_FIELD_field_date',

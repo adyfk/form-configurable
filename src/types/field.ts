@@ -113,8 +113,13 @@ export interface SchemaFieldCounter extends BaseField {
 
 export interface SchemaFieldSwitch extends BaseField {
   fieldType: 'SWITCH';
-  initialValue?: boolean;
-  meta?: Partial<MetaField>;
+  initialValue?: IOption;
+  meta?: Partial<MetaField> & {
+    options: [
+      { value: true, label: string },
+      { value: false, label: string }
+    ]
+  };
 }
 
 export interface SchemaFieldDate extends BaseField {
