@@ -376,7 +376,7 @@ export const createForm = (props: CreateFormProps) => {
     updateTouch(name, true, false);
     executeConfig(name);
     notifyWatch();
-    setIsDirty();
+    // setIsDirty();
     checkFormStateValid();
   };
 
