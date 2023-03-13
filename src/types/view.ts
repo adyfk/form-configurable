@@ -17,7 +17,6 @@ export interface MetaView {
 interface BaseView extends SchemaBase {
   variant: 'VIEW';
   name?: string;
-  data?: any;
 }
 
 export interface SchemaViewText extends BaseView {

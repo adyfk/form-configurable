@@ -16,6 +16,7 @@ export interface BaseProp {
 }
 
 export interface SchemaBase {
+  data?: any;
   name?: string;
   key?: string;
   style?: Partial<BaseStyle>;
