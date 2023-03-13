@@ -314,6 +314,8 @@ export const createForm = (props: CreateFormProps) => {
               name: config.name,
               skipValidate: options.skipValidate,
             });
+          } else if (config.fieldType === 'OBJECT') {
+            //
           }
         } else if (config.variant === 'GROUP') {
           executeExpressionProps(config);

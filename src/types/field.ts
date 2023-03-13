@@ -146,6 +146,15 @@ export interface SchemaFieldDateRange extends BaseField {
   initialValue?: { start: string; end: string };
 }
 
+export interface SchemaFieldDateTimeRange extends BaseField {
+  fieldType: 'DATE-TIME-RANGE';
+  valueType: 'DATE';
+  meta?: Partial<MetaField> & {
+    format: string;
+  };
+  initialValue?: { start: string; end: string };
+}
+
 export interface SchemaFieldFile extends BaseField {
   fieldType: 'FILE';
   initialValue?: Partial<{
@@ -196,6 +205,14 @@ export interface SchemaFieldPhone extends BaseField {
   }>
 }
 
+export interface SchemaFieldObject extends BaseField {
+  fieldType: 'OBJECT';
+  initialValue?: any;
+  component: string;
+  child: Schema[];
+  meta?: Partial<MetaField>;
+}
+
 export interface SchemaFieldCustom extends BaseField {
   fieldType: 'CUSTOM';
   initialValue?: any;
@@ -218,6 +235,8 @@ export type SchemaField =
   | SchemaFieldDate
   | SchemaFieldPhone
   | SchemaFieldDateRange
-  | SchemaFieldArray;
+  | SchemaFieldArray
+  | SchemaFieldObject
+  | SchemaFieldDateTimeRange;
 
 // FORMNAME_VARIANT_FIELDNAME
