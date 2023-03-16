@@ -1,0 +1,79 @@
+{
+  "name": "form-configurable",
+  "version": "1.4.64",
+  "license": "MIT",
+  "private": false,
+  "author": "Adi Fatkhurozi <ady.fatkhurozi@gmail.com>",
+  "description": "Performant, flexible and extensible forms library for React Form Configurable",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "expressionparser": "^1.1.5",
+    "@babel/runtime": "^7.20.7",
+    "lodash.isequal": "^4.5.0"
+  },
+  "release": {
+    "branches": [
+      "master",
+      "next"
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      [
+        "@semantic-release/npm",
+        {
+          "pkgRoot": "dist"
+        }
+      ],
+      "@semantic-release/github"
+    ],
+    "ci": true
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adyfk/form-configurable.git"
+  },
+  "keywords": [
+    "react",
+    "hooks",
+    "form",
+    "forms",
+    "form-validation",
+    "validation",
+    "typescript",
+    "react-hooks",
+    "react-form",
+    "form-dynamic",
+    "form-configurable",
+    "expression-form"
+  ],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "bugs": {
+    "url": "https://github.com/adyfk/form-configurable/issues"
+  },
+  "types": "./index.d.ts"
+}
