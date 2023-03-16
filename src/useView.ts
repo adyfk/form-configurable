@@ -65,7 +65,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
     subject: 'state',
     form,
     callback: latestState,
-    disabled: !config.props?.length && !config.name,
+    disabled: !config.name,
   });
 
   useEffect(() => {
