@@ -45,6 +45,7 @@ type IStateInitializeView = ReturnType<typeof initializeView>;
 export const useView = (props: { form?: Form; config: Schema }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, config } = props;
+
   const _state = useRef<IStateInitializeView>(
     initializeView({ values: form.config.values, props: form.props, config }),
   );
