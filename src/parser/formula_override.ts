@@ -292,7 +292,6 @@ export const formula = function (
         return false;
       }
     },
-
     DATE_MIN: (date1, date2) => {
       try {
         const d1 = date(date1());
@@ -313,13 +312,22 @@ export const formula = function (
         return false;
       }
     },
-
     INCLUDES: (arg1, arg2) => {
       const item = arg1();
       const arr = evalArray(arg2());
       return arr.includes(item);
     },
-
+    REGEX: (arg1, arg2) => {
+      const stringRegex = string(arg1());
+      const value = string(arg2());
+      return new RegExp(stringRegex).test(value);
+    },
+    REGEX_FLAG: (arg1, arg2, arg3) => {
+      const stringRegex = string(arg1());
+      const flag = string(arg2());
+      const value = string(arg3());
+      return new RegExp(stringRegex, flag).test(value);
+    },
     NEG: (arg) => -num(arg()),
     MOD: (a, b) => num(a()) % num(b()),
     NOT: (arg) => !arg(),
