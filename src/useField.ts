@@ -7,7 +7,7 @@ import {
 } from "./logic/createForm";
 import useSubscribe from "./useSubscribe";
 import { FormContext } from "./useForm";
-import get from "./utils/get";
+import get from "./v2/utils/get";
 import useUpdate from "./hooks/useUpdate";
 
 export const initializeField = ({

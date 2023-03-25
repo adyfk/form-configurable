@@ -12,8 +12,8 @@ import type {
 } from "./types";
 
 import type { Form } from "./logic/createForm";
-import createPath from "./utils/createPath";
-import generateId from "./utils/generateId";
+import createPath from "./v2/utils/createPath";
+import generateId from "./v2/utils/generateId";
 // import useField from './useField';
 
 export type GroupProps = FC<{

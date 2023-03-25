@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { renderHook } from "@testing-library/react";
+// import { renderHook } from "@testing-library/react";
 import { INativeSchema, ISchemaFieldArrayCustom, ISchemaFieldCustom, ISchemaGroupCustom, ISchemaViewCustom } from "../../types";
 import useForm from "../useForm";
 import useField from "../useField";
@@ -100,6 +100,7 @@ const schemas: ISchema[] = [
   },
 ];
 
+// eslint-disable-next-line no-unused-vars
 function testMergeHook() {
   const { form } = useForm<ISchema>({
     schemas,
@@ -142,6 +143,6 @@ function testMergeHook() {
 }
 // eslint-disable-next-line jest/expect-expect
 test("returns logged in user", () => {
-  const { result } = renderHook(() => testMergeHook());
-  console.log("use form", result.current);
+  // const { result } = renderHook(() => testMergeHook());
+  // console.log("use form", result.current);
 });

@@ -4,7 +4,7 @@ import { FormContext } from "./useForm";
 import { Form, FormValues } from "./logic/createForm";
 import useSubscribe from "./useSubscribe";
 import useUpdate from "./hooks/useUpdate";
-import get from "./utils/get";
+import get from "./v2/utils/get";
 
 interface IStateInitializeWatch {
   values: FormValues;

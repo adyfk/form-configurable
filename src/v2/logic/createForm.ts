@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-vars */
 import isEqual from "lodash.isequal";
 import { FormEvent } from "react";
-import get from "../../utils/get";
+import get from "../utils/get";
 import type {
   IExpressionString,
   IObject,
@@ -11,7 +11,7 @@ import type {
   ISchemaFieldDefault,
   ISchemaFieldObjectDefault,
 } from "../types";
-import set from "../../utils/set";
+import set from "../utils/set";
 import { createParser } from "../parser";
 
 // eslint-disable-next-line no-unused-vars

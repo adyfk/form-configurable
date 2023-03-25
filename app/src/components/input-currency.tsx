@@ -5,10 +5,10 @@ import InputCurrencyField, {
   CurrencyInputProps,
 } from 'react-currency-input-field';
 import InputBase, { InputBaseProps } from '@mui/material/InputBase';
-import { transformToNumber } from '../utils/number';
+import { transformToNumber } from '../v2/utils/number';
 
 export type IInputCurrencyProps = CurrencyInputProps & InputBaseProps & {
-    empty?: string | number;
+  empty?: string | number;
 };
 
 type Ref = HTMLInputElement | any;

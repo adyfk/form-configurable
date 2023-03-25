@@ -1,9 +1,9 @@
 import isEqual from "lodash.isequal";
-import createPath from "../utils/createPath";
+import createPath from "../v2/utils/createPath";
 import { expressionToValue } from "../parser";
 import type { Schema, SchemaField, SchemaFieldArray } from "../types";
-import set from "../utils/set";
-import get from "../utils/get";
+import set from "../v2/utils/set";
+import get from "../v2/utils/get";
 
 export type Props = {
   show: Record<string, boolean>;
