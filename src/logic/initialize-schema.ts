@@ -1,5 +1,5 @@
 /* eslint-disable camelcase */
-import type { Schema } from '../types';
+import type { Schema } from "../types";
 
 const executeEachConfig = (
   schema: Schema[],
@@ -7,13 +7,13 @@ const executeEachConfig = (
   extraData: Record<any, any>,
 ) => {
   for (const config of schema) {
-    if (config.variant === 'FIELD') {
+    if (config.variant === "FIELD") {
       config.initialValue = data[config.name];
-    } else if (config.variant === 'VIEW') {
+    } else if (config.variant === "VIEW") {
       if (config.name) {
         config.data = data[config.name];
       }
-    } else if (config.variant === 'GROUP') {
+    } else if (config.variant === "GROUP") {
       if (config.name) {
         config.data = data[config.name];
       }

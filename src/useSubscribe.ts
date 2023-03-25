@@ -1,17 +1,17 @@
-import { useContext, useEffect } from 'react';
-import { FormContext } from './useForm';
+import { useContext, useEffect } from "react";
+import { FormContext } from "./useForm";
 import {
   Form, Fields, Props, RootFormState,
-} from './logic/createForm';
+} from "./logic/createForm";
 
 interface IUseSubscribePropsState {
-  subject: 'state';
+  subject: "state";
   // eslint-disable-next-line no-unused-vars
   callback: (values: Record<string, any>, fields: Fields, props: Props) => any;
 }
 
 interface IUseSubscribePropsContainer {
-  subject: 'container';
+  subject: "container";
   // eslint-disable-next-line no-unused-vars
   callback: (rootFormState: RootFormState) => any;
 }
@@ -25,7 +25,7 @@ type IUseSubscribeProps = (IUseSubscribePropsState | IUseSubscribePropsContainer
 const useSubscribe = (props: IUseSubscribeProps) => {
   const { form: formContext } = useContext(FormContext);
   const {
-    form = formContext, callback, disabled, subject = 'state',
+    form = formContext, callback, disabled, subject = "state",
   } = props;
 
   useEffect(() => {

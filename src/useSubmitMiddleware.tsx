@@ -9,16 +9,16 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from 'react';
-import { SchemaField } from './types';
-import { Form } from './logic/createForm';
+} from "react";
+import { SchemaField } from "./types";
+import { Form } from "./logic/createForm";
 
 interface IFormRegisterContext {
   listSubmit: any[];
   addListSubmit: (callback: any) => void;
   removeListSubmit: (callback: any) => void;
   validateListSubmit: () => Promise<any>;
-  order: 'before' | 'after';
+  order: "before" | "after";
 }
 
 export const SumbitMiddlewareContext = createContext<IFormRegisterContext>({
@@ -28,7 +28,7 @@ export const SumbitMiddlewareContext = createContext<IFormRegisterContext>({
 export const SumbitMiddlewareContextProvider: FC<
   {
     children: any;
-  } & Pick<IFormRegisterContext, 'order'>
+  } & Pick<IFormRegisterContext, "order">
 > = ({ children, order }) => {
   const [listSubmit, setListSubmit] = useState<any[]>([]);
 
@@ -91,12 +91,12 @@ export const useSubmitMiddleware = (props: IUserRegisterProps) => {
 
 export function withSubmitMiddleware<T extends object>(
   Child: React.ComponentType<T>,
-  config: Pick<IFormRegisterContext, 'order'>,
+  config: Pick<IFormRegisterContext, "order">,
 ) {
-  const displayName = Child.displayName || Child.name || 'Component';
+  const displayName = Child.displayName || Child.name || "Component";
   function Component(props: T) {
     return (
-      <SumbitMiddlewareContextProvider order={config.order || 'before'}>
+      <SumbitMiddlewareContextProvider order={config.order || "before"}>
         <Child {...props} />
       </SumbitMiddlewareContextProvider>
     );

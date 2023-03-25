@@ -1,15 +1,15 @@
 /* eslint-disable no-underscore-dangle */
 import {
   useCallback, useContext, useEffect, useRef,
-} from 'react';
-import { Schema } from './types';
-import { FormContext } from './useForm';
+} from "react";
+import { Schema } from "./types";
+import { FormContext } from "./useForm";
 import {
   Fields, Form, FormValues, Props,
-} from './logic/createForm';
-import useSubscribe from './useSubscribe';
-import get from './utils/get';
-import useUpdate from './hooks/useUpdate';
+} from "./logic/createForm";
+import useSubscribe from "./useSubscribe";
+import get from "./utils/get";
+import useUpdate from "./hooks/useUpdate";
 
 export const initializeView = ({
   values,
@@ -30,7 +30,7 @@ export const initializeView = ({
 
   for (const key in props) {
     const value = props[key]?.[(config.name || config.key) as string];
-    field.viewState[key] = typeof value === 'undefined' ? true : value;
+    field.viewState[key] = typeof value === "undefined" ? true : value;
   }
 
   if (config.name) {
@@ -63,7 +63,7 @@ export const useView = (props: { form?: Form; config: Schema }) => {
   );
 
   useSubscribe({
-    subject: 'state',
+    subject: "state",
     form,
     callback: latestState,
     disabled: !config.props?.length && !config.name,

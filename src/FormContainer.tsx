@@ -1,16 +1,19 @@
+/* eslint-disable consistent-return */
+/* eslint-disable react/require-default-props */
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-use-before-define */
 /* eslint-disable array-callback-return */
 
-import { FC } from 'react';
+import { FC } from "react";
 
 import type {
   Schema, SchemaGroup, SchemaView, SchemaField, SchemaFieldArray,
-} from './types';
+} from "./types";
 
-import type { Form } from './logic/createForm';
-import createPath from './utils/createPath';
-import generateId from './utils/generateId';
+import type { Form } from "./logic/createForm";
+import createPath from "./utils/createPath";
+import generateId from "./utils/generateId";
 // import useField from './useField';
 
 export type GroupProps = FC<{
@@ -56,7 +59,7 @@ export const mapConfigChildArray = ({ config, index }: {
     key: `${childConfigOverride.key}_${index}`,
   });
 
-  if (childConfigOverride.variant === 'FIELD') {
+  if (childConfigOverride.variant === "FIELD") {
     Object.assign(childConfigOverride, {
       name: createPath({
         parent: config.name,
@@ -65,11 +68,11 @@ export const mapConfigChildArray = ({ config, index }: {
       }),
       meta: {
         ...childConfigOverride.meta,
-        label: childConfigOverride.meta?.label?.replace('__ITEM__', `${+index + 1}`),
+        label: childConfigOverride.meta?.label?.replace("__ITEM__", `${+index + 1}`),
       },
     });
   }
-  if (childConfigOverride.variant === 'GROUP') {
+  if (childConfigOverride.variant === "GROUP") {
     Object.assign(childConfigOverride, {
       child: mapConfigChildArray({ config, index }),
     });
@@ -98,7 +101,7 @@ export function FormContainer({
     <>
       {schema.map((config) => {
         const key = config.variant + (config.name || config.key || generateId());
-        if (config.variant === 'GROUP') {
+        if (config.variant === "GROUP") {
           return (
             <Group
               key={key}
@@ -119,7 +122,7 @@ export function FormContainer({
               {...otherProps}
             />
           );
-        } if (config.variant === 'VIEW') {
+        } if (config.variant === "VIEW") {
           return (
             <View
               key={key}
@@ -129,8 +132,8 @@ export function FormContainer({
             />
           );
         }
-        if (config.variant === 'FIELD') {
-          if (config.fieldType === 'ARRAY' && !!FieldArray) {
+        if (config.variant === "FIELD") {
+          if (config.fieldType === "ARRAY" && !!FieldArray) {
             return (
               <FieldArray
                 key={key}

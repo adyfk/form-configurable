@@ -1,5 +1,5 @@
-import { init } from 'expressionparser';
-import formula from './formula_override';
+import { init } from "expressionparser";
+import formula from "./formula_override";
 
 const parser = init(formula, (term) => term);
 

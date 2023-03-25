@@ -1,9 +1,9 @@
-import isEqual from 'lodash.isequal';
-import createPath from '../utils/createPath';
-import { expressionToValue } from '../parser';
-import type { Schema, SchemaField, SchemaFieldArray } from '../types';
-import set from '../utils/set';
-import get from '../utils/get';
+import isEqual from "lodash.isequal";
+import createPath from "../utils/createPath";
+import { expressionToValue } from "../parser";
+import type { Schema, SchemaField, SchemaFieldArray } from "../types";
+import set from "../utils/set";
+import get from "../utils/get";
 
 export type Props = {
   show: Record<string, boolean>;
@@ -85,7 +85,7 @@ export const createForm = (props: CreateFormProps) => {
   function getTouch(name: string) { return _fields.touched[name]; }
   function getProp(name: string, key: string) {
     const value = _props[name]?.[key];
-    return (typeof value === 'undefined' || value);
+    return (typeof value === "undefined" || value);
   }
   // function unsetValue(name: string) { unset(_config.values, name); }
   function unsetError(name: string) { delete _fields.error[name]; }
@@ -104,22 +104,23 @@ export const createForm = (props: CreateFormProps) => {
   const isPropsSkipExceute = (config: Schema, options: IOptionsEachSchema = {}) => {
     const path = (options.path || config.name || config.key) as string;
 
-    const editable = getProp('editable', path);
-    const show = getProp('show', path);
+    const editable = getProp("editable", path);
+    const show = getProp("show", path);
     if (!editable) return true;
     if (!show) return true;
     return false;
   };
 
-  const subscribeWatch = (callback: any, subject: 'state' | 'container' = 'state') => {
-    if (subject === 'state') {
+  // eslint-disable-next-line consistent-return
+  const subscribeWatch = (callback: any, subject: "state" | "container" = "state") => {
+    if (subject === "state") {
       _subjects.watchs.push(callback);
       return () => {
         _subjects.watchs = _subjects.watchs.filter((fn) => fn !== callback);
       };
     }
 
-    if (subject === 'container') {
+    if (subject === "container") {
       _subjects.watchContainer = _subjects.watchContainer.filter((fn) => fn !== callback);
       return () => {
         _subjects.watchContainer.push(callback);
@@ -127,8 +128,8 @@ export const createForm = (props: CreateFormProps) => {
     }
   };
 
-  const notifyWatch = (subject: 'state' | 'container' = 'state') => {
-    if (subject === 'state') {
+  const notifyWatch = (subject: "state" | "container" = "state") => {
+    if (subject === "state") {
       for (const fn of _subjects.watchs) {
         fn(_config.values, _fields, _props);
       }
@@ -141,7 +142,7 @@ export const createForm = (props: CreateFormProps) => {
 
   const setFormState = (formStateValue: Partial<RootFormState>) => {
     Object.assign(_formState, formStateValue);
-    notifyWatch('container');
+    notifyWatch("container");
   };
 
   const checkFormStateValid = () => {
@@ -159,7 +160,7 @@ export const createForm = (props: CreateFormProps) => {
   ) => {
     const path = options.path || config.name;
 
-    if (typeof name === 'string' && path.includes(name) && config.override?.others) {
+    if (typeof name === "string" && path.includes(name) && config.override?.others) {
       Object.assign(_config.values, config.override?.others);
     }
 
@@ -203,7 +204,7 @@ export const createForm = (props: CreateFormProps) => {
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      props.log?.('error on executeExpressionProps', error, {
+      props.log?.("error on executeExpressionProps", error, {
         info: {
           path,
           option: options,
@@ -256,7 +257,7 @@ export const createForm = (props: CreateFormProps) => {
     config: SchemaFieldArray,
     options: { skipValidate?: boolean; name?: string; parent?: string } = {},
   ) => {
-    const path = (options.parent ? `${options.parent}.` : '')
+    const path = (options.parent ? `${options.parent}.` : "")
       + (options.name || config.name);
     const hasError = getError(path);
     if (hasError) return;
@@ -275,7 +276,7 @@ export const createForm = (props: CreateFormProps) => {
             __SELF__: getValue(`${path}[${index}]`),
           },
         };
-        if (childConfig.variant === 'FIELD') {
+        if (childConfig.variant === "FIELD") {
           executeExpressionOverride(childConfig, options.name, eachOptions);
           executeExpressionProps(childConfig, eachOptions);
 
@@ -284,7 +285,7 @@ export const createForm = (props: CreateFormProps) => {
           if (!options.skipValidate) {
             executeExpressionRule(childConfig, eachOptions);
           }
-        } else if (childConfig.variant === 'GROUP') {
+        } else if (childConfig.variant === "GROUP") {
           //
         } else {
           executeExpressionProps(childConfig, eachOptions);
@@ -300,7 +301,7 @@ export const createForm = (props: CreateFormProps) => {
   ) => {
     try {
       for (const config of schema) {
-        if (config.variant === 'FIELD') {
+        if (config.variant === "FIELD") {
           executeExpressionOverride(config, name);
           executeExpressionProps(config);
           if (isPropsSkipExceute(config)) continue;
@@ -309,15 +310,15 @@ export const createForm = (props: CreateFormProps) => {
             executeExpressionRule(config);
           }
 
-          if (config.fieldType === 'ARRAY') {
+          if (config.fieldType === "ARRAY") {
             executeExpressionEachArray(config, {
               name: config.name,
               skipValidate: options.skipValidate,
             });
-          } else if (config.fieldType === 'OBJECT') {
+          } else if (config.fieldType === "OBJECT") {
             //
           }
-        } else if (config.variant === 'GROUP') {
+        } else if (config.variant === "GROUP") {
           executeExpressionProps(config);
           if (isPropsSkipExceute(config)) {
             continue;
@@ -330,7 +331,7 @@ export const createForm = (props: CreateFormProps) => {
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      props.log?.('error on executeEachConfig', error);
+      props.log?.("error on executeEachConfig", error);
     }
   };
 
@@ -339,7 +340,7 @@ export const createForm = (props: CreateFormProps) => {
       setFormState({
         isDirty: !isEqual(props.initialValues, _config.values),
       });
-      notifyWatch('container');
+      notifyWatch("container");
     }
   };
 
@@ -434,21 +435,21 @@ export const createForm = (props: CreateFormProps) => {
   const initializeValues = (schema: Schema[]) => {
     try {
       for (const config of schema) {
-        if (config.variant === 'FIELD') {
+        if (config.variant === "FIELD") {
           set(_config.values, config.name, get(_config.initialValues, config.name) || config.initialValue);
-        } else if (config.variant === 'GROUP') {
+        } else if (config.variant === "GROUP") {
           initializeValues(config.child);
         }
       }
     } catch (error) {
-      props.log?.('error on initializeValues', error);
+      props.log?.("error on initializeValues", error);
     }
   };
 
   // initialize default values
   const initialize = (arg: CreateFormProps = {}) => {
-    props.log?.('initialize arg', arg);
-    props.log?.('initialize props', props);
+    props.log?.("initialize arg", arg);
+    props.log?.("initialize props", props);
 
     try {
       _fields.error = {};
@@ -467,11 +468,11 @@ export const createForm = (props: CreateFormProps) => {
 
       initializeValues(_config.schema);
       executeConfig();
-      notifyWatch('container');
-      notifyWatch('state');
+      notifyWatch("container");
+      notifyWatch("state");
       checkFormStateValid();
     } catch (error) {
-      props.log?.('error on initialize', error);
+      props.log?.("error on initialize", error);
     }
   };
 
@@ -479,7 +480,7 @@ export const createForm = (props: CreateFormProps) => {
 
   initialize();
 
-  props.log?.('createForm');
+  props.log?.("createForm");
 
   return {
     config: _config,

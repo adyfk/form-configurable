@@ -1,9 +1,9 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useContext } from 'react';
-import { FormContext } from './useForm';
-import { Form } from './logic/createForm';
-import useSubscribe from './useSubscribe';
-import useUpdate from './hooks/useUpdate';
+import { useCallback, useContext } from "react";
+import { FormContext } from "./useForm";
+import { Form } from "./logic/createForm";
+import useSubscribe from "./useSubscribe";
+import useUpdate from "./hooks/useUpdate";
 
 export const useWatchAll = (props: { form?: Form; disabled?: boolean }) => {
   const { form: formContext } = useContext(FormContext);
@@ -20,7 +20,7 @@ export const useWatchAll = (props: { form?: Form; disabled?: boolean }) => {
 
   useSubscribe({
     form,
-    subject: 'state',
+    subject: "state",
     callback: latestState,
     disabled,
   });

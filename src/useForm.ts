@@ -6,17 +6,17 @@ import {
   useEffect,
   useRef,
   useState,
-} from 'react';
+} from "react";
 import {
   Form,
   createForm,
   CreateFormProps,
   RootFormState,
-} from './logic/createForm';
+} from "./logic/createForm";
 // import useUpdate from './hooks/useUpdate';
-import { SumbitMiddlewareContext } from './useSubmitMiddleware';
-import { Schema } from './types';
-import useUpdate from './hooks/useUpdate';
+import { SumbitMiddlewareContext } from "./useSubmitMiddleware";
+import { Schema } from "./types";
+import useUpdate from "./hooks/useUpdate";
 
 interface IUserFormProps extends CreateFormProps {
   forceSubmitOnError?: boolean;
@@ -64,9 +64,9 @@ export const useForm = (props: IUserFormProps) => {
       // eslint-disable-next-line no-unused-vars
       onValid: (values: Record<string, any>) => Promise<void> | any,
       // eslint-disable-next-line no-unused-vars
-      onInvalid?: (errors: Record<string, any>, values: Record<string, any>, type: 'SCHEMA' | 'CUSTOM') => Promise<void> | any,
+      onInvalid?: (errors: Record<string, any>, values: Record<string, any>, type: "SCHEMA" | "CUSTOM") => Promise<void> | any,
     ) => async (event: FormEvent) => {
-      props.log?.('handleSubmit triggered');
+      props.log?.("handleSubmit triggered");
       event?.stopPropagation();
       event?.preventDefault();
 
@@ -77,10 +77,10 @@ export const useForm = (props: IUserFormProps) => {
           isSubmitting: true,
           isSubmitted: true,
         });
-        if (order === 'before') {
-          props.log?.('run (before) validate list submit');
+        if (order === "before") {
+          props.log?.("run (before) validate list submit");
           await validateListSubmit();
-          props.log?.('success (before) validate list submit');
+          props.log?.("success (before) validate list submit");
         }
 
         form.executeConfig();
@@ -90,15 +90,15 @@ export const useForm = (props: IUserFormProps) => {
             form.setFocus(name);
             props.log?.(`trigger focus ${name}`);
           }
-          throw new Error('Error Schema');
+          throw new Error("Error Schema");
         } else {
           await onValid(form.config.values);
         }
 
-        if (order === 'after') {
-          props.log?.('run (after) validate list submit');
+        if (order === "after") {
+          props.log?.("run (after) validate list submit");
           await validateListSubmit();
-          props.log?.('success (after) validate list submit');
+          props.log?.("success (after) validate list submit");
         }
 
         form.setFormState({
@@ -115,7 +115,7 @@ export const useForm = (props: IUserFormProps) => {
           await onInvalid?.(
             form.fields.error,
             form.config.values,
-            error?.message === 'Error Schema' ? 'SCHEMA' : 'CUSTOM',
+            error?.message === "Error Schema" ? "SCHEMA" : "CUSTOM",
           );
         } catch (error) {
           //
@@ -129,7 +129,7 @@ export const useForm = (props: IUserFormProps) => {
 
   useEffect(() => {
     if (!_form.current) return;
-    props.log?.('useForm - useEffect - (schema, extraData, initialValues)');
+    props.log?.("useForm - useEffect - (schema, extraData, initialValues)");
     const form = getForm();
 
     form.reset({
@@ -154,7 +154,7 @@ export const useForm = (props: IUserFormProps) => {
       }
     };
 
-    const unsubscribe = form.subscribeWatch(latestState, 'container');
+    const unsubscribe = form.subscribeWatch(latestState, "container");
     return unsubscribe;
   }, [schema]);
 

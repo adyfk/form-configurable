@@ -1,3 +1,3 @@
 /// <reference types="react-scripts" />
 
-declare module 'jsoneditor-react';
+declare module "jsoneditor-react";

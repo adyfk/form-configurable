@@ -1,14 +1,14 @@
 import {
   useCallback, useContext, useEffect, useRef,
-} from 'react';
-import { SchemaField } from './types';
+} from "react";
+import { SchemaField } from "./types";
 import {
   Fields, Form, FormValues, Props,
-} from './logic/createForm';
-import useSubscribe from './useSubscribe';
-import { FormContext } from './useForm';
-import get from './utils/get';
-import useUpdate from './hooks/useUpdate';
+} from "./logic/createForm";
+import useSubscribe from "./useSubscribe";
+import { FormContext } from "./useForm";
+import get from "./utils/get";
+import useUpdate from "./hooks/useUpdate";
 
 export const initializeField = ({
   values,
@@ -35,7 +35,7 @@ export const initializeField = ({
 
   for (const key in props) {
     const value = props[key]?.[config.name as string];
-    field.fieldState[key] = typeof value === 'undefined' ? true : value;
+    field.fieldState[key] = typeof value === "undefined" ? true : value;
   }
 
   return field;
@@ -80,7 +80,7 @@ export const useField = (props: {
   useSubscribe({
     form,
     callback: latestState,
-    subject: 'state',
+    subject: "state",
   });
 
   useEffect(() => {
@@ -107,7 +107,7 @@ export const useField = (props: {
     touched: formState.isSubmitted || _state.current.touched,
     onChange: useCallback(
       (arg: any) => {
-        if (typeof arg === 'function') {
+        if (typeof arg === "function") {
           form.setValue(config.name, arg(form.config.values));
         } else {
           form.setValue(config.name, arg);

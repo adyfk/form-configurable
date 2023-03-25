@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useCallback, useContext, useRef } from 'react';
-import { FormContext } from './useForm';
-import { Form, FormValues } from './logic/createForm';
-import useSubscribe from './useSubscribe';
-import useUpdate from './hooks/useUpdate';
-import get from './utils/get';
+import { useCallback, useContext, useRef } from "react";
+import { FormContext } from "./useForm";
+import { Form, FormValues } from "./logic/createForm";
+import useSubscribe from "./useSubscribe";
+import useUpdate from "./hooks/useUpdate";
+import get from "./utils/get";
 
 interface IStateInitializeWatch {
   values: FormValues;
@@ -45,7 +45,7 @@ export const useWatch = (props: { form?: Form; name: string[] }) => {
 
   useSubscribe({
     form,
-    subject: 'state',
+    subject: "state",
     callback: latestState,
   });
 

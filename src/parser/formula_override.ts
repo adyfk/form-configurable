@@ -11,7 +11,7 @@ import type {
   TermTyper,
   TermType,
   ArgumentsArray,
-} from 'expressionparser/dist/ExpressionParser';
+} from "expressionparser/dist/ExpressionParser";
 
 export interface FunctionOps {
   // eslint-disable-next-line no-unused-vars
@@ -42,7 +42,7 @@ const unpackArgs = (f: Delegate) => (expr: ExpressionThunk) => {
 };
 
 const num = (result: ExpressionValue) => {
-  if (typeof result !== 'number') {
+  if (typeof result !== "number") {
     throw new Error(
       `Expected number, found: ${typeof result} ${JSON.stringify(result)}`,
     );
@@ -59,14 +59,14 @@ const array = (result: ExpressionValue) => {
   }
 
   if (isArgumentsArray(result)) {
-    throw new Error('Expected array, found: arguments');
+    throw new Error("Expected array, found: arguments");
   }
 
   return result;
 };
 
 const bool = (value: ExpressionValue) => {
-  if (typeof value !== 'boolean') {
+  if (typeof value !== "boolean") {
     throw new Error(
       `Expected boolean, found: ${typeof value} ${JSON.stringify(value)}`,
     );
@@ -78,7 +78,7 @@ const bool = (value: ExpressionValue) => {
 const evalBool = (value: ExpressionValue): boolean => {
   let result;
 
-  while (typeof value === 'function' && value.length === 0) {
+  while (typeof value === "function" && value.length === 0) {
     result = value();
   }
 
@@ -95,7 +95,7 @@ const evalArray = (
   typeCheck?: (value: ExpressionValue) => ExpressionValue,
 ) => array(arr).map((value) => {
   let result;
-  if (typeof value === 'function' && value.length === 0) {
+  if (typeof value === "function" && value.length === 0) {
     result = value();
   } else {
     result = value;
@@ -113,19 +113,19 @@ const evalArray = (
 });
 
 const obj = (obj: ExpressionValue) => {
-  if (typeof obj !== 'object' || obj === null) {
+  if (typeof obj !== "object" || obj === null) {
     throw new Error(
       `Expected object, found: ${typeof obj} ${JSON.stringify(obj)}`,
     );
   } else if (Array.isArray(obj)) {
-    throw new Error('Expected object, found array');
+    throw new Error("Expected object, found array");
   }
 
   return obj;
 };
 
 const iterable = (result: ExpressionValue) => {
-  if (!Array.isArray(result) && typeof result !== 'string') {
+  if (!Array.isArray(result) && typeof result !== "string") {
     throw new Error(
       `Expected array or string, found: ${typeof result} ${JSON.stringify(
         result,
@@ -137,7 +137,7 @@ const iterable = (result: ExpressionValue) => {
 };
 
 const string = (result: ExpressionValue) => {
-  if (typeof result !== 'string') {
+  if (typeof result !== "string") {
     throw new Error(
       `Expected string, found: ${typeof result} ${JSON.stringify(result)}`,
     );
@@ -147,7 +147,7 @@ const string = (result: ExpressionValue) => {
 };
 
 const char = (result: ExpressionValue) => {
-  if (typeof result !== 'string' || result.length !== 1) {
+  if (typeof result !== "string" || result.length !== 1) {
     throw new Error(
       `Expected char, found: ${typeof result} ${JSON.stringify(result)}`,
     );
@@ -157,18 +157,18 @@ const char = (result: ExpressionValue) => {
 };
 
 const date = (result: ExpressionValue) => {
-  if (`${result}` === 'Invalid Date') {
+  if (`${result}` === "Invalid Date") {
     throw new Error(`Expected date, found: ${typeof result}`);
   }
 
   if (result instanceof Date) return result;
 
-  if (!(typeof result === 'string' || typeof result === 'number')) {
+  if (!(typeof result === "string" || typeof result === "number")) {
     throw new Error(`Expected string or number, found: ${typeof result}`);
   }
   const parseToDate = new Date(result);
 
-  if (`${parseToDate}` === 'Invalid Date') {
+  if (`${parseToDate}` === "Invalid Date") {
     throw new Error(
       `Expected string or number date format, found: ${typeof result}`,
     );
@@ -179,7 +179,7 @@ const date = (result: ExpressionValue) => {
 
 const evalString = (value: ExpressionValue) => {
   let result;
-  if (typeof value === 'function' && value.length === 0) {
+  if (typeof value === "function" && value.length === 0) {
     result = value();
   } else {
     result = value;
@@ -209,11 +209,11 @@ export const formula = function (
   };
 
   const infixOps: InfixOps = {
-    '+': (a, b) => num(a()) + num(b()),
-    '-': (a, b) => num(a()) - num(b()),
-    '*': (a, b) => num(a()) * num(b()),
-    '/': (a, b) => num(a()) / num(b()),
-    ',': (a, b): ArgumentsArray => {
+    "+": (a, b) => num(a()) + num(b()),
+    "-": (a, b) => num(a()) - num(b()),
+    "*": (a, b) => num(a()) * num(b()),
+    "/": (a, b) => num(a()) / num(b()),
+    ",": (a, b): ArgumentsArray => {
       const aVal = a();
       const aArr: ExpressionArray<ExpressionValue> = isArgumentsArray(aVal)
         ? aVal
@@ -222,18 +222,18 @@ export const formula = function (
       args.isArgumentsArray = true;
       return args as ArgumentsArray;
     },
-    '%': (a, b) => num(a()) % num(b()),
-    '=': (a, b) => a() === b(),
-    '!=': (a, b) => a() !== b(),
-    '<>': (a, b) => a() !== b(),
-    '~=': (a, b) => Math.abs(num(a()) - num(b())) < Number.EPSILON,
-    '>': (a, b) => a() > b(),
-    '<': (a, b) => a() < b(),
-    '>=': (a, b) => a() >= b(),
-    '<=': (a, b) => a() <= b(),
+    "%": (a, b) => num(a()) % num(b()),
+    "=": (a, b) => a() === b(),
+    "!=": (a, b) => a() !== b(),
+    "<>": (a, b) => a() !== b(),
+    "~=": (a, b) => Math.abs(num(a()) - num(b())) < Number.EPSILON,
+    ">": (a, b) => a() > b(),
+    "<": (a, b) => a() < b(),
+    ">=": (a, b) => a() >= b(),
+    "<=": (a, b) => a() <= b(),
     AND: (a, b) => a() && b(),
     OR: (a, b) => a() || b(),
-    '^': (a, b) => num(a()) ** num(b()),
+    "^": (a, b) => num(a()) ** num(b()),
   };
 
   const prefixOps: FunctionOps = {
@@ -285,8 +285,8 @@ export const formula = function (
       try {
         const value = string(arg());
         if (!value) return true;
-        if (value === '<div></div>') return true;
-        if (value === '<span></span>') return true;
+        if (value === "<div></div>") return true;
+        if (value === "<span></span>") return true;
         return false;
       } catch (error) {
         return false;
@@ -331,7 +331,7 @@ export const formula = function (
     NEG: (arg) => -num(arg()),
     MOD: (a, b) => num(a()) % num(b()),
     NOT: (arg) => !arg(),
-    '!': (arg) => !arg(),
+    "!": (arg) => !arg(),
     ADD: (a, b) => num(a()) + num(b()),
     SUB: (a, b) => num(a()) - num(b()),
     MUL: (a, b) => num(a()) * num(b()),
@@ -386,11 +386,11 @@ export const formula = function (
     INDEX: (arg1, arg2) => iterable(arg1())[num(arg2())],
     LENGTH: (arg) => iterable(arg()).length,
     JOIN: (arg1, arg2) => evalArray(arg2()).join(string(arg1())),
-    STRING: (arg) => evalArray(arg()).join(''),
+    STRING: (arg) => evalArray(arg()).join(""),
     SPLIT: (arg1, arg2) => string(arg2()).split(string(arg1())),
     CHARARRAY: (arg) => {
       const str = string(arg());
-      return str.split('');
+      return str.split("");
     },
     ARRAY: (arg) => {
       const val = arg();
@@ -400,7 +400,7 @@ export const formula = function (
       const func = arg1();
       const arr = evalArray(arg2());
       return arr.map((val) => {
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           return () => func(val);
         }
         return call(string(func))(() => val);
@@ -433,7 +433,7 @@ export const formula = function (
           () => value,
           () => item,
         ];
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           return func(...args);
         }
         return call(string(func))(...args);
@@ -445,7 +445,7 @@ export const formula = function (
       const arr = evalArray(arg3());
       return arr.reduce((prev, curr) => {
         const args: ExpressionArray<ExpressionThunk> = [() => prev, () => curr];
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           return func(...args);
         }
         return call(string(func))(...args);
@@ -468,7 +468,7 @@ export const formula = function (
       const arr2 = evalArray(arg2());
 
       if (arr1.length !== arr2.length) {
-        throw new Error('ZIP: Arrays are of different lengths');
+        throw new Error("ZIP: Arrays are of different lengths");
       } else {
         return arr1.map((v1, i) => [v1, arr2[i]]);
       }
@@ -495,7 +495,7 @@ export const formula = function (
       const result: ExpressionArray<ExpressionValue> = [];
       arr.forEach((val) => {
         let isSatisfied;
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           isSatisfied = evalBool(func(val));
         } else {
           isSatisfied = evalBool(call(string(func))(() => val));
@@ -514,7 +514,7 @@ export const formula = function (
 
       const satisfaction = (val: ExpressionValue) => {
         let isSatisfied;
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           isSatisfied = evalBool(func(val));
         } else {
           isSatisfied = evalBool(call(string(func))(() => val));
@@ -536,7 +536,7 @@ export const formula = function (
 
       const satisfaction = (val: ExpressionValue) => {
         let isSatisfied;
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           isSatisfied = evalBool(func(val));
         } else {
           isSatisfied = evalBool(call(string(func))(() => val));
@@ -585,7 +585,7 @@ export const formula = function (
       arr.forEach((item) => {
         const kvPair = array(item);
         if (kvPair.length !== 2) {
-          throw new Error('UNZIPDICT: Expected sub-array of length 2');
+          throw new Error("UNZIPDICT: Expected sub-array of length 2");
         }
 
         const [key, value] = kvPair;
@@ -614,56 +614,56 @@ export const formula = function (
   // Ensure arguments are unpacked accordingly
   // Except for the ARRAY constructor
   Object.keys(prefixOps).forEach((key) => {
-    if (key !== 'ARRAY') {
+    if (key !== "ARRAY") {
       prefixOps[key] = unpackArgs((prefixOps as any)[key]);
     }
   });
 
   return {
-    ESCAPE_CHAR: '\\',
+    ESCAPE_CHAR: "\\",
     INFIX_OPS: infixOps,
     PREFIX_OPS: prefixOps,
     PRECEDENCE: [
       Object.keys(prefixOps),
-      ['^'],
-      ['*', '/', '%', 'MOD'],
-      ['+', '-'],
-      ['<', '>', '<=', '>='],
-      ['=', '!=', '<>', '~='],
-      ['AND', 'OR'],
-      [','],
+      ["^"],
+      ["*", "/", "%", "MOD"],
+      ["+", "-"],
+      ["<", ">", "<=", ">="],
+      ["=", "!=", "<>", "~="],
+      ["AND", "OR"],
+      [","],
     ],
-    LITERAL_OPEN: '"',
-    LITERAL_CLOSE: '"',
-    GROUP_OPEN: '(',
-    GROUP_CLOSE: ')',
-    SEPARATOR: ' ',
+    LITERAL_OPEN: "\"",
+    LITERAL_CLOSE: "\"",
+    GROUP_OPEN: "(",
+    GROUP_CLOSE: ")",
+    SEPARATOR: " ",
     SYMBOLS: [
-      '^',
-      '*',
-      '/',
-      '%',
-      '+',
-      '-',
-      '<',
-      '>',
-      '=',
-      '!',
-      ',',
-      '"',
-      '(',
-      ')',
-      '[',
-      ']',
-      '~',
+      "^",
+      "*",
+      "/",
+      "%",
+      "+",
+      "-",
+      "<",
+      ">",
+      "=",
+      "!",
+      ",",
+      "\"",
+      "(",
+      ")",
+      "[",
+      "]",
+      "~",
     ],
     AMBIGUOUS: {
-      '-': 'NEG',
+      "-": "NEG",
     },
     SURROUNDING: {
       ARRAY: {
-        OPEN: '[',
-        CLOSE: ']',
+        OPEN: "[",
+        CLOSE: "]",
       },
     },
 
@@ -671,22 +671,22 @@ export const formula = function (
       const numVal = parseFloat(term);
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case 'FALSE':
-            return false;
-          case 'TRUE':
-            return true;
-          case 'EMPTY':
-            return [];
-          case 'EMPTYDICT':
-            return {};
-          case 'INFINITY':
-            return Number.POSITIVE_INFINITY;
-          case 'EPSILON':
-            return Number.EPSILON;
-          case 'UNDEFINED':
-            return undefined as any;
-          default:
-            return termDelegate(term);
+        case "FALSE":
+          return false;
+        case "TRUE":
+          return true;
+        case "EMPTY":
+          return [];
+        case "EMPTYDICT":
+          return {};
+        case "INFINITY":
+          return Number.POSITIVE_INFINITY;
+        case "EPSILON":
+          return Number.EPSILON;
+        case "UNDEFINED":
+          return undefined as any;
+        default:
+          return termDelegate(term);
         }
       } else {
         return numVal;
@@ -698,21 +698,21 @@ export const formula = function (
 
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case 'FALSE':
-            return 'boolean';
-          case 'TRUE':
-            return 'boolean';
-          case 'EMPTY':
-            return 'array';
-          case 'INFINITY':
-            return 'number';
-          case 'EPSILON':
-            return 'number';
-          default:
-            return termTypeDelegate ? termTypeDelegate(term) : 'unknown';
+        case "FALSE":
+          return "boolean";
+        case "TRUE":
+          return "boolean";
+        case "EMPTY":
+          return "array";
+        case "INFINITY":
+          return "number";
+        case "EPSILON":
+          return "number";
+        default:
+          return termTypeDelegate ? termTypeDelegate(term) : "unknown";
         }
       } else {
-        return 'number';
+        return "number";
       }
     },
 

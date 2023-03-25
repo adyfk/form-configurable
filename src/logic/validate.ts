@@ -1,5 +1,5 @@
-import { Schema } from '../types';
-import createForm from './createForm';
+import { Schema } from "../types";
+import createForm from "./createForm";
 
 export const validate = (
   schema: Schema[],
