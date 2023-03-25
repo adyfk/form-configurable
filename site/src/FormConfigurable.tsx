@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'form-configurable/v2'
-import type { INativeSchema, ISchema } from 'form-configurable/v2'
+import type { INativeSchema, ISchema as Schema } from 'form-configurable/v2'
 
 declare module 'form-configurable/v2' {
   // Redefine the ISchema type
@@ -8,7 +8,7 @@ declare module 'form-configurable/v2' {
 }
 
 const FormConfigurable = () => {
-  useForm<ISchema>({
+  useForm<Schema>({
     schemas: [],
     initialValues: {}
   })
