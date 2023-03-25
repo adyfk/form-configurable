@@ -8,7 +8,11 @@ import ComponentContext from "../contexts/ComponentContext";
 import { getSchemaKey, getSchemaName } from "../logic/createForm";
 import set from "../utils/set";
 
-export const updateSchemaConfigName = (schema: ISchemaCore, key: string): any => {
+function ComponentNotRegistered({ schema }: { schema: ISchemaCore; }) {
+  return <div>Component "{schema.component}" not registered</div>;
+}
+
+const updateSchemaConfigName = (schema: ISchemaCore, key: string): any => {
   if (!key) return schema;
 
   set(schema, "config.name", key);
@@ -28,7 +32,7 @@ function SchemaComponent({
   const identity = getSchemaName(schema as any, parent);
 
   if (schema.variant === "FIELD") {
-    const Component = components[schema.variant][schema.component];
+    const Component = components[schema.variant][schema.component] || ComponentNotRegistered;
     return (
       <Component
         schema={updateSchemaConfigName(schema, identity)}
@@ -37,7 +41,7 @@ function SchemaComponent({
   }
 
   if (schema.variant === "VIEW") {
-    const Component = components[schema.variant][schema.component];
+    const Component = components[schema.variant][schema.component] || ComponentNotRegistered;
     return (
       <Component
         schema={updateSchemaConfigName(schema, identity)}
@@ -46,7 +50,7 @@ function SchemaComponent({
   }
 
   if (schema.variant === "GROUP") {
-    const Component = components[schema.variant][schema.component];
+    const Component = components[schema.variant][schema.component] || ComponentNotRegistered;
     return (
       <Component
         schema={schema}
@@ -61,7 +65,7 @@ function SchemaComponent({
   }
 
   if (schema.variant === "FIELD-ARRAY") {
-    const Component = components[schema.variant][schema.component];
+    const Component = components[schema.variant][schema.component] || ComponentNotRegistered;
     return (
       <Component
         schema={schema}
@@ -81,7 +85,7 @@ function SchemaComponent({
   }
 
   if (schema.variant === "FIELD-OBJECT") {
-    const Component = components[schema.variant][schema.component];
+    const Component = components[schema.variant][schema.component] || ComponentNotRegistered;
     return (
       <Component
         schema={schema}
