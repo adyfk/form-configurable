@@ -8,7 +8,7 @@ exports.useField = exports.initializeField = exports["default"] = void 0;
 var _react = require("react");
 var _useSubscribe = _interopRequireDefault(require("./useSubscribe"));
 var _useForm = require("./useForm");
-var _get = _interopRequireDefault(require("./utils/get"));
+var _get = _interopRequireDefault(require("./v2/utils/get"));
 var _useUpdate = _interopRequireDefault(require("./hooks/useUpdate"));
 var initializeField = function initializeField(_ref2) {
   var values = _ref2.values,
@@ -24,7 +24,7 @@ var initializeField = function initializeField(_ref2) {
   for (var key in props) {
     var _props$key;
     var value = (_props$key = props[key]) == null ? void 0 : _props$key[config.name];
-    field.fieldState[key] = typeof value === 'undefined' ? true : value;
+    field.fieldState[key] = typeof value === "undefined" ? true : value;
   }
   return field;
 };
@@ -60,7 +60,7 @@ var useField = function useField(props) {
   (0, _useSubscribe["default"])({
     form: form,
     callback: latestState,
-    subject: 'state'
+    subject: "state"
   });
   (0, _react.useEffect)(function () {
     latestState(form.config.values, form.fields, form.props);
@@ -82,7 +82,7 @@ var useField = function useField(props) {
     error: _state.current.error,
     touched: formState.isSubmitted || _state.current.touched,
     onChange: (0, _react.useCallback)(function (arg) {
-      if (typeof arg === 'function') {
+      if (typeof arg === "function") {
         form.setValue(config.name, arg(form.config.values));
       } else {
         form.setValue(config.name, arg);

@@ -22,6 +22,7 @@ function baseGet(object, updatePath) {
   return object;
 }
 function isEmptyArray(obj) {
+  // eslint-disable-next-line no-restricted-syntax
   for (var key in obj) {
     if (!(0, _isUndefined["default"])(obj[key])) {
       return false;

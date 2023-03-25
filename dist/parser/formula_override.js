@@ -35,7 +35,7 @@ var unpackArgs = function unpackArgs(f) {
   };
 };
 var num = function num(result) {
-  if (typeof result !== 'number') {
+  if (typeof result !== "number") {
     throw new Error("Expected number, found: ".concat((0, _typeof2["default"])(result), " ").concat(JSON.stringify(result)));
   }
   return result;
@@ -45,19 +45,19 @@ var array = function array(result) {
     throw new Error("Expected array, found: ".concat((0, _typeof2["default"])(result), " ").concat(JSON.stringify(result)));
   }
   if (isArgumentsArray(result)) {
-    throw new Error('Expected array, found: arguments');
+    throw new Error("Expected array, found: arguments");
   }
   return result;
 };
 var bool = function bool(value) {
-  if (typeof value !== 'boolean') {
+  if (typeof value !== "boolean") {
     throw new Error("Expected boolean, found: ".concat((0, _typeof2["default"])(value), " ").concat(JSON.stringify(value)));
   }
   return value;
 };
 var evalBool = function evalBool(value) {
   var result;
-  while (typeof value === 'function' && value.length === 0) {
+  while (typeof value === "function" && value.length === 0) {
     result = value();
   }
   if (!result) {
@@ -68,7 +68,7 @@ var evalBool = function evalBool(value) {
 var evalArray = function evalArray(arr, typeCheck) {
   return array(arr).map(function (value) {
     var result;
-    if (typeof value === 'function' && value.length === 0) {
+    if (typeof value === "function" && value.length === 0) {
       result = value();
     } else {
       result = value;
@@ -84,48 +84,48 @@ var evalArray = function evalArray(arr, typeCheck) {
   });
 };
 var obj = function obj(_obj) {
-  if ((0, _typeof2["default"])(_obj) !== 'object' || _obj === null) {
+  if ((0, _typeof2["default"])(_obj) !== "object" || _obj === null) {
     throw new Error("Expected object, found: ".concat((0, _typeof2["default"])(_obj), " ").concat(JSON.stringify(_obj)));
   } else if (Array.isArray(_obj)) {
-    throw new Error('Expected object, found array');
+    throw new Error("Expected object, found array");
   }
   return _obj;
 };
 var iterable = function iterable(result) {
-  if (!Array.isArray(result) && typeof result !== 'string') {
+  if (!Array.isArray(result) && typeof result !== "string") {
     throw new Error("Expected array or string, found: ".concat((0, _typeof2["default"])(result), " ").concat(JSON.stringify(result)));
   }
   return result;
 };
 var string = function string(result) {
-  if (typeof result !== 'string') {
+  if (typeof result !== "string") {
     throw new Error("Expected string, found: ".concat((0, _typeof2["default"])(result), " ").concat(JSON.stringify(result)));
   }
   return result;
 };
 var _char = function _char(result) {
-  if (typeof result !== 'string' || result.length !== 1) {
+  if (typeof result !== "string" || result.length !== 1) {
     throw new Error("Expected char, found: ".concat((0, _typeof2["default"])(result), " ").concat(JSON.stringify(result)));
   }
   return result;
 };
 var date = function date(result) {
-  if ("".concat(result) === 'Invalid Date') {
+  if ("".concat(result) === "Invalid Date") {
     throw new Error("Expected date, found: ".concat((0, _typeof2["default"])(result)));
   }
   if (result instanceof Date) return result;
-  if (!(typeof result === 'string' || typeof result === 'number')) {
+  if (!(typeof result === "string" || typeof result === "number")) {
     throw new Error("Expected string or number, found: ".concat((0, _typeof2["default"])(result)));
   }
   var parseToDate = new Date(result);
-  if ("".concat(parseToDate) === 'Invalid Date') {
+  if ("".concat(parseToDate) === "Invalid Date") {
     throw new Error("Expected string or number date format, found: ".concat((0, _typeof2["default"])(result)));
   }
   return parseToDate;
 };
 var evalString = function evalString(value) {
   var result;
-  if (typeof value === 'function' && value.length === 0) {
+  if (typeof value === "function" && value.length === 0) {
     result = value();
   } else {
     result = value;
@@ -157,19 +157,19 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
     throw new Error("Unknown function: ".concat(name));
   };
   var infixOps = {
-    '+': function _(a, b) {
+    "+": function _(a, b) {
       return num(a()) + num(b());
     },
-    '-': function _(a, b) {
+    "-": function _(a, b) {
       return num(a()) - num(b());
     },
-    '*': function _(a, b) {
+    "*": function _(a, b) {
       return num(a()) * num(b());
     },
-    '/': function _(a, b) {
+    "/": function _(a, b) {
       return num(a()) / num(b());
     },
-    ',': function _(a, b) {
+    ",": function _(a, b) {
       var aVal = a();
       var aArr = isArgumentsArray(aVal) ? aVal : [function () {
         return aVal;
@@ -178,31 +178,31 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       args.isArgumentsArray = true;
       return args;
     },
-    '%': function _(a, b) {
+    "%": function _(a, b) {
       return num(a()) % num(b());
     },
-    '=': function _(a, b) {
+    "=": function _(a, b) {
       return a() === b();
     },
-    '!=': function _(a, b) {
+    "!=": function _(a, b) {
       return a() !== b();
     },
-    '<>': function _(a, b) {
+    "<>": function _(a, b) {
       return a() !== b();
     },
-    '~=': function _(a, b) {
+    "~=": function _(a, b) {
       return Math.abs(num(a()) - num(b())) < Number.EPSILON;
     },
-    '>': function _(a, b) {
+    ">": function _(a, b) {
       return a() > b();
     },
-    '<': function _(a, b) {
+    "<": function _(a, b) {
       return a() < b();
     },
-    '>=': function _(a, b) {
+    ">=": function _(a, b) {
       return a() >= b();
     },
-    '<=': function _(a, b) {
+    "<=": function _(a, b) {
       return a() <= b();
     },
     AND: function AND(a, b) {
@@ -211,7 +211,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
     OR: function OR(a, b) {
       return a() || b();
     },
-    '^': function _(a, b) {
+    "^": function _(a, b) {
       return Math.pow(num(a()), num(b()));
     }
   };
@@ -262,8 +262,8 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       try {
         var _value = string(arg());
         if (!_value) return true;
-        if (_value === '<div></div>') return true;
-        if (_value === '<span></span>') return true;
+        if (_value === "<div></div>") return true;
+        if (_value === "<span></span>") return true;
         return false;
       } catch (error) {
         return false;
@@ -292,6 +292,17 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       var arr = evalArray(arg2());
       return arr.includes(item);
     },
+    REGEX: function REGEX(arg1, arg2) {
+      var stringRegex = string(arg1());
+      var value = string(arg2());
+      return new RegExp(stringRegex).test(value);
+    },
+    REGEX_FLAG: function REGEX_FLAG(arg1, arg2, arg3) {
+      var stringRegex = string(arg1());
+      var flag = string(arg2());
+      var value = string(arg3());
+      return new RegExp(stringRegex, flag).test(value);
+    },
     NEG: function NEG(arg) {
       return -num(arg());
     },
@@ -301,7 +312,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
     NOT: function NOT(arg) {
       return !arg();
     },
-    '!': function _(arg) {
+    "!": function _(arg) {
       return !arg();
     },
     ADD: function ADD(a, b) {
@@ -388,14 +399,14 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       return evalArray(arg2()).join(string(arg1()));
     },
     STRING: function STRING(arg) {
-      return evalArray(arg()).join('');
+      return evalArray(arg()).join("");
     },
     SPLIT: function SPLIT(arg1, arg2) {
       return string(arg2()).split(string(arg1()));
     },
     CHARARRAY: function CHARARRAY(arg) {
       var str = string(arg());
-      return str.split('');
+      return str.split("");
     },
     ARRAY: function ARRAY(arg) {
       var val = arg();
@@ -405,7 +416,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       var func = arg1();
       var arr = evalArray(arg2());
       return arr.map(function (val) {
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           return function () {
             return func(val);
           };
@@ -449,7 +460,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
         }, function () {
           return item;
         }];
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           return func.apply(void 0, args);
         }
         return call(string(func)).apply(void 0, args);
@@ -465,7 +476,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
         }, function () {
           return curr;
         }];
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           return func.apply(void 0, args);
         }
         return call(string(func)).apply(void 0, args);
@@ -490,7 +501,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       var arr1 = evalArray(arg1());
       var arr2 = evalArray(arg2());
       if (arr1.length !== arr2.length) {
-        throw new Error('ZIP: Arrays are of different lengths');
+        throw new Error("ZIP: Arrays are of different lengths");
       } else {
         return arr1.map(function (v1, i) {
           return [v1, arr2[i]];
@@ -523,7 +534,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       var result = [];
       arr.forEach(function (val) {
         var isSatisfied;
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           isSatisfied = evalBool(func(val));
         } else {
           isSatisfied = evalBool(call(string(func))(function () {
@@ -541,7 +552,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       var arr = evalArray(arg2());
       var satisfaction = function satisfaction(val) {
         var isSatisfied;
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           isSatisfied = evalBool(func(val));
         } else {
           isSatisfied = evalBool(call(string(func))(function () {
@@ -561,7 +572,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       var arr = evalArray(arg2());
       var satisfaction = function satisfaction(val) {
         var isSatisfied;
-        if (typeof func === 'function') {
+        if (typeof func === "function") {
           isSatisfied = evalBool(func(val));
         } else {
           isSatisfied = evalBool(call(string(func))(function () {
@@ -603,7 +614,7 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       arr.forEach(function (item) {
         var kvPair = array(item);
         if (kvPair.length !== 2) {
-          throw new Error('UNZIPDICT: Expected sub-array of length 2');
+          throw new Error("UNZIPDICT: Expected sub-array of length 2");
         }
         var _kvPair = (0, _slicedToArray2["default"])(kvPair, 2),
           key = _kvPair[0],
@@ -631,47 +642,47 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
   // Ensure arguments are unpacked accordingly
   // Except for the ARRAY constructor
   Object.keys(prefixOps).forEach(function (key) {
-    if (key !== 'ARRAY') {
+    if (key !== "ARRAY") {
       prefixOps[key] = unpackArgs(prefixOps[key]);
     }
   });
   return {
-    ESCAPE_CHAR: '\\',
+    ESCAPE_CHAR: "\\",
     INFIX_OPS: infixOps,
     PREFIX_OPS: prefixOps,
-    PRECEDENCE: [Object.keys(prefixOps), ['^'], ['*', '/', '%', 'MOD'], ['+', '-'], ['<', '>', '<=', '>='], ['=', '!=', '<>', '~='], ['AND', 'OR'], [',']],
-    LITERAL_OPEN: '"',
-    LITERAL_CLOSE: '"',
-    GROUP_OPEN: '(',
-    GROUP_CLOSE: ')',
-    SEPARATOR: ' ',
-    SYMBOLS: ['^', '*', '/', '%', '+', '-', '<', '>', '=', '!', ',', '"', '(', ')', '[', ']', '~'],
+    PRECEDENCE: [Object.keys(prefixOps), ["^"], ["*", "/", "%", "MOD"], ["+", "-"], ["<", ">", "<=", ">="], ["=", "!=", "<>", "~="], ["AND", "OR"], [","]],
+    LITERAL_OPEN: "\"",
+    LITERAL_CLOSE: "\"",
+    GROUP_OPEN: "(",
+    GROUP_CLOSE: ")",
+    SEPARATOR: " ",
+    SYMBOLS: ["^", "*", "/", "%", "+", "-", "<", ">", "=", "!", ",", "\"", "(", ")", "[", "]", "~"],
     AMBIGUOUS: {
-      '-': 'NEG'
+      "-": "NEG"
     },
     SURROUNDING: {
       ARRAY: {
-        OPEN: '[',
-        CLOSE: ']'
+        OPEN: "[",
+        CLOSE: "]"
       }
     },
     termDelegate: function termDelegate(term) {
       var numVal = parseFloat(term);
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case 'FALSE':
+          case "FALSE":
             return false;
-          case 'TRUE':
+          case "TRUE":
             return true;
-          case 'EMPTY':
+          case "EMPTY":
             return [];
-          case 'EMPTYDICT':
+          case "EMPTYDICT":
             return {};
-          case 'INFINITY':
+          case "INFINITY":
             return Number.POSITIVE_INFINITY;
-          case 'EPSILON':
+          case "EPSILON":
             return Number.EPSILON;
-          case 'UNDEFINED':
+          case "UNDEFINED":
             return undefined;
           default:
             return _termDelegate(term);
@@ -684,21 +695,21 @@ var formula = function formula(_termDelegate, termTypeDelegate) {
       var numVal = parseFloat(term);
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case 'FALSE':
-            return 'boolean';
-          case 'TRUE':
-            return 'boolean';
-          case 'EMPTY':
-            return 'array';
-          case 'INFINITY':
-            return 'number';
-          case 'EPSILON':
-            return 'number';
+          case "FALSE":
+            return "boolean";
+          case "TRUE":
+            return "boolean";
+          case "EMPTY":
+            return "array";
+          case "INFINITY":
+            return "number";
+          case "EPSILON":
+            return "number";
           default:
-            return termTypeDelegate ? termTypeDelegate(term) : 'unknown';
+            return termTypeDelegate ? termTypeDelegate(term) : "unknown";
         }
       } else {
-        return 'number';
+        return "number";
       }
     },
     isCaseInsensitive: true

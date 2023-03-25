@@ -17,13 +17,13 @@ var executeEachConfig = function executeEachConfig(schema, data, extraData) {
   try {
     for (_iterator.s(); !(_step = _iterator.n()).done;) {
       var config = _step.value;
-      if (config.variant === 'FIELD') {
+      if (config.variant === "FIELD") {
         config.initialValue = data[config.name];
-      } else if (config.variant === 'VIEW') {
+      } else if (config.variant === "VIEW") {
         if (config.name) {
           config.data = data[config.name];
         }
-      } else if (config.variant === 'GROUP') {
+      } else if (config.variant === "GROUP") {
         if (config.name) {
           config.data = data[config.name];
         }

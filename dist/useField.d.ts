@@ -1,6 +1,6 @@
 /// <reference types="react" />
-import { SchemaField } from './types';
-import { Fields, Form, FormValues, Props } from './logic/createForm';
+import { SchemaField } from "./types";
+import { Fields, Form, FormValues, Props } from "./logic/createForm";
 export declare const initializeField: ({ values, fields, props, config, }: {
     values: FormValues;
     fields: Fields;

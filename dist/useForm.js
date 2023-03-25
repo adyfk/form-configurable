@@ -59,7 +59,7 @@ var useForm = function useForm(props) {
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
-              (_props$log = props.log) == null ? void 0 : _props$log.call(props, 'handleSubmit triggered');
+              (_props$log = props.log) == null ? void 0 : _props$log.call(props, "handleSubmit triggered");
               event == null ? void 0 : event.stopPropagation();
               event == null ? void 0 : event.preventDefault();
               form = getForm();
@@ -68,15 +68,15 @@ var useForm = function useForm(props) {
                 isSubmitting: true,
                 isSubmitted: true
               });
-              if (!(order === 'before')) {
+              if (!(order === "before")) {
                 _context.next = 11;
                 break;
               }
-              (_props$log2 = props.log) == null ? void 0 : _props$log2.call(props, 'run (before) validate list submit');
+              (_props$log2 = props.log) == null ? void 0 : _props$log2.call(props, "run (before) validate list submit");
               _context.next = 10;
               return validateListSubmit();
             case 10:
-              (_props$log3 = props.log) == null ? void 0 : _props$log3.call(props, 'success (before) validate list submit');
+              (_props$log3 = props.log) == null ? void 0 : _props$log3.call(props, "success (before) validate list submit");
             case 11:
               form.executeConfig();
               if (!(form.hasError() && !props.forceSubmitOnError)) {
@@ -88,20 +88,20 @@ var useForm = function useForm(props) {
                 form.setFocus(name);
                 (_props$log4 = props.log) == null ? void 0 : _props$log4.call(props, "trigger focus ".concat(name));
               }
-              throw new Error('Error Schema');
+              throw new Error("Error Schema");
             case 17:
               _context.next = 19;
               return onValid(form.config.values);
             case 19:
-              if (!(order === 'after')) {
+              if (!(order === "after")) {
                 _context.next = 24;
                 break;
               }
-              (_props$log5 = props.log) == null ? void 0 : _props$log5.call(props, 'run (after) validate list submit');
+              (_props$log5 = props.log) == null ? void 0 : _props$log5.call(props, "run (after) validate list submit");
               _context.next = 23;
               return validateListSubmit();
             case 23:
-              (_props$log6 = props.log) == null ? void 0 : _props$log6.call(props, 'success (after) validate list submit');
+              (_props$log6 = props.log) == null ? void 0 : _props$log6.call(props, "success (after) validate list submit");
             case 24:
               form.setFormState({
                 isSubmitting: false,
@@ -118,7 +118,7 @@ var useForm = function useForm(props) {
               });
               _context.prev = 30;
               _context.next = 33;
-              return onInvalid == null ? void 0 : onInvalid(form.fields.error, form.config.values, (_context.t0 == null ? void 0 : _context.t0.message) === 'Error Schema' ? 'SCHEMA' : 'CUSTOM');
+              return onInvalid == null ? void 0 : onInvalid(form.fields.error, form.config.values, (_context.t0 == null ? void 0 : _context.t0.message) === "Error Schema" ? "SCHEMA" : "CUSTOM");
             case 33:
               _context.next = 37;
               break;
@@ -143,7 +143,7 @@ var useForm = function useForm(props) {
   (0, _react.useEffect)(function () {
     var _props$log7;
     if (!_form.current) return;
-    (_props$log7 = props.log) == null ? void 0 : _props$log7.call(props, 'useForm - useEffect - (schema, extraData, initialValues)');
+    (_props$log7 = props.log) == null ? void 0 : _props$log7.call(props, "useForm - useEffect - (schema, extraData, initialValues)");
     var form = getForm();
     form.reset({
       schema: props.schema,
@@ -163,7 +163,7 @@ var useForm = function useForm(props) {
         update();
       }
     };
-    var unsubscribe = form.subscribeWatch(latestState, 'container');
+    var unsubscribe = form.subscribeWatch(latestState, "container");
     return unsubscribe;
   }, [schema]);
   return {

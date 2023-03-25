@@ -1,4 +1,4 @@
-import { SchemaBase } from './core';
+import { SchemaBase } from "./core";
 export interface MetaView {
     title: string;
     subtitle: string;
@@ -13,36 +13,36 @@ export interface MetaView {
     [key: string]: any;
 }
 interface BaseView extends SchemaBase {
-    variant: 'VIEW';
+    variant: "VIEW";
     name?: string;
 }
 export interface SchemaViewText extends BaseView {
-    viewType: 'TEXT';
+    viewType: "TEXT";
     meta?: Partial<MetaView> & Partial<{
         prefix: string;
         suffix: string;
     }>;
 }
 export interface SchemaViewFieldText extends BaseView {
-    viewType: 'FIELD-TEXT';
+    viewType: "FIELD-TEXT";
     meta?: Partial<MetaView> & Partial<{
         prefix: string;
         suffix: string;
     }>;
 }
 export interface SchemaViewFieldDate extends BaseView {
-    viewType: 'FIELD-DATE';
+    viewType: "FIELD-DATE";
     meta?: Partial<MetaView> & Partial<{
         format: string;
     }>;
 }
 export interface SchemaViewFieldCurrency extends BaseView {
-    viewType: 'FIELD-CURRENCY';
+    viewType: "FIELD-CURRENCY";
     meta?: Partial<MetaView>;
 }
 type SchemaViewField = SchemaViewFieldText | SchemaViewFieldDate | SchemaViewFieldCurrency;
 export interface SchemaViewDivider extends BaseView {
-    viewType: 'DIVIDER';
+    viewType: "DIVIDER";
     meta?: Partial<MetaView> & Partial<{
         textAlign: string;
         children: string;
@@ -51,19 +51,19 @@ export interface SchemaViewDivider extends BaseView {
     }>;
 }
 export interface SchemaViewCustom extends BaseView {
-    viewType: 'CUSTOM';
+    viewType: "CUSTOM";
     component: string;
     meta?: Partial<MetaView>;
 }
 export interface SchemaViewFieldOption extends BaseView {
-    viewType: 'FIELD-OPTION';
+    viewType: "FIELD-OPTION";
     meta?: Partial<MetaView> & Partial<{
         prefix: string;
         suffix: string;
     }>;
 }
 export interface SchemaViewFieldMultipleOption extends BaseView {
-    viewType: 'FIELD-MULTIPLE-OPTION';
+    viewType: "FIELD-MULTIPLE-OPTION";
     meta?: Partial<MetaView> & Partial<{
         prefix: string;
         suffix: string;

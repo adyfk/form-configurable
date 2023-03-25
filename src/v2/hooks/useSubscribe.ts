@@ -1,17 +1,17 @@
 import { useContext, useEffect } from "react";
-import { FormContext } from "./useForm";
-import type { IForm, IState, ISubject } from "../logic/createForm";
+import type { IState, ISubject } from "../logic/createForm";
+import { FormContext } from "../contexts/FormContext";
 // import type { ISchema } from "../../types";
 
-type IUseSubscribeProps<TSchema> = {
+type IUseSubscribeProps = {
   subject: keyof ISubject;
   // eslint-disable-next-line no-unused-vars
   callback: (state: IState) => any;
-  form?: IForm<TSchema>;
+  form?: any;
   disabled?: boolean;
 }
 
-const useSubscribe = (props: IUseSubscribeProps<any>) => {
+const useSubscribe = (props: IUseSubscribeProps) => {
   const { form: formContext } = useContext(FormContext);
   const {
     form = formContext,

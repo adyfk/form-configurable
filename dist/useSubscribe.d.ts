@@ -1,10 +1,10 @@
-import { Form, Fields, Props, RootFormState } from './logic/createForm';
+import { Form, Fields, Props, RootFormState } from "./logic/createForm";
 interface IUseSubscribePropsState {
-    subject: 'state';
+    subject: "state";
     callback: (values: Record<string, any>, fields: Fields, props: Props) => any;
 }
 interface IUseSubscribePropsContainer {
-    subject: 'container';
+    subject: "container";
     callback: (rootFormState: RootFormState) => any;
 }
 type IUseSubscribeProps = (IUseSubscribePropsState | IUseSubscribePropsContainer) & {

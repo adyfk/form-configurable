@@ -1,5 +1,5 @@
-import { ExpressionString, SchemaBase } from './core';
-import { Schema } from './schema';
+import { ExpressionString, SchemaBase } from "./core";
+import { Schema } from "./schema";
 export interface MetaField {
     placeholder: string;
     label: string;
@@ -30,21 +30,21 @@ export interface IOption {
     other?: boolean;
 }
 interface BaseField extends SchemaBase {
-    variant: 'FIELD';
+    variant: "FIELD";
     initialValue?: any;
     name: string;
     override?: Partial<BaseOverride>;
     rules?: BaseRule[];
 }
 export interface SchemaFieldText extends BaseField {
-    fieldType: 'TEXT';
-    valueType: 'STRING' | 'NUMBER';
+    fieldType: "TEXT";
+    valueType: "STRING" | "NUMBER";
     initialValue?: string | number;
     meta?: Partial<MetaField>;
 }
 export interface SchemaFieldTextArea extends BaseField {
-    fieldType: 'TEXTAREA';
-    valueType: 'STRING';
+    fieldType: "TEXTAREA";
+    valueType: "STRING";
     initialValue?: string;
     meta?: Partial<MetaField> & Partial<{
         rows: number;
@@ -52,8 +52,8 @@ export interface SchemaFieldTextArea extends BaseField {
     }>;
 }
 export interface SchemaFieldWyswyg extends BaseField {
-    fieldType: 'WYSWYG';
-    valueType: 'STRING';
+    fieldType: "WYSWYG";
+    valueType: "STRING";
     initialValue?: string;
     meta?: Partial<MetaField> & Partial<{
         rows: number;
@@ -61,7 +61,7 @@ export interface SchemaFieldWyswyg extends BaseField {
     }>;
 }
 export interface SchemaFieldCheckbox extends BaseField {
-    fieldType: 'CHECKBOX';
+    fieldType: "CHECKBOX";
     initialValue?: IOption[];
     meta?: Partial<MetaField> & {
         options: IOption[];
@@ -70,7 +70,7 @@ export interface SchemaFieldCheckbox extends BaseField {
     };
 }
 export interface SchemaFieldRadio extends BaseField {
-    fieldType: 'RADIO';
+    fieldType: "RADIO";
     initialValue?: IOption;
     meta?: Partial<MetaField> & {
         options: IOption[];
@@ -79,7 +79,7 @@ export interface SchemaFieldRadio extends BaseField {
     };
 }
 export interface SchemaFieldDropdown extends BaseField {
-    fieldType: 'DROPDOWN';
+    fieldType: "DROPDOWN";
     initialValue?: IOption;
     meta?: Partial<MetaField> & {
         options: IOption[];
@@ -87,7 +87,7 @@ export interface SchemaFieldDropdown extends BaseField {
     };
 }
 export interface SchemaFieldDropdownAsync extends BaseField {
-    fieldType: 'DROPDOWN-ASYNC';
+    fieldType: "DROPDOWN-ASYNC";
     initialValue?: IOption;
     meta?: Partial<MetaField> & {
         optionUrl: string;
@@ -95,7 +95,7 @@ export interface SchemaFieldDropdownAsync extends BaseField {
     };
 }
 export interface SchemaFieldCounter extends BaseField {
-    fieldType: 'COUNTER';
+    fieldType: "COUNTER";
     initialValue?: number;
     meta?: Partial<MetaField> & {
         min?: number;
@@ -103,7 +103,7 @@ export interface SchemaFieldCounter extends BaseField {
     };
 }
 export interface SchemaFieldSwitch extends BaseField {
-    fieldType: 'SWITCH';
+    fieldType: "SWITCH";
     initialValue?: IOption;
     meta?: Partial<MetaField> & {
         options: [
@@ -119,16 +119,16 @@ export interface SchemaFieldSwitch extends BaseField {
     };
 }
 export interface SchemaFieldDate extends BaseField {
-    fieldType: 'DATE';
-    valueType: 'DATE';
+    fieldType: "DATE";
+    valueType: "DATE";
     meta?: Partial<MetaField> & {
         format: string;
-        variant: 'date' | 'month' | 'year' | 'time' | 'month-year' | 'date-month-year' | 'date-month-year-time';
+        variant: "date" | "month" | "year" | "time" | "month-year" | "date-month-year" | "date-month-year-time";
     };
 }
 export interface SchemaFieldDateRange extends BaseField {
-    fieldType: 'DATERANGE';
-    valueType: 'DATE';
+    fieldType: "DATERANGE";
+    valueType: "DATE";
     meta?: Partial<MetaField> & {
         format: string;
     };
@@ -138,8 +138,8 @@ export interface SchemaFieldDateRange extends BaseField {
     };
 }
 export interface SchemaFieldDateTimeRange extends BaseField {
-    fieldType: 'DATE-TIME-RANGE';
-    valueType: 'DATE';
+    fieldType: "DATE-TIME-RANGE";
+    valueType: "DATE";
     meta?: Partial<MetaField> & {
         format: string;
     };
@@ -149,7 +149,7 @@ export interface SchemaFieldDateTimeRange extends BaseField {
     };
 }
 export interface SchemaFieldFile extends BaseField {
-    fieldType: 'FILE';
+    fieldType: "FILE";
     initialValue?: Partial<{
         [key: string]: any;
         fileId: string;
@@ -164,32 +164,32 @@ export interface SchemaFieldFile extends BaseField {
         uploadUrl?: string;
         maxFile?: number;
         maxSize?: number;
-        allowExtension?: ('txt' | 'doc' | 'xls' | 'ppt' | 'docx' | 'xlsx' | 'pptx' | 'pdf' | 'png' | 'mp4' | 'jpeg' | 'jpg' | 'mov')[];
+        allowExtension?: ("txt" | "doc" | "xls" | "ppt" | "docx" | "xlsx" | "pptx" | "pdf" | "png" | "mp4" | "jpeg" | "jpg" | "mov")[];
     };
 }
 export interface SchemaFieldArray extends BaseField {
-    fieldType: 'ARRAY';
+    fieldType: "ARRAY";
     component: string;
     initialValue?: any[];
     child: Schema[];
     meta?: Partial<MetaField>;
 }
 export interface SchemaFieldPhone extends BaseField {
-    fieldType: 'PHONE';
-    initialValue?: '';
+    fieldType: "PHONE";
+    initialValue?: "";
     meta?: Partial<MetaField> & Partial<{
         country: string;
     }>;
 }
 export interface SchemaFieldObject extends BaseField {
-    fieldType: 'OBJECT';
+    fieldType: "OBJECT";
     initialValue?: any;
     component: string;
     child: Schema[];
     meta?: Partial<MetaField>;
 }
 export interface SchemaFieldCustom extends BaseField {
-    fieldType: 'CUSTOM';
+    fieldType: "CUSTOM";
     initialValue?: any;
     component: string;
     meta?: Partial<MetaField>;

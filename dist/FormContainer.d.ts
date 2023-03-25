@@ -1,6 +1,6 @@
-import { FC } from 'react';
-import type { Schema, SchemaGroup, SchemaView, SchemaField, SchemaFieldArray } from './types';
-import type { Form } from './logic/createForm';
+import { FC } from "react";
+import type { Schema, SchemaGroup, SchemaView, SchemaField, SchemaFieldArray } from "./types";
+import type { Form } from "./logic/createForm";
 export type GroupProps = FC<{
     form?: Form;
     config: SchemaGroup;

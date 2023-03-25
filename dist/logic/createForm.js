@@ -8,10 +8,10 @@ exports["default"] = exports.createForm = void 0;
 var _slicedToArray2 = _interopRequireDefault(require("@babel/runtime/helpers/slicedToArray"));
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
 var _lodash = _interopRequireDefault(require("lodash.isequal"));
-var _createPath = _interopRequireDefault(require("../utils/createPath"));
+var _createPath = _interopRequireDefault(require("../v2/utils/createPath"));
 var _parser = require("../parser");
-var _set = _interopRequireDefault(require("../utils/set"));
-var _get = _interopRequireDefault(require("../utils/get"));
+var _set = _interopRequireDefault(require("../v2/utils/set"));
+var _get = _interopRequireDefault(require("../v2/utils/get"));
 function _createForOfIteratorHelper(o, allowArrayLike) { var it = typeof Symbol !== "undefined" && o[Symbol.iterator] || o["@@iterator"]; if (!it) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = it.call(o); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
 function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i]; return arr2; }
@@ -59,7 +59,7 @@ var createForm = function createForm(props) {
   function getProp(name, key) {
     var _props$name;
     var value = (_props$name = _props[name]) == null ? void 0 : _props$name[key];
-    return typeof value === 'undefined' || value;
+    return typeof value === "undefined" || value;
   }
   // function unsetValue(name: string) { unset(_config.values, name); }
   function unsetError(name) {
@@ -86,15 +86,17 @@ var createForm = function createForm(props) {
   var isPropsSkipExceute = function isPropsSkipExceute(config) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var path = options.path || config.name || config.key;
-    var editable = getProp('editable', path);
-    var show = getProp('show', path);
+    var editable = getProp("editable", path);
+    var show = getProp("show", path);
     if (!editable) return true;
     if (!show) return true;
     return false;
   };
+
+  // eslint-disable-next-line consistent-return
   var subscribeWatch = function subscribeWatch(callback) {
-    var subject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'state';
-    if (subject === 'state') {
+    var subject = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "state";
+    if (subject === "state") {
       _subjects.watchs.push(callback);
       return function () {
         _subjects.watchs = _subjects.watchs.filter(function (fn) {
@@ -102,7 +104,7 @@ var createForm = function createForm(props) {
         });
       };
     }
-    if (subject === 'container') {
+    if (subject === "container") {
       _subjects.watchContainer = _subjects.watchContainer.filter(function (fn) {
         return fn !== callback;
       });
@@ -112,8 +114,8 @@ var createForm = function createForm(props) {
     }
   };
   var notifyWatch = function notifyWatch() {
-    var subject = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'state';
-    if (subject === 'state') {
+    var subject = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "state";
+    if (subject === "state") {
       var _iterator = _createForOfIteratorHelper(_subjects.watchs),
         _step;
       try {
@@ -143,7 +145,7 @@ var createForm = function createForm(props) {
   };
   var setFormState = function setFormState(formStateValue) {
     Object.assign(_formState, formStateValue);
-    notifyWatch('container');
+    notifyWatch("container");
   };
   var checkFormStateValid = function checkFormStateValid() {
     var isValid = !hasError();
@@ -157,7 +159,7 @@ var createForm = function createForm(props) {
     var _config$override, _config$override3;
     var options = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
     var path = options.path || config.name;
-    if (typeof name === 'string' && path.includes(name) && (_config$override = config.override) != null && _config$override.others) {
+    if (typeof name === "string" && path.includes(name) && (_config$override = config.override) != null && _config$override.others) {
       var _config$override2;
       Object.assign(_config.values, (_config$override2 = config.override) == null ? void 0 : _config$override2.others);
     }
@@ -202,7 +204,7 @@ var createForm = function createForm(props) {
     } catch (error) {
       var _props$log;
       // eslint-disable-next-line no-console
-      (_props$log = props.log) == null ? void 0 : _props$log.call(props, 'error on executeExpressionProps', error, {
+      (_props$log = props.log) == null ? void 0 : _props$log.call(props, "error on executeExpressionProps", error, {
         info: {
           path: path,
           option: options,
@@ -252,7 +254,7 @@ var createForm = function createForm(props) {
   // eslint-disable-next-line no-unused-vars
   var executeExpressionEachArray = function executeExpressionEachArray(config) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    var path = (options.parent ? "".concat(options.parent, ".") : '') + (options.name || config.name);
+    var path = (options.parent ? "".concat(options.parent, ".") : "") + (options.name || config.name);
     var hasError = getError(path);
     if (hasError) return;
     var value = getValue(path) || [];
@@ -273,7 +275,7 @@ var createForm = function createForm(props) {
               __SELF__: getValue("".concat(path, "[").concat(index, "]"))
             }
           };
-          if (childConfig.variant === 'FIELD') {
+          if (childConfig.variant === "FIELD") {
             executeExpressionOverride(childConfig, options.name, eachOptions);
             executeExpressionProps(childConfig, eachOptions);
             if (isPropsSkipExceute(childConfig, eachOptions)) {
@@ -282,7 +284,7 @@ var createForm = function createForm(props) {
             if (!options.skipValidate) {
               executeExpressionRule(childConfig, eachOptions);
             }
-          } else if (childConfig.variant === 'GROUP') {
+          } else if (childConfig.variant === "GROUP") {
             //
           } else {
             executeExpressionProps(childConfig, eachOptions);
@@ -305,22 +307,22 @@ var createForm = function createForm(props) {
       try {
         for (_iterator6.s(); !(_step6 = _iterator6.n()).done;) {
           var config = _step6.value;
-          if (config.variant === 'FIELD') {
+          if (config.variant === "FIELD") {
             executeExpressionOverride(config, name);
             executeExpressionProps(config);
             if (isPropsSkipExceute(config)) continue;
             if (!options.skipValidate) {
               executeExpressionRule(config);
             }
-            if (config.fieldType === 'ARRAY') {
+            if (config.fieldType === "ARRAY") {
               executeExpressionEachArray(config, {
                 name: config.name,
                 skipValidate: options.skipValidate
               });
-            } else if (config.fieldType === 'OBJECT') {
+            } else if (config.fieldType === "OBJECT") {
               //
             }
-          } else if (config.variant === 'GROUP') {
+          } else if (config.variant === "GROUP") {
             executeExpressionProps(config);
             if (isPropsSkipExceute(config)) {
               continue;
@@ -338,7 +340,7 @@ var createForm = function createForm(props) {
     } catch (error) {
       var _props$log2;
       // eslint-disable-next-line no-console
-      (_props$log2 = props.log) == null ? void 0 : _props$log2.call(props, 'error on executeEachConfig', error);
+      (_props$log2 = props.log) == null ? void 0 : _props$log2.call(props, "error on executeEachConfig", error);
     }
   };
   var setIsDirty = function setIsDirty() {
@@ -346,7 +348,7 @@ var createForm = function createForm(props) {
       setFormState({
         isDirty: !(0, _lodash["default"])(props.initialValues, _config.values)
       });
-      notifyWatch('container');
+      notifyWatch("container");
     }
   };
   var executeConfig = function executeConfig(name) {
@@ -420,9 +422,9 @@ var createForm = function createForm(props) {
       try {
         for (_iterator7.s(); !(_step7 = _iterator7.n()).done;) {
           var config = _step7.value;
-          if (config.variant === 'FIELD') {
+          if (config.variant === "FIELD") {
             (0, _set["default"])(_config.values, config.name, (0, _get["default"])(_config.initialValues, config.name) || config.initialValue);
-          } else if (config.variant === 'GROUP') {
+          } else if (config.variant === "GROUP") {
             initializeValues(config.child);
           }
         }
@@ -433,7 +435,7 @@ var createForm = function createForm(props) {
       }
     } catch (error) {
       var _props$log3;
-      (_props$log3 = props.log) == null ? void 0 : _props$log3.call(props, 'error on initializeValues', error);
+      (_props$log3 = props.log) == null ? void 0 : _props$log3.call(props, "error on initializeValues", error);
     }
   };
 
@@ -441,8 +443,8 @@ var createForm = function createForm(props) {
   var initialize = function initialize() {
     var _props$log4, _props$log5;
     var arg = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-    (_props$log4 = props.log) == null ? void 0 : _props$log4.call(props, 'initialize arg', arg);
-    (_props$log5 = props.log) == null ? void 0 : _props$log5.call(props, 'initialize props', props);
+    (_props$log4 = props.log) == null ? void 0 : _props$log4.call(props, "initialize arg", arg);
+    (_props$log5 = props.log) == null ? void 0 : _props$log5.call(props, "initialize props", props);
     try {
       _fields.error = {};
       _fields.touched = {};
@@ -458,17 +460,17 @@ var createForm = function createForm(props) {
       _config.values = (0, _extends2["default"])({}, _config.initialValues);
       initializeValues(_config.schema);
       executeConfig();
-      notifyWatch('container');
-      notifyWatch('state');
+      notifyWatch("container");
+      notifyWatch("state");
       checkFormStateValid();
     } catch (error) {
       var _props$log6;
-      (_props$log6 = props.log) == null ? void 0 : _props$log6.call(props, 'error on initialize', error);
+      (_props$log6 = props.log) == null ? void 0 : _props$log6.call(props, "error on initialize", error);
     }
   };
   var reset = initialize;
   initialize();
-  (_props$log7 = props.log) == null ? void 0 : _props$log7.call(props, 'createForm');
+  (_props$log7 = props.log) == null ? void 0 : _props$log7.call(props, "createForm");
   return {
     config: _config,
     props: _props,

@@ -75,7 +75,7 @@ function SchemaComponent({
           // eslint-disable-next-line react/no-array-index-key
           <Container data={data} key={`${identity}-${index}`}>
             <FormGenerator
-              parent={identity}
+              parent={`${identity}.${index}`}
               schemas={schemas}
             />
           </Container>
@@ -94,7 +94,7 @@ function SchemaComponent({
         {({ value, container: Container }) => (
           <Container data={value} key={`${identity}`}>
             <FormGenerator
-              parent={identity}
+              parent={`${identity}`}
               schemas={schemas}
             />
           </Container>

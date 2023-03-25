@@ -25,7 +25,7 @@ var useWatchAll = function useWatchAll(props) {
   []);
   (0, _useSubscribe["default"])({
     form: form,
-    subject: 'state',
+    subject: "state",
     callback: latestState,
     disabled: disabled
   });

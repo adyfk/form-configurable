@@ -1,4 +1,4 @@
-import type { Schema } from '../types';
+import type { Schema } from "../types";
 export type Props = {
     show: Record<string, boolean>;
     editable: Record<string, boolean>;
@@ -44,8 +44,8 @@ export declare const createForm: (props: CreateFormProps) => {
         watchContainer: any[];
     };
     hasError: () => boolean;
-    subscribeWatch: (callback: any, subject?: 'state' | 'container') => (() => void) | undefined;
-    notifyWatch: (subject?: 'state' | 'container') => void;
+    subscribeWatch: (callback: any, subject?: "state" | "container") => (() => void) | undefined;
+    notifyWatch: (subject?: "state" | "container") => void;
     updateTouch: (name: string, value?: boolean, shouldRender?: boolean) => void;
     getValue: (name: string) => any;
     getError: (name: string) => string;

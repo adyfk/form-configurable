@@ -2,18 +2,19 @@ import {
   useCallback, useContext, useEffect, useRef,
 } from "react";
 import useSubscribe from "./useSubscribe";
-import { FormContext } from "./useForm";
 import useUpdate from "./useUpdate";
 import { IForm, IState, initializeState } from "../logic/createForm";
+import { ISchema } from "../types";
+import { FormContext } from "../contexts/FormContext";
 // import type { ISchema } from "../../types";
 
 export const useSupport = (props: {
-  form?: IForm<any>;
+  form?: any;
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
   const { form: formContext } = useContext(FormContext);
-  const { form = formContext } = props;
+  const { form = formContext } = props as { form: IForm<ISchema> };
   const _state = useRef<IState["supportFormState"]>(initializeState.supportFormState);
   const update = useUpdate();
 

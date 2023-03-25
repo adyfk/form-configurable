@@ -14,7 +14,9 @@ var _default = function _default(obj, path, defaultValue) {
   if (!path || !(0, _isObject["default"])(obj)) {
     return defaultValue;
   }
-  var result = (0, _compact["default"])(path.split(/[,[\].]+?/)).reduce(function (result, key) {
+  var result = (0, _compact["default"])(path.split(/[,[\].]+?/)).reduce(
+  // eslint-disable-next-line no-shadow
+  function (result, key) {
     return (0, _isNullOrUndefined["default"])(result) ? result : result[key];
   }, obj);
   return (0, _isUndefined["default"])(result) || result === obj ? (0, _isUndefined["default"])(obj[path]) ? defaultValue : obj[path] : result;

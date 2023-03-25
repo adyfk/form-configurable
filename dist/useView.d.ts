@@ -1,5 +1,5 @@
-import { Schema } from './types';
-import { Fields, Form, FormValues, Props } from './logic/createForm';
+import { Schema } from "./types";
+import { Fields, Form, FormValues, Props } from "./logic/createForm";
 export declare const initializeView: ({ values, props, config, }: {
     values: FormValues;
     props: Props;

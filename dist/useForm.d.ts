@@ -1,6 +1,6 @@
-import { FormEvent } from 'react';
-import { CreateFormProps, RootFormState } from './logic/createForm';
-import { Schema } from './types';
+import { FormEvent } from "react";
+import { CreateFormProps, RootFormState } from "./logic/createForm";
+import { Schema } from "./types";
 interface IUserFormProps extends CreateFormProps {
     forceSubmitOnError?: boolean;
     log?: (...arg: any) => void;
@@ -59,7 +59,7 @@ export declare const useForm: (props: IUserFormProps) => {
         reset: (arg?: CreateFormProps) => void;
     };
     readonly formState: RootFormState;
-    handleSubmit: (onValid: (values: Record<string, any>) => Promise<void> | any, onInvalid?: ((errors: Record<string, any>, values: Record<string, any>, type: 'SCHEMA' | 'CUSTOM') => Promise<void> | any) | undefined) => (event: FormEvent) => Promise<void>;
+    handleSubmit: (onValid: (values: Record<string, any>) => Promise<void> | any, onInvalid?: ((errors: Record<string, any>, values: Record<string, any>, type: "SCHEMA" | "CUSTOM") => Promise<void> | any) | undefined) => (event: FormEvent) => Promise<void>;
 };
 export declare const FormContext: import("react").Context<{
     schema: Schema[];
@@ -107,6 +107,6 @@ export declare const FormContext: import("react").Context<{
         reset: (arg?: CreateFormProps) => void;
     };
     readonly formState: RootFormState;
-    handleSubmit: (onValid: (values: Record<string, any>) => Promise<void> | any, onInvalid?: ((errors: Record<string, any>, values: Record<string, any>, type: 'SCHEMA' | 'CUSTOM') => Promise<void> | any) | undefined) => (event: FormEvent) => Promise<void>;
+    handleSubmit: (onValid: (values: Record<string, any>) => Promise<void> | any, onInvalid?: ((errors: Record<string, any>, values: Record<string, any>, type: "SCHEMA" | "CUSTOM") => Promise<void> | any) | undefined) => (event: FormEvent) => Promise<void>;
 }>;
 export default useForm;

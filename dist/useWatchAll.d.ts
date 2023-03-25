@@ -1,4 +1,4 @@
-import { Form } from './logic/createForm';
+import { Form } from "./logic/createForm";
 export declare const useWatchAll: (props: {
     form?: {
         config: {

@@ -14,7 +14,7 @@ var useSubscribe = function useSubscribe(props) {
     callback = props.callback,
     disabled = props.disabled,
     _props$subject = props.subject,
-    subject = _props$subject === void 0 ? 'state' : _props$subject;
+    subject = _props$subject === void 0 ? "state" : _props$subject;
   (0, _react.useEffect)(function () {
     if (disabled) return;
     var unsubscribe = form.subscribeWatch(callback, subject);

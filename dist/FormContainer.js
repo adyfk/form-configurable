@@ -8,8 +8,8 @@ exports.FormContainer = FormContainer;
 exports.mapConfigChildArray = exports["default"] = void 0;
 var _objectWithoutProperties2 = _interopRequireDefault(require("@babel/runtime/helpers/objectWithoutProperties"));
 var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-var _createPath = _interopRequireDefault(require("./utils/createPath"));
-var _generateId = _interopRequireDefault(require("./utils/generateId"));
+var _createPath = _interopRequireDefault(require("./v2/utils/createPath"));
+var _generateId = _interopRequireDefault(require("./v2/utils/generateId"));
 var _jsxRuntime = require("react/jsx-runtime");
 var _excluded = ["form", "schema", "Group", "View", "Field", "FieldArray"];
 var mapConfigChildArray = function mapConfigChildArray(_ref) {
@@ -20,7 +20,7 @@ var mapConfigChildArray = function mapConfigChildArray(_ref) {
     Object.assign(childConfigOverride, {
       key: "".concat(childConfigOverride.key, "_").concat(index)
     });
-    if (childConfigOverride.variant === 'FIELD') {
+    if (childConfigOverride.variant === "FIELD") {
       var _childConfigOverride$, _childConfigOverride$2;
       Object.assign(childConfigOverride, {
         name: (0, _createPath["default"])({
@@ -29,11 +29,11 @@ var mapConfigChildArray = function mapConfigChildArray(_ref) {
           child: childConfig.name
         }),
         meta: (0, _extends2["default"])({}, childConfigOverride.meta, {
-          label: (_childConfigOverride$ = childConfigOverride.meta) == null ? void 0 : (_childConfigOverride$2 = _childConfigOverride$.label) == null ? void 0 : _childConfigOverride$2.replace('__ITEM__', "".concat(+index + 1))
+          label: (_childConfigOverride$ = childConfigOverride.meta) == null ? void 0 : (_childConfigOverride$2 = _childConfigOverride$.label) == null ? void 0 : _childConfigOverride$2.replace("__ITEM__", "".concat(+index + 1))
         })
       });
     }
-    if (childConfigOverride.variant === 'GROUP') {
+    if (childConfigOverride.variant === "GROUP") {
       Object.assign(childConfigOverride, {
         child: mapConfigChildArray({
           config: config,
@@ -56,7 +56,7 @@ function FormContainer(_ref2) {
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
     children: schema.map(function (config) {
       var key = config.variant + (config.name || config.key || (0, _generateId["default"])());
-      if (config.variant === 'GROUP') {
+      if (config.variant === "GROUP") {
         return /*#__PURE__*/(0, _jsxRuntime.jsx)(Group, (0, _extends2["default"])({
           form: form,
           config: config,
@@ -72,14 +72,14 @@ function FormContainer(_ref2) {
           }
         }, otherProps), key);
       }
-      if (config.variant === 'VIEW') {
+      if (config.variant === "VIEW") {
         return /*#__PURE__*/(0, _jsxRuntime.jsx)(View, (0, _extends2["default"])({
           form: form,
           config: config
         }, otherProps), key);
       }
-      if (config.variant === 'FIELD') {
-        if (config.fieldType === 'ARRAY' && !!FieldArray) {
+      if (config.variant === "FIELD") {
+        if (config.fieldType === "ARRAY" && !!FieldArray) {
           return /*#__PURE__*/(0, _jsxRuntime.jsx)(FieldArray, {
             form: form,
             config: config,

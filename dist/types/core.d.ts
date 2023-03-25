@@ -7,7 +7,7 @@ export interface BaseStyle {
     [key: string]: any;
 }
 export interface BaseProp {
-    name: 'editable' | 'show' | string;
+    name: "editable" | "show" | string;
     value?: any;
     expression?: ExpressionString | null;
 }

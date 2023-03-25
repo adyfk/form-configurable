@@ -8,7 +8,7 @@ exports.useView = exports.initializeView = exports["default"] = void 0;
 var _react = require("react");
 var _useForm = require("./useForm");
 var _useSubscribe = _interopRequireDefault(require("./useSubscribe"));
-var _get = _interopRequireDefault(require("./utils/get"));
+var _get = _interopRequireDefault(require("./v2/utils/get"));
 var _useUpdate = _interopRequireDefault(require("./hooks/useUpdate"));
 /* eslint-disable no-underscore-dangle */
 
@@ -23,7 +23,7 @@ var initializeView = function initializeView(_ref) {
   for (var key in props) {
     var _props$key;
     var value = (_props$key = props[key]) == null ? void 0 : _props$key[config.name || config.key];
-    field.viewState[key] = typeof value === 'undefined' ? true : value;
+    field.viewState[key] = typeof value === "undefined" ? true : value;
   }
   if (config.name) {
     field.data = (0, _get["default"])(values, config.name);
@@ -56,7 +56,7 @@ var useView = function useView(props) {
     }
   }, [config]);
   (0, _useSubscribe["default"])({
-    subject: 'state',
+    subject: "state",
     form: form,
     callback: latestState,
     disabled: !((_config$props = config.props) != null && _config$props.length) && !config.name

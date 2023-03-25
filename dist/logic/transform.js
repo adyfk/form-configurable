@@ -7,7 +7,7 @@ exports.transform = void 0;
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 var transform = {
   STRING: function STRING(value) {
-    return value || '';
+    return value || "";
   },
   NUMBER: function NUMBER(value) {
     var result = parseInt(value);

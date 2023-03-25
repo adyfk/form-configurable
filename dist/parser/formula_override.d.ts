@@ -1,4 +1,4 @@
-import type { ExpressionThunk, TermDelegate, ExpressionValue, ExpressionParserOptions, TermTyper, ArgumentsArray } from 'expressionparser/dist/ExpressionParser';
+import type { ExpressionThunk, TermDelegate, ExpressionValue, ExpressionParserOptions, TermTyper, ArgumentsArray } from "expressionparser/dist/ExpressionParser";
 export interface FunctionOps {
     [op: string]: (...args: ExpressionThunk[]) => ExpressionValue;
 }

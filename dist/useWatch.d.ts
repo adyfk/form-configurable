@@ -1,4 +1,4 @@
-import { Form, FormValues } from './logic/createForm';
+import { Form, FormValues } from "./logic/createForm";
 interface IStateInitializeWatch {
     values: FormValues;
     name: string[];
