@@ -14,7 +14,9 @@ var _FormContext = require("../contexts/FormContext");
 
 var useContainer = function useContainer(props) {
   var _useContext = (0, _react.useContext)(_FormContext.FormContext),
-    formContext = _useContext.form;
+    context = _useContext.context;
+  var _useContext2 = (0, _react.useContext)(context),
+    formContext = _useContext2.form;
   var _ref = props,
     _ref$form = _ref.form,
     form = _ref$form === void 0 ? formContext : _ref$form;

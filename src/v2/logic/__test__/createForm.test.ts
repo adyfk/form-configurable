@@ -2,16 +2,13 @@ import { ISchema, ISchemaFieldCore } from "../../types";
 import createForm from "../createForm";
 
 test("function", () => {
-  interface newX extends ISchemaFieldCore {
+  interface NewX extends ISchemaFieldCore {
     variant: "FIELD",
     childs: [];
     component: "XDEFAULT"
   }
 
-  // eslint-disable-next-line no-redeclare
-  type NewObject = newX | ISchema;
-
-  const form = createForm<NewObject>({
+  const form = createForm<ISchema<NewX>>({
     initialValues: {},
     schemas: [
       {

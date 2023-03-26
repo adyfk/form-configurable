@@ -3,7 +3,7 @@ export declare const useSupport: (props: {
     form?: any;
     log?: (() => void) | undefined;
 }) => {
-    form: IForm<import("../types").INativeSchema>;
+    form: IForm<any> | IForm<import("../types").INativeSchema<null>>;
     state: {
         isValid: boolean;
         isDirty: boolean;

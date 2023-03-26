@@ -6,6 +6,7 @@
       "dom.iterable",
       "esnext"
     ],
+    "moduleDetection": "force",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -28,5 +29,6 @@
   },
   "include": [
     "src"
-  ]
+  ],
+  "exclude": ["node_modules", "dist", "app", "docs", "site"]
 }

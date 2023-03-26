@@ -10,6 +10,6 @@ export declare const useView: <TSchema extends ISchemaViewCore>(props: {
         propsState: TSchema["propStateType"] & IDefaultProp;
     };
     data: any;
-    form: IForm<import("../types").INativeSchema> | IForm<TSchema>;
+    form: IForm<any> | IForm<TSchema>;
 };
 export default useView;

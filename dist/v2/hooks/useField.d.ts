@@ -13,7 +13,7 @@ export declare const useField: <TSchema extends ISchemaFieldCore>(props: {
         fieldState: import("../types").IObject;
     };
     ref: import("react").MutableRefObject<any>;
-    form: IForm<import("../types").INativeSchema> | IForm<TSchema>;
+    form: IForm<any> | IForm<TSchema>;
     data: any;
     onChange: (arg: any) => void;
     onBlur: () => void;

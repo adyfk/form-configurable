@@ -11,7 +11,9 @@ var _useUpdate = _interopRequireDefault(require("./useUpdate"));
 var _FormContext = require("../contexts/FormContext");
 var useView = function useView(props) {
   var _useContext = (0, _react.useContext)(_FormContext.FormContext),
-    formContext = _useContext.form;
+    context = _useContext.context;
+  var _useContext2 = (0, _react.useContext)(context),
+    formContext = _useContext2.form;
   var _ref = props,
     _ref$form = _ref.form,
     form = _ref$form === void 0 ? formContext : _ref$form,

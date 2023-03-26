@@ -16,7 +16,8 @@ export const useWatch = <T>(props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { form: formContext } = useContext(FormContext);
+  const { context } = useContext(FormContext);
+  const { form: formContext } = useContext(context);
   const { form = formContext, name } = props as { form: IForm<any>, name: string };
   const _state = useRef<IState>(props.defaultValue || form.getValue(name));
   const update = useUpdate();

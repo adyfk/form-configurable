@@ -16,7 +16,8 @@ export const useView = <TSchema extends ISchemaViewCore>(props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { form: formContext } = useContext(FormContext);
+  const { context } = useContext(FormContext);
+  const { form: formContext } = useContext(context);
   const { form = formContext, schema } = props as { form: IForm<TSchema>, schema: TSchema };
   const _state = useRef(form.getSchemaViewState<TSchema["propStateType"] & IDefaultProp>(schema as any));
   const update = useUpdate();

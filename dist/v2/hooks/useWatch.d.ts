@@ -6,6 +6,6 @@ export declare const useWatch: <T>(props: {
     log?: (() => void) | undefined;
 }) => {
     state: T;
-    form: IForm<import("..").INativeSchema> | IForm<any>;
+    form: IForm<any>;
 };
 export default useWatch;

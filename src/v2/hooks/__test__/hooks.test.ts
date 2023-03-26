@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-console */
-// import { renderHook } from "@testing-library/react";
-import { INativeSchema, ISchemaFieldArrayCustom, ISchemaFieldCustom, ISchemaGroupCustom, ISchemaViewCustom } from "../../types";
+import { renderHook } from "@testing-library/react";
+import { ISchema, ISchemaFieldArrayCustom, ISchemaFieldCustom, ISchemaGroupCustom, ISchemaViewCustom } from "../../types";
 import useForm from "../useForm";
 import useField from "../useField";
 import "@testing-library/jest-dom";
@@ -19,6 +21,7 @@ interface ISchemaFieldArrayCustom1 extends ISchemaFieldArrayCustom<{ x: false }>
   attribute: {
     title: string;
   };
+  childs: ISchema<TMoreSchema>[]
 }
 
 interface ISchemaViewCustom1 extends ISchemaViewCustom<{ p: boolean; }> {
@@ -29,15 +32,12 @@ interface ISchemaViewCustom1 extends ISchemaViewCustom<{ p: boolean; }> {
 interface ISchemaGroupCustom1 extends ISchemaGroupCustom<{ x: boolean }> {
   variant: "GROUP";
   component: "CUSTOM 1",
+  childs: ISchema<TMoreSchema>[]
 }
 
-type ISchema = INativeSchema | ISchemaFieldCustom1 | ISchemaFieldArrayCustom1 | ISchemaViewCustom1 | ISchemaGroupCustom1
+type TMoreSchema = ISchemaFieldCustom1 | ISchemaFieldArrayCustom1 | ISchemaViewCustom1 | ISchemaGroupCustom1;
 
-declare module "../../types" {
-  // eslint-disable-next-line jest/no-export
-}
-
-const schemas: ISchema[] = [
+const schemas: ISchema<TMoreSchema>[] = [
   {
     variant: "FIELD",
     component: "CUSTOM 1",
@@ -52,6 +52,7 @@ const schemas: ISchema[] = [
       name: "test-name-1",
       data: {},
     },
+    initialValue: 22,
     overrides: [],
     rules: [],
     attribute: {
@@ -94,18 +95,36 @@ const schemas: ISchema[] = [
   {
     variant: "GROUP",
     component: "CUSTOM 1",
-    childs: [],
+    childs: [
+      {
+        variant: "FIELD-ARRAY",
+        component: "CUSTOM 1",
+        childs: [],
+        config: {
+          name: "name",
+        },
+        props: [],
+        rules: [],
+        overrides: [],
+        attribute: {
+          title: "test",
+        },
+      },
+    ],
     config: {},
     props: [],
   },
 ];
 
+const initialValues = {};
+const extraData = {};
+
 // eslint-disable-next-line no-unused-vars
 function testMergeHook() {
-  const { form } = useForm<ISchema>({
+  const { form } = useForm<ISchema<TMoreSchema>>({
     schemas,
-    initialValues: {},
-    extraData: {},
+    initialValues,
+    extraData,
   });
 
   const field = useField<ISchemaFieldCustom1>({
@@ -113,15 +132,17 @@ function testMergeHook() {
     schema: {
       variant: "FIELD",
       component: "CUSTOM 1",
-      rules: [],
-      config: {
-        name: "xxx",
-      },
-      attribute: {
-        title: "sdfsdf",
-      },
-      overrides: [],
       props: [],
+      config: {
+        name: "test-name-1",
+        data: {},
+      },
+      initialValue: 22,
+      overrides: [],
+      rules: [],
+      attribute: {
+        title: "TITLE",
+      },
     },
   });
 
@@ -135,14 +156,14 @@ function testMergeHook() {
     },
   });
 
-  console.log(
-    field,
-    view,
-  );
+  // console.log(
+  //   field,
+  //   view,
+  // );
   return form;
 }
 // eslint-disable-next-line jest/expect-expect
 test("returns logged in user", () => {
-  // const { result } = renderHook(() => testMergeHook());
+  renderHook(() => testMergeHook());
   // console.log("use form", result.current);
 });

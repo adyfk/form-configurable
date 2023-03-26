@@ -128,7 +128,8 @@ var createForm = function createForm(props) {
 
     // eslint-disable-next-line guard-for-in
     for (var name in _state.propsState) {
-      propsState[name] = _state.propsState[name][key];
+      var _state$propsState$nam3;
+      propsState[name] = (_state$propsState$nam3 = _state.propsState[name][key]) != null ? _state$propsState$nam3 : true;
     }
     return {
       value: getValue(key),

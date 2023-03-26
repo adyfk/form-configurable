@@ -14,28 +14,6 @@ Object.keys(_core).forEach(function (key) {
     }
   });
 });
-var _field = require("./field");
-Object.keys(_field).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _field[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _field[key];
-    }
-  });
-});
-var _group = require("./group");
-Object.keys(_group).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _group[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _group[key];
-    }
-  });
-});
 var _schema = require("./schema");
 Object.keys(_schema).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -55,17 +33,6 @@ Object.keys(_utils).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _utils[key];
-    }
-  });
-});
-var _view = require("./view");
-Object.keys(_view).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  if (key in exports && exports[key] === _view[key]) return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _view[key];
     }
   });
 });

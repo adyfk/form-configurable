@@ -28,6 +28,7 @@
     "build-homepage": "npm run build && cd ./app && npm install && npm run build && cd .. && npm run docs",
     "start": "cd ./app && npm run start",
     "build": "rimraf dist/* && rimraf types/* && npm run build:stable && npm run build:typescript && npm run build:copy-files",
+    "build:local": "rimraf dist/* && rimraf types/* && npm run build:stable && npm run build:typescript && npm run build:copy-files && cd ./dist && npm pack",
     "build:stable": "node scripts/build.js stable",
     "build:typescript": "npx tsc --emitDeclarationOnly",
     "build:copy-files": "node scripts/copy-files.js",

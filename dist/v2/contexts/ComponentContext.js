@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports["default"] = exports.ComponentContext = void 0;
 var _react = require("react");
 var ComponentContext = /*#__PURE__*/(0, _react.createContext)({
   components: {
@@ -14,5 +14,6 @@ var ComponentContext = /*#__PURE__*/(0, _react.createContext)({
     VIEW: {}
   }
 });
+exports.ComponentContext = ComponentContext;
 var _default = ComponentContext;
 exports["default"] = _default;

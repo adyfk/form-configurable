@@ -10,7 +10,7 @@
     "@types/node": "^16.18.20",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
-    "form-configurable": "file:../dist",
+    "form-configurable": "file:../dist/form-configurable-3.3.3-development.tgz",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
@@ -18,7 +18,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "preinstall": "npm i file:../dist",
+    "preinstall": "npm i ../dist/form-configurable-3.3.3-development.tgz",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

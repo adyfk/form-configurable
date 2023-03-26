@@ -37,7 +37,7 @@ export type Components = {
     "FIELD-ARRAY": Record<string, ComponentArray<any>>;
     "FIELD-OBJECT": Record<string, ComponentObject<any>>;
 };
-declare const ComponentContext: import("react").Context<{
+export declare const ComponentContext: import("react").Context<{
     components: Components;
 }>;
 export default ComponentContext;

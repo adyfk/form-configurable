@@ -13,7 +13,8 @@ export const useContainer = (props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { form: formContext } = useContext(FormContext);
+  const { context } = useContext(FormContext);
+  const { form: formContext } = useContext(context);
   const { form = formContext } = props as { form: IForm<ISchema> };
   const _state = useRef<IState["containerFormState"]>(initializeState.containerFormState);
   const update = useUpdate();

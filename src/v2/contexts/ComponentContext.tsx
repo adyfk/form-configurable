@@ -33,7 +33,7 @@ export type Components = {
   "FIELD-OBJECT": Record<string, ComponentObject<any>>;
 };
 
-const ComponentContext = createContext<{ components: Components }>({
+export const ComponentContext = createContext<{ components: Components }>({
   components: {
     "FIELD-ARRAY": {},
     "FIELD-OBJECT": {},

@@ -15,7 +15,8 @@ export const useWatchAll = (props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { form: formContext } = useContext(FormContext);
+  const { context } = useContext(FormContext);
+  const { form: formContext } = useContext(context);
   const { form = formContext } = props;
   const _state = useRef<IState>({} as any);
   const update = useUpdate();
