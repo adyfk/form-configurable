@@ -131,9 +131,12 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     if (!key) return undefined;
     return _state.error[key];
   }
-  function getTouch(key: string) { return _state.fieldsState.touched[key]; }
   function initError(key: string, value: any) { _state.error[key] = value; }
-  function initTouched(key: string, value: any) { _state.fieldsState.touched[key] = value; }
+  function getField(name: string, key: string) { return _state.fieldsState[name]?.[key]; }
+  function initField(name: string, key: string, value: any) {
+    if (!_state.fieldsState[name]) _state.fieldsState[name] = {};
+    _state.fieldsState[name][key] = value;
+  }
   // propsState
   function getProp(name: keyof IState["propsState"], key: string) { return _state.propsState[name]?.[key]; }
   function initProp(name: string, key: string, value: any) {
@@ -242,12 +245,12 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   };
 
   const updateTouch = (
-    name: string,
+    key: string,
     value: boolean = true,
     shouldRender: boolean = true,
   ) => {
-    const isPreviousTouched = getTouch(name);
-    initTouched(name, value);
+    const isPreviousTouched = getField("touched", key);
+    initField("touched", key, value);
 
     if (shouldRender && isPreviousTouched !== value) {
       notify("fields");
@@ -607,7 +610,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     setFocus,
     handleSubmit,
     reset,
-    getTouch,
+    getField,
     subscribe,
     notify,
     getSchemaKey,

@@ -84,19 +84,21 @@ var createForm = function createForm(props) {
     if (!key) return undefined;
     return _state.error[key];
   }
-  function getTouch(key) {
-    return _state.fieldsState.touched[key];
-  }
   function initError(key, value) {
     _state.error[key] = value;
   }
-  function initTouched(key, value) {
-    _state.fieldsState.touched[key] = value;
+  function getField(name, key) {
+    var _state$fieldsState$na;
+    return (_state$fieldsState$na = _state.fieldsState[name]) == null ? void 0 : _state$fieldsState$na[key];
+  }
+  function initField(name, key, value) {
+    if (!_state.fieldsState[name]) _state.fieldsState[name] = {};
+    _state.fieldsState[name][key] = value;
   }
   // propsState
   function getProp(name, key) {
-    var _state$propsState$nam, _state$propsState$nam2;
-    return (_state$propsState$nam = (_state$propsState$nam2 = _state.propsState[name]) == null ? void 0 : _state$propsState$nam2[key]) != null ? _state$propsState$nam : true;
+    var _state$propsState$nam;
+    return (_state$propsState$nam = _state.propsState[name]) == null ? void 0 : _state$propsState$nam[key];
   }
   function initProp(name, key, value) {
     if (!_state.propsState[name]) _state.propsState[name] = {};
@@ -205,11 +207,11 @@ var createForm = function createForm(props) {
       }
     }
   };
-  var updateTouch = function updateTouch(name) {
+  var updateTouch = function updateTouch(key) {
     var value = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
     var shouldRender = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-    var isPreviousTouched = getTouch(name);
-    initTouched(name, value);
+    var isPreviousTouched = getField("touched", key);
+    initField("touched", key, value);
     if (shouldRender && isPreviousTouched !== value) {
       notify("fields");
     }
@@ -473,6 +475,7 @@ var createForm = function createForm(props) {
           executeEachObjectExpression(schema.childs, (0, _extends2["default"])({}, options, {
             parent: _key2
           }));
+          continue;
         }
         if (schema.variant === "GROUP") {
           executeEachExpression(schema.childs, options);
@@ -614,7 +617,7 @@ var createForm = function createForm(props) {
     setFocus: setFocus,
     handleSubmit: handleSubmit,
     reset: reset,
-    getTouch: getTouch,
+    getField: getField,
     subscribe: subscribe,
     notify: notify,
     getSchemaKey: getSchemaKey,

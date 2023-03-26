@@ -87,7 +87,7 @@ declare const createForm: <TSchema>(props: ICreateFormProps<TSchema>) => {
         forceSubmit: boolean;
     }) => (event: FormEvent) => Promise<void>;
     reset: ({ initialValues, schemas, extraData, }: Partial<Omit<ICreateFormProps<TSchema>, "formula">>) => void;
-    getTouch: (key: string) => boolean;
+    getField: (name: string, key: string) => any;
     subscribe: (subject: keyof ISubject, callback: any) => () => void;
     notify: (subject: keyof ISubject) => void;
     getSchemaKey: typeof getSchemaKey;
@@ -101,7 +101,7 @@ declare const createForm: <TSchema>(props: ICreateFormProps<TSchema>) => {
         value: any;
         propsState: TFieldProps_1;
     };
-    updateTouch: (name: string, value?: boolean, shouldRender?: boolean) => void;
+    updateTouch: (key: string, value?: boolean, shouldRender?: boolean) => void;
 };
 export type IForm<T> = ReturnType<typeof createForm<T>>;
 export default createForm;
