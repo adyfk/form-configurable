@@ -1,5 +1,5 @@
 import { FormEvent } from "react";
-import type { IObject, ISchema } from "../types";
+import type { IExpressionString, IObject, ISchema } from "../types";
 export interface IState {
     containerFormState: {
         isSubmitting: boolean;
@@ -71,6 +71,7 @@ declare const createForm: <TSchema>(props: ICreateFormProps<TSchema>) => {
     state: IState;
     subject: ISubject;
     fieldRef: Record<string, any>;
+    parse: (expression: IExpressionString, terms?: Record<string, any>) => import("../parser/expression").ExpressionValue;
     setContainerFormState: (formStateValue: Partial<IState["containerFormState"]>) => void;
     setSupportFormState: (formStateValue: Partial<IState["supportFormState"]>) => void;
     getValue: (key?: string) => any;

@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 /* eslint-disable func-names */
 /* eslint-disable no-use-before-define */
 import type {
@@ -671,22 +672,22 @@ export const formula = function (
       const numVal = parseFloat(term);
       if (Number.isNaN(numVal)) {
         switch (term) {
-        case "FALSE":
-          return false;
-        case "TRUE":
-          return true;
-        case "EMPTY":
-          return [];
-        case "EMPTYDICT":
-          return {};
-        case "INFINITY":
-          return Number.POSITIVE_INFINITY;
-        case "EPSILON":
-          return Number.EPSILON;
-        case "UNDEFINED":
-          return undefined as any;
-        default:
-          return termDelegate(term);
+          case "FALSE":
+            return false;
+          case "TRUE":
+            return true;
+          case "EMPTY":
+            return [];
+          case "EMPTYDICT":
+            return {};
+          case "INFINITY":
+            return Number.POSITIVE_INFINITY;
+          case "EPSILON":
+            return Number.EPSILON;
+          case "UNDEFINED":
+            return undefined as any;
+          default:
+            return termDelegate(term);
         }
       } else {
         return numVal;
@@ -698,18 +699,18 @@ export const formula = function (
 
       if (Number.isNaN(numVal)) {
         switch (term) {
-        case "FALSE":
-          return "boolean";
-        case "TRUE":
-          return "boolean";
-        case "EMPTY":
-          return "array";
-        case "INFINITY":
-          return "number";
-        case "EPSILON":
-          return "number";
-        default:
-          return termTypeDelegate ? termTypeDelegate(term) : "unknown";
+          case "FALSE":
+            return "boolean";
+          case "TRUE":
+            return "boolean";
+          case "EMPTY":
+            return "array";
+          case "INFINITY":
+            return "number";
+          case "EPSILON":
+            return "number";
+          default:
+            return termTypeDelegate ? termTypeDelegate(term) : "unknown";
         }
       } else {
         return "number";

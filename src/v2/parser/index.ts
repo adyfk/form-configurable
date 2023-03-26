@@ -1,4 +1,4 @@
-import ExpressionParser from "./expression";
+import { parser } from "../../parser";
 import { formula } from "./formula";
 
-export const createParser = (config = formula) => new ExpressionParser(config((val) => val));
+export const createParser = (_config = formula) => parser;

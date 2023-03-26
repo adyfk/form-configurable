@@ -1,7 +1,9 @@
+/* eslint-disable jest/expect-expect */
+/* eslint-disable no-console */
 import { ISchema, ISchemaFieldCore } from "../../types";
 import createForm from "../createForm";
 
-test("function", () => {
+test("cobain v2", () => {
   interface NewX extends ISchemaFieldCore {
     variant: "FIELD",
     childs: [];
@@ -124,7 +126,9 @@ test("function", () => {
         ],
       },
     ],
+
   });
+
   expect(form.state.values).toEqual({
     first: 123,
     second: 555,

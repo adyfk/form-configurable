@@ -295,6 +295,7 @@ var createForm = function createForm(props) {
         var terms = (0, _extends2["default"])({}, options.extraData, {
           __SELF__: getValue(_key)
         });
+        if (typeof getProp(name, _key) !== "undefined") continue;
         if (!expression) {
           updateProps(name, _key, {
             value: value,
@@ -607,6 +608,7 @@ var createForm = function createForm(props) {
     state: _state,
     subject: _subject,
     fieldRef: _fieldRef,
+    parse: parse,
     setContainerFormState: setContainerFormState,
     setSupportFormState: setSupportFormState,
     getValue: getValue,
