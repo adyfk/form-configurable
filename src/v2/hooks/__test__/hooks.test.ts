@@ -21,18 +21,18 @@ interface ISchemaFieldArrayCustom1 extends ISchemaFieldArrayCustom<{ x: false }>
   attribute: {
     title: string;
   };
-  childs: ISchema<TMoreSchema>[]
+  childs: ISchema<TMoreSchema>[];
 }
 
 interface ISchemaViewCustom1 extends ISchemaViewCustom<{ p: boolean; }> {
   variant: "VIEW",
-  component: "CUSTOM 1"
+  component: "CUSTOM 1";
 }
 
 interface ISchemaGroupCustom1 extends ISchemaGroupCustom<{ x: boolean }> {
   variant: "GROUP";
   component: "CUSTOM 1",
-  childs: ISchema<TMoreSchema>[]
+  childs: ISchema<TMoreSchema>[];
 }
 
 type TMoreSchema = ISchemaFieldCustom1 | ISchemaFieldArrayCustom1 | ISchemaViewCustom1 | ISchemaGroupCustom1;

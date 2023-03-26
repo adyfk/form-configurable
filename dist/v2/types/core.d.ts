@@ -2,13 +2,13 @@ import { IObject } from "./utils";
 export type IExpressionString = string;
 export type IVariant = "FIELD" | "FIELD-ARRAY" | "FIELD-OBJECT" | "VIEW" | "GROUP";
 export interface IDefaultProp {
-    show: boolean;
-    editable: boolean;
+    disabled: boolean;
+    hidden: boolean;
 }
 export type IProp = {
     condition?: boolean;
     name: string;
-    expression: IExpressionString;
+    expression?: IExpressionString;
     value: any;
     expressionValue?: IExpressionString;
 };

@@ -54,18 +54,27 @@ export interface ISchemaFieldObjectCustom<TProp> extends ISchemaFieldCore {
 export interface ISchemaFieldDefault extends ISchemaFieldCore {
   variant: "FIELD",
   component: "DEFAULT";
+  props: (IProp & {
+    name: keyof IDefaultProp
+  })[];
 }
 
 export interface ISchemaFieldArrayDefault<TSchema = null> extends ISchemaFieldCore {
   variant: "FIELD-ARRAY",
   childs: ISchema<TSchema>[];
   component: "DEFAULT";
+  props: (IProp & {
+    name: keyof IDefaultProp
+  })[];
 }
 
 export interface ISchemaFieldObjectDefault<TSchema = null> extends ISchemaFieldCore {
   variant: "FIELD-OBJECT";
   childs: ISchema<TSchema>[];
   component: "DEFAULT";
+  props: (IProp & {
+    name: keyof IDefaultProp
+  })[];
 }
 
 // ======================================================
@@ -78,12 +87,15 @@ export interface ISchemaGroupCore extends Omit<ISchemaCore, "initialValue"> {
 
 export interface ISchemaGroupDefault<TMoreSchema = null> extends ISchemaGroupCore {
   component: "DEFAULT";
-  childs: ISchema<TMoreSchema>[]
+  childs: ISchema<TMoreSchema>[];
+  props: (IProp & {
+    name: keyof IDefaultProp
+  })[];
 }
 
 export interface ISchemaGroupCustom<TProp> extends ISchemaGroupCore {
   props: (IProp & {
-    name: keyof TProp
+    name: keyof TProp | keyof IDefaultProp
   })[];
   readonly propStateType?: TProp & IDefaultProp
 }
@@ -102,11 +114,14 @@ export interface ISchemaViewCore extends Omit<ISchemaCore, "initialValue"> {
 
 export interface ISchemaViewDefault extends ISchemaViewCore {
   component: "DEFAULT";
+  props: (IProp & {
+    name: keyof IDefaultProp
+  })[];
 }
 
 export interface ISchemaViewCustom<TProp> extends ISchemaViewCore {
   props: (IProp & {
-    name: keyof TProp;
+    name: keyof TProp | keyof IDefaultProp
   })[];
   readonly propStateType?: TProp & IDefaultProp;
 }

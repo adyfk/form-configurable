@@ -35,7 +35,7 @@ test("function", () => {
         },
         rules: [],
         props: [
-          { condition: true, expression: "first > 20", name: "show", value: false },
+          { condition: true, expression: "first > 20", name: "hidden", value: false },
         ],
         overrides: [],
         attribute: {
@@ -136,7 +136,7 @@ test("function", () => {
     "object.first": "error dong",
   });
   expect(form.state.propsState).toEqual({
-    editable: {},
-    show: { second: false },
+    disabled: {},
+    hidden: { second: false },
   });
 });

@@ -45,7 +45,7 @@ interface ISchemaGroupCustom1 extends ISchemaGroupCustom<{}> {
 interface ISchemaFieldObjectCustom1 extends ISchemaFieldObjectCustom<{}> {
   variant: "FIELD-OBJECT";
   component: "CUSTOM-1";
-  // childs: ISchema<IMergeSchema>[]
+  childs: ISchema<IMergeSchema>[]
 }
 
 type IMergeSchema = ISchemaFieldCustom1 | ISchemaFieldArrayCustom1 | ISchemaGroupCustom1 | ISchemaFieldObjectCustom1;
@@ -63,50 +63,76 @@ const schemas: ISchema<IMergeSchema>[] = [
         },
         initialValue: '',
         overrides: [],
-        props: [],
-        rules: []
+        props: [
+          {
+            condition: true,
+            name: 'hidden',
+            // expression: 'TRUE',
+            value: true
+          }
+        ],
+        rules: [],
+        attribute: {
+          title: "Sample Title Hidden"
+        }
       },
     ],
     config: {},
-    props: []
+    props: [],
   },
   {
     variant: 'GROUP',
     component: 'CUSTOM-1',
     childs: [
-      {
-        variant: 'FIELD',
-        component: 'DEFAULT',
-        config: {
-          name: 'field-default'
-        },
-        initialValue: '',
-        overrides: [],
-        props: [],
-        rules: []
-      },
-      {
-        variant: 'FIELD',
-        component: 'DEFAULT',
-        config: {
-          name: 'field-default'
-        },
-        initialValue: '',
-        overrides: [],
-        props: [],
-        rules: []
-      },
-      {
-        variant: 'FIELD',
-        component: 'DEFAULT',
-        config: {
-          name: 'field-default'
-        },
-        initialValue: '',
-        overrides: [],
-        props: [],
-        rules: []
-      },
+      // {
+      //   variant: 'FIELD',
+      //   component: 'DEFAULT',
+      //   config: {
+      //     name: 'field-default'
+      //   },
+      //   initialValue: '',
+      //   overrides: [],
+      //   props: [
+      //     {
+      //       condition: true,
+      //       name: 'hidden',
+      //       // expression: 'TRUE',
+      //       value: true
+      //     }
+      //   ],
+      //   rules: [],
+      //   attribute: {
+      //     title: "Sample Title Hidden"
+      //   }
+      // },
+      // {
+      //   variant: 'FIELD',
+      //   component: 'DEFAULT',
+      //   config: {
+      //     name: 'field-default'
+      //   },
+      //   initialValue: '',
+      //   overrides: [],
+      //   props: [],
+      //   rules: [],
+      //   attribute: {
+      //     title: "Sample Title"
+      //   }
+      // },
+      // {
+      //   variant: 'FIELD',
+      //   component: 'DEFAULT',
+      //   config: {
+      //     name: 'field-default'
+      //   },
+      //   initialValue: '',
+      //   overrides: [],
+      //   props: [],
+      //   rules: [],
+      //   attribute: {
+      //     title: "Sample Title"
+      //   }
+      // },
     ],
     config: {},
     props: []
@@ -119,17 +145,19 @@ const schemas: ISchema<IMergeSchema>[] = [
     },
     props: [],
   },
-  {
-    variant: 'FIELD',
-    component: 'DEFAULT',
-    config: {
-      name: 'field-default'
-    },
-    initialValue: '',
-    overrides: [],
-    props: [],
-    rules: []
-  },
+  // {
+  //   variant: 'FIELD',
+  //   component: 'DEFAULT',
+  //   config: {
+  //     name: 'field-default'
+  //   },
+  //   initialValue: '',
+  //   overrides: [],
+  //   props: [
+
+  //   ],
+  //   rules: []
+  // },
   {
     variant: 'FIELD',
     component: 'CUSTOM-1',
@@ -158,7 +186,10 @@ const schemas: ISchema<IMergeSchema>[] = [
         },
         overrides: [],
         props: [],
-        rules: []
+        rules: [],
+        attribute: {
+          title: "Sample Title __ITEM__"
+        }
       },
       {
         variant: 'FIELD',
@@ -168,7 +199,10 @@ const schemas: ISchema<IMergeSchema>[] = [
         },
         overrides: [],
         props: [],
-        rules: []
+        rules: [],
+        attribute: {
+          title: "Sample Title __ITEM__"
+        }
       },
     ],
     overrides: [],
@@ -247,20 +281,32 @@ const schemas: ISchema<IMergeSchema>[] = [
     },
     overrides: [],
     props: [],
-    rules: []
+    rules: [],
+    childs: []
   },
 ]
 
 const initialValues = {};
 
 const FieldDefault: IComponent<ISchemaFieldDefault> = (props) => {
-  const { state, onChange, onBlur } = useField({
+  const { state, onChange, onBlur, form } = useField({
     schema: props.schema,
   })
+
+  if (props.schema.config.name === 'field-default') {
+    console.log('FIELD-DEFAULT =', props.schema.config.name, '=', state.propsState)
+    console.log(form.state.propsState)
+  }
+
+  if (state.propsState.hidden) return <></>;
+
   return (
     <div>
-      {props.schema.attribute?.title}
+      <div>
+        {props.schema.attribute?.title}
+      </div>
       <input
+        disabled={state.propsState.disabled}
         onBlur={onBlur}
         type="text" value={state.value}
         onChange={(e) => {
@@ -276,10 +322,16 @@ const FieldCustom1: IComponent<ISchemaFieldCustom1> = (props) => {
   const { state, onChange, onBlur } = useField({
     schema: props.schema,
   })
+
+  if (state.propsState.hidden) return <></>;
+
   return (
     <div>
-      {props.schema.attribute?.title}
+      <div>
+        {props.schema.attribute?.title}
+      </div>
       <input
+        disabled={state.propsState.disabled}
         onBlur={onBlur}
         type="text" value={state.value}
         onChange={(e) => {
@@ -362,10 +414,10 @@ const FieldObjectDefault: IComponentObject<ISchemaFieldObjectDefault> = (props) 
 }
 
 const FieldObjectCustom1: IComponentObject<ISchemaFieldObjectCustom1> = (props) => {
-  const { state, onChange } = useField({
+  const { state, onChange, form } = useField({
     schema: props.schema
   })
-
+  console.log(form.state)
   return (
     <div>
       FIELD ARRAY DEFAULT {props.schema.config.name}

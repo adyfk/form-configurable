@@ -277,6 +277,7 @@ var createForm = function createForm(props) {
       extraData: {},
       name: ""
     };
+    if (!schema.props) return;
     var _iterator2 = _createForOfIteratorHelper(schema.props),
       _step2;
     try {
@@ -328,7 +329,8 @@ var createForm = function createForm(props) {
       extraData: {},
       name: ""
     };
-    var _iterator3 = _createForOfIteratorHelper(schema.overrides || []),
+    if (!schema.overrides) return;
+    var _iterator3 = _createForOfIteratorHelper(schema.overrides),
       _step3;
     try {
       for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -370,8 +372,9 @@ var createForm = function createForm(props) {
       parent: "",
       extraData: {}
     };
+    if (!schema.rules) return;
     var key = getSchemaKey(schema, options.parent);
-    var _iterator4 = _createForOfIteratorHelper(schema.rules || []),
+    var _iterator4 = _createForOfIteratorHelper(schema.rules),
       _step4;
     try {
       for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {

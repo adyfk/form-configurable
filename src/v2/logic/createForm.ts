@@ -135,7 +135,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   function initError(key: string, value: any) { _state.error[key] = value; }
   function initTouched(key: string, value: any) { _state.fieldsState.touched[key] = value; }
   // propsState
-  function getProp(name: keyof IState["propsState"], key: string) { return _state.propsState[name]?.[key] ?? true; }
+  function getProp(name: keyof IState["propsState"], key: string) { return _state.propsState[name]?.[key]; }
   function initProp(name: string, key: string, value: any) {
     if (!_state.propsState[name]) _state.propsState[name] = {};
     _state.propsState[name][key] = value;
@@ -314,6 +314,8 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     schema: ISchema,
     options: IExecuteEachOptions = { parent: "", extraData: {}, name: "" },
   ) => {
+    if (!schema.props) return;
+
     for (
       const {
         condition = false,
@@ -348,7 +350,9 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     schema: ISchemaFieldAll,
     options: Partial<IExecuteEachOptions> = { parent: "", extraData: {}, name: "" },
   ) => {
-    for (const { condition, expression, values } of (schema.overrides || [])) {
+    if (!schema.overrides) return;
+
+    for (const { condition, expression, values } of schema.overrides) {
       if (!expression) {
         setValues({ ...values }, { skipNotify: true });
         continue;
@@ -373,13 +377,15 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     schema: ISchemaFieldAll,
     options: Partial<IExecuteEachOptions> = { parent: "", extraData: {} },
   ) => {
+    if (!schema.rules) return;
+
     const key = getSchemaKey(schema, options.parent);
     for (
       const {
         condition = false,
         expression,
         message,
-      } of (schema.rules || [])
+      } of (schema.rules)
     ) {
       try {
         const result = parse(expression, {
@@ -478,6 +484,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
             parent: key,
           },
         );
+        continue;
       }
 
       if (schema.variant === "GROUP") {
