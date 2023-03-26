@@ -13,8 +13,7 @@ export const useSupport = (props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { context } = useContext(FormContext);
-  const { form: formContext } = useContext(context);
+  const { form: formContext } = useContext(FormContext);
   const { form = formContext } = props as { form: IForm<ISchema> };
   const _state = useRef<IState["supportFormState"]>(initializeState.supportFormState);
   const update = useUpdate();
@@ -24,7 +23,7 @@ export const useSupport = (props: {
       const latestState = _state.current;
 
       if (JSON.stringify(state.supportFormState) !== JSON.stringify(latestState)) {
-        _state.current = latestState;
+        _state.current = state.supportFormState;
         update();
       }
     },

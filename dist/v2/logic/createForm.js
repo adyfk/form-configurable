@@ -128,8 +128,7 @@ var createForm = function createForm(props) {
 
     // eslint-disable-next-line guard-for-in
     for (var name in _state.propsState) {
-      var _state$propsState$nam3;
-      propsState[name] = (_state$propsState$nam3 = _state.propsState[name][key]) != null ? _state$propsState$nam3 : true;
+      propsState[name] = _state.propsState[name][key];
     }
     return {
       value: getValue(key),
@@ -229,6 +228,11 @@ var createForm = function createForm(props) {
     notify("fields");
     setSupportFormStateValid();
     setIsDirty();
+    console.log("setvalue", {
+      key: key,
+      value: value,
+      options: options
+    });
   }
   function setValues(values) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {

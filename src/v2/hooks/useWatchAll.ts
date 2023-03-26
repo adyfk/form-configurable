@@ -6,7 +6,7 @@ import {
 } from "react";
 import useSubscribe from "./useSubscribe";
 import useUpdate from "./useUpdate";
-import { IState } from "../logic/createForm";
+import { IForm, IState } from "../logic/createForm";
 import { FormContext } from "../contexts/FormContext";
 
 export const useWatchAll = (props: {
@@ -15,18 +15,17 @@ export const useWatchAll = (props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { context } = useContext(FormContext);
-  const { form: formContext } = useContext(context);
-  const { form = formContext } = props;
-  const _state = useRef<IState>({} as any);
+  const { form: formContext } = useContext(FormContext);
+  const { form = formContext } = props as { form: IForm<any> };
+  const _state = useRef<IState["values"]>({} as any);
   const update = useUpdate();
 
   const latestState = useCallback(
-    (state: IState) => {
+    () => {
       const latestState = _state.current;
-
-      if (JSON.stringify(state.values) !== JSON.stringify(latestState)) {
-        _state.current = latestState;
+      const { values } = form.state;
+      if (JSON.stringify(values) !== JSON.stringify(latestState)) {
+        _state.current = values;
         update();
       }
     },
@@ -40,7 +39,7 @@ export const useWatchAll = (props: {
   });
 
   useEffect(() => {
-    latestState(_state.current);
+    latestState();
   }, []);
 
   return {

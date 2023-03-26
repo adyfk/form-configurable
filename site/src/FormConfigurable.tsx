@@ -1,12 +1,16 @@
 
 import {
-  useForm,
   type ISchema,
   type ISchemaFieldCustom,
   type ISchemaFieldArrayCustom,
+  type ISchemaFieldDefault,
+  type ISchemaViewDefault,
+  useForm,
+  useField,
+  useView
 } from 'form-configurable/v2'
 import { FormGenerator } from 'form-configurable/v2/components';
-import { FormContextProvider, createFormContext } from 'form-configurable/v2/contexts';
+import { Component, Components, FormContextProvider } from 'form-configurable/v2/contexts';
 
 interface ISchemaFieldCustom1 extends ISchemaFieldCustom<{ test: true }> {
   variant: "FIELD",
@@ -42,11 +46,20 @@ const schemas: ISchema<IMergeSchema>[] = [
     props: []
   },
   {
+    variant: 'VIEW',
+    component: 'DEFAULT',
+    config: {
+      name: 'field-default'
+    },
+    props: [],
+  },
+  {
     variant: 'FIELD',
     component: 'DEFAULT',
     config: {
       name: 'field-default'
     },
+    initialValue: 12212,
     overrides: [],
     props: [],
     rules: []
@@ -128,25 +141,63 @@ const schemas: ISchema<IMergeSchema>[] = [
 ]
 const initialValues = {};
 
-const FormContext = createFormContext<IMergeSchema>()
+const FieldDefault: Component<ISchemaFieldDefault> = (props) => {
+  const { state, onChange, onBlur } = useField({
+    schema: props.schema,
+  })
+  return (
+    <div>
+      <input
+        onBlur={onBlur}
+        type="text" value={state.value}
+        onChange={(e) => {
+          onChange(e.target.value)
+        }}
+      />
+      {state.error && <div>Has Error</div>}
+    </div>
+  )
+}
+
+const ViewDefault: Component<ISchemaViewDefault> = (props) => {
+  const { state } = useView({
+    schema: props.schema
+  })
+  return (
+    <div >
+      view = {state.value}
+    </div>
+  )
+}
+
+const components: Components = {
+  FIELD: {
+    "DEFAULT": FieldDefault,
+  },
+  "FIELD-ARRAY": {},
+  "FIELD-OBJECT": {},
+  GROUP: {},
+  VIEW: {
+    "DEFAULT": ViewDefault
+  }
+}
 
 const FormConfigurable = () => {
   const action = useForm<ISchema<IMergeSchema>>({
     schemas,
     initialValues
   })
+  console.log('container root')
   return (
     <FormContextProvider
-      context={FormContext}
-      action={action}
-      components={{
-        FIELD: {},
-        "FIELD-ARRAY": {},
-        "FIELD-OBJECT": {},
-        GROUP: {},
-        VIEW: {}
-      }}>
-      <FormGenerator />
+      value={action}
+      components={components}
+    >
+      <FormGenerator
+        fallback={<div>Loading</div>}
+        fallbackComponentNotRegisterd={<div>Component Not Registed</div>}
+        fallbackVariantNotRegistered={<div>Variant Not Registered</div>}
+      />
     </FormContextProvider>
 
   )

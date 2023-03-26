@@ -12,9 +12,7 @@ var _FormContext = require("../contexts/FormContext");
 // eslint-disable-next-line no-use-before-define
 var useField = function useField(props) {
   var _useContext = (0, _react.useContext)(_FormContext.FormContext),
-    context = _useContext.context;
-  var _useContext2 = (0, _react.useContext)(context),
-    formContext = _useContext2.form;
+    formContext = _useContext.form;
   var _ref2 = props,
     _ref2$form = _ref2.form,
     form = _ref2$form === void 0 ? formContext : _ref2$form,
@@ -24,8 +22,9 @@ var useField = function useField(props) {
   var update = (0, _useUpdate["default"])();
   var latestState = (0, _react.useCallback)(function () {
     var latestState = _state.current;
-    if (JSON.stringify(form.getSchemaFieldState(schema)) !== JSON.stringify(latestState)) {
-      _state.current = latestState;
+    var state = form.getSchemaFieldState(schema);
+    if (JSON.stringify(state) !== JSON.stringify(latestState)) {
+      _state.current = state;
       update();
     }
   }, [schema]);

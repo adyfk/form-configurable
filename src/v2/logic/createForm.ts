@@ -174,7 +174,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
     // eslint-disable-next-line guard-for-in
     for (const name in _state.propsState) {
-      propsState[name] = _state.propsState[name][key] ?? true;
+      propsState[name] = _state.propsState[name][key];
     }
     return {
       value: getValue(key),

@@ -17,8 +17,7 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { context } = useContext(FormContext);
-  const { form: formContext } = useContext(context);
+  const { form: formContext } = useContext(FormContext);
   const { form = formContext, schema } = props as { form: IForm<TSchema>, schema: TSchema };
   const _ref = useRef<any>();
   const _state = useRef(form.getSchemaFieldState<TSchema["propStateType"] & IDefaultProp>(schema as any));
@@ -27,9 +26,9 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
   const latestState = useCallback(
     () => {
       const latestState = _state.current;
-
-      if (JSON.stringify(form.getSchemaFieldState<TSchema["propStateType"] & IDefaultProp>(schema as any)) !== JSON.stringify(latestState)) {
-        _state.current = latestState;
+      const state = form.getSchemaFieldState<TSchema["propStateType"] & IDefaultProp>(schema as any);
+      if (JSON.stringify(state) !== JSON.stringify(latestState)) {
+        _state.current = state;
         update();
       }
     },

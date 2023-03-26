@@ -145,9 +145,7 @@ function SchemaComponent(_ref) {
 }
 function FormGenerator(props) {
   var _useContext2 = (0, _react.useContext)(_contexts.FormContext),
-    context = _useContext2.context;
-  var _useContext3 = (0, _react.useContext)(context),
-    formContext = _useContext3.form;
+    formContext = _useContext2.form;
   var _props$schemas = props.schemas,
     schemas = _props$schemas === void 0 ? formContext.config.schemas : _props$schemas,
     _props$parent = props.parent,

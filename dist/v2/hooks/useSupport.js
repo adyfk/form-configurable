@@ -14,9 +14,7 @@ var _FormContext = require("../contexts/FormContext");
 
 var useSupport = function useSupport(props) {
   var _useContext = (0, _react.useContext)(_FormContext.FormContext),
-    context = _useContext.context;
-  var _useContext2 = (0, _react.useContext)(context),
-    formContext = _useContext2.form;
+    formContext = _useContext.form;
   var _ref = props,
     _ref$form = _ref.form,
     form = _ref$form === void 0 ? formContext : _ref$form;
@@ -25,7 +23,7 @@ var useSupport = function useSupport(props) {
   var latestState = (0, _react.useCallback)(function (state) {
     var latestState = _state.current;
     if (JSON.stringify(state.supportFormState) !== JSON.stringify(latestState)) {
-      _state.current = latestState;
+      _state.current = state.supportFormState;
       update();
     }
   }, []);

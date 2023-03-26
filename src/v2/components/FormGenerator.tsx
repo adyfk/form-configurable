@@ -158,8 +158,7 @@ export function FormGenerator(props: {
   fallbackVariantNotRegistered?: any;
   fallbackComponentNotRegisterd?: any;
 }) {
-  const { context } = useContext(FormContext);
-  const { form: formContext } = useContext(context);
+  const { form: formContext } = useContext(FormContext);
   const {
     schemas = formContext.config.schemas,
     parent = "",

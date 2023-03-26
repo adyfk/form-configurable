@@ -1,10 +1,8 @@
-import React from "react";
-import { ISchema } from "../types";
-import useForm from "../hooks/useForm";
+import { FC } from "react";
 import { Components } from "./ComponentContext";
-export declare function createFormContext<T>(): React.Context<{
-    config: import("..").IConfig<ISchema<T>>;
-    form: import("..").IForm<ISchema<T>>;
+export declare const FormContext: import("react").Context<{
+    config: import("..").IConfig<any>;
+    form: import("..").IForm<any>;
     state: {
         isSubmitting: boolean;
         isSubmitted: boolean;
@@ -12,12 +10,8 @@ export declare function createFormContext<T>(): React.Context<{
         isValidating: boolean;
     };
 }>;
-export declare const FormContext: React.Context<{
-    context: React.Context<ReturnType<(typeof useForm<ISchema<any>>)>>;
-}>;
-export declare function FormContextProvider({ context: Context, action, children, components }: {
-    context: React.Context<ReturnType<(typeof useForm<ISchema<any>>)>>;
-    action: ReturnType<(typeof useForm<ISchema<any>>)>;
-    children: any;
+export declare const FormContextProvider: FC<{
+    value: any;
     components: Components;
-}): JSX.Element;
+    children: any;
+}>;

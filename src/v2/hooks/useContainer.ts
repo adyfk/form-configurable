@@ -13,18 +13,17 @@ export const useContainer = (props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { context } = useContext(FormContext);
-  const { form: formContext } = useContext(context);
+  const { form: formContext } = useContext(FormContext);
   const { form = formContext } = props as { form: IForm<ISchema> };
   const _state = useRef<IState["containerFormState"]>(initializeState.containerFormState);
   const update = useUpdate();
 
   const latestState = useCallback(
-    (state: IState) => {
+    () => {
       const latestState = _state.current;
-
-      if (JSON.stringify(state.containerFormState) !== JSON.stringify(latestState)) {
-        _state.current = latestState;
+      const { containerFormState } = form.state;
+      if (JSON.stringify(containerFormState) !== JSON.stringify(latestState)) {
+        _state.current = containerFormState;
         update();
       }
     },
@@ -38,7 +37,7 @@ export const useContainer = (props: {
   });
 
   useEffect(() => {
-    latestState(form.state);
+    latestState();
   }, []);
 
   return {

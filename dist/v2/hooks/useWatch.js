@@ -11,19 +11,18 @@ var _useUpdate = _interopRequireDefault(require("./useUpdate"));
 var _FormContext = require("../contexts/FormContext");
 var useWatch = function useWatch(props) {
   var _useContext = (0, _react.useContext)(_FormContext.FormContext),
-    context = _useContext.context;
-  var _useContext2 = (0, _react.useContext)(context),
-    formContext = _useContext2.form;
+    formContext = _useContext.form;
   var _ref = props,
     _ref$form = _ref.form,
     form = _ref$form === void 0 ? formContext : _ref$form,
     name = _ref.name;
-  var _state = (0, _react.useRef)(props.defaultValue || form.getValue(name));
+  var _state = (0, _react.useRef)(form.getValue(name) || props.defaultValue);
   var update = (0, _useUpdate["default"])();
   var latestState = (0, _react.useCallback)(function () {
     var latestState = _state.current;
-    if (JSON.stringify(form.getValue(name)) !== JSON.stringify(latestState)) {
-      _state.current = latestState;
+    var state = form.getValue(name);
+    if (JSON.stringify(state) !== JSON.stringify(latestState)) {
+      _state.current = state;
       update();
     }
   }, []);

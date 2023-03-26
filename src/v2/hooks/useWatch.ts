@@ -16,18 +16,17 @@ export const useWatch = <T>(props: {
   // eslint-disable-next-line no-unused-vars
   log?: () => void;
 }) => {
-  const { context } = useContext(FormContext);
-  const { form: formContext } = useContext(context);
+  const { form: formContext } = useContext(FormContext);
   const { form = formContext, name } = props as { form: IForm<any>, name: string };
-  const _state = useRef<IState>(props.defaultValue || form.getValue(name));
+  const _state = useRef<IState>(form.getValue(name) || props.defaultValue);
   const update = useUpdate();
 
   const latestState = useCallback(
     () => {
       const latestState = _state.current;
-
-      if (JSON.stringify(form.getValue(name)) !== JSON.stringify(latestState)) {
-        _state.current = latestState;
+      const state = form.getValue(name);
+      if (JSON.stringify(state) !== JSON.stringify(latestState)) {
+        _state.current = state;
         update();
       }
     },

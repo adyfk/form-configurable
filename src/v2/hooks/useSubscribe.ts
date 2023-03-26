@@ -12,8 +12,7 @@ type IUseSubscribeProps = {
 }
 
 const useSubscribe = (props: IUseSubscribeProps) => {
-  const { context } = useContext(FormContext);
-  const { form: formContext } = useContext(context);
+  const { form: formContext } = useContext(FormContext);
   const {
     form = formContext,
     callback,

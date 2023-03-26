@@ -11,17 +11,17 @@ var _useUpdate = _interopRequireDefault(require("./useUpdate"));
 var _FormContext = require("../contexts/FormContext");
 var useWatchAll = function useWatchAll(props) {
   var _useContext = (0, _react.useContext)(_FormContext.FormContext),
-    context = _useContext.context;
-  var _useContext2 = (0, _react.useContext)(context),
-    formContext = _useContext2.form;
-  var _props$form = props.form,
-    form = _props$form === void 0 ? formContext : _props$form;
+    formContext = _useContext.form;
+  var _ref = props,
+    _ref$form = _ref.form,
+    form = _ref$form === void 0 ? formContext : _ref$form;
   var _state = (0, _react.useRef)({});
   var update = (0, _useUpdate["default"])();
-  var latestState = (0, _react.useCallback)(function (state) {
+  var latestState = (0, _react.useCallback)(function () {
     var latestState = _state.current;
-    if (JSON.stringify(state.values) !== JSON.stringify(latestState)) {
-      _state.current = latestState;
+    var values = form.state.values;
+    if (JSON.stringify(values) !== JSON.stringify(latestState)) {
+      _state.current = values;
       update();
     }
   }, []);
@@ -31,7 +31,7 @@ var useWatchAll = function useWatchAll(props) {
     subject: "fields"
   });
   (0, _react.useEffect)(function () {
-    latestState(_state.current);
+    latestState();
   }, []);
   return {
     state: _state.current,

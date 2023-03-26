@@ -14,18 +14,17 @@ var _FormContext = require("../contexts/FormContext");
 
 var useContainer = function useContainer(props) {
   var _useContext = (0, _react.useContext)(_FormContext.FormContext),
-    context = _useContext.context;
-  var _useContext2 = (0, _react.useContext)(context),
-    formContext = _useContext2.form;
+    formContext = _useContext.form;
   var _ref = props,
     _ref$form = _ref.form,
     form = _ref$form === void 0 ? formContext : _ref$form;
   var _state = (0, _react.useRef)(_createForm.initializeState.containerFormState);
   var update = (0, _useUpdate["default"])();
-  var latestState = (0, _react.useCallback)(function (state) {
+  var latestState = (0, _react.useCallback)(function () {
     var latestState = _state.current;
-    if (JSON.stringify(state.containerFormState) !== JSON.stringify(latestState)) {
-      _state.current = latestState;
+    var containerFormState = form.state.containerFormState;
+    if (JSON.stringify(containerFormState) !== JSON.stringify(latestState)) {
+      _state.current = containerFormState;
       update();
     }
   }, []);
@@ -35,7 +34,7 @@ var useContainer = function useContainer(props) {
     subject: "containers"
   });
   (0, _react.useEffect)(function () {
-    latestState(form.state);
+    latestState();
   }, []);
   return {
     form: form,
