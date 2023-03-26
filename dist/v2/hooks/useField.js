@@ -44,6 +44,7 @@ var useField = function useField(props) {
   }, [schema.config.name]);
   return {
     state: _state.current,
+    formState: form.state.containerFormState,
     ref: _ref,
     form: form,
     data: schema.config.data || {},

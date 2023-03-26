@@ -7,10 +7,23 @@ import {
   type ISchemaViewDefault,
   useForm,
   useField,
-  useView
+  useView,
+  ISchemaFieldArrayDefault,
+  ISchemaGroupDefault,
+  ISchemaGroupCustom,
+  ISchemaFieldObjectCustom,
+  ISchemaFieldObjectDefault
 } from 'form-configurable/v2'
 import { FormGenerator } from 'form-configurable/v2/components';
-import { Component, Components, FormContextProvider } from 'form-configurable/v2/contexts';
+import {
+  type IComponent,
+  type IComponents,
+  type IComponentArray,
+  type IComponentContainer,
+  type IComponentGroup,
+  FormContextProvider,
+  IComponentObject
+} from 'form-configurable/v2/contexts';
 
 interface ISchemaFieldCustom1 extends ISchemaFieldCustom<{ test: true }> {
   variant: "FIELD",
@@ -23,8 +36,19 @@ interface ISchemaFieldArrayCustom1 extends ISchemaFieldArrayCustom<{ test: true 
   childs: ISchema<IMergeSchema>[]
 }
 
+interface ISchemaGroupCustom1 extends ISchemaGroupCustom<{}> {
+  variant: "GROUP";
+  component: "CUSTOM-1";
+  childs: ISchema<IMergeSchema>[]
+}
 
-type IMergeSchema = ISchemaFieldCustom1 | ISchemaFieldArrayCustom1
+interface ISchemaFieldObjectCustom1 extends ISchemaFieldObjectCustom<{}> {
+  variant: "FIELD-OBJECT";
+  component: "CUSTOM-1";
+  // childs: ISchema<IMergeSchema>[]
+}
+
+type IMergeSchema = ISchemaFieldCustom1 | ISchemaFieldArrayCustom1 | ISchemaGroupCustom1 | ISchemaFieldObjectCustom1;
 
 const schemas: ISchema<IMergeSchema>[] = [
   {
@@ -33,10 +57,52 @@ const schemas: ISchema<IMergeSchema>[] = [
     childs: [
       {
         variant: 'FIELD',
-        component: 'CUSTOM-1',
+        component: 'DEFAULT',
         config: {
-          name: 'group-custom1'
+          name: 'field-default'
         },
+        initialValue: '',
+        overrides: [],
+        props: [],
+        rules: []
+      },
+    ],
+    config: {},
+    props: []
+  },
+  {
+    variant: 'GROUP',
+    component: 'CUSTOM-1',
+    childs: [
+      {
+        variant: 'FIELD',
+        component: 'DEFAULT',
+        config: {
+          name: 'field-default'
+        },
+        initialValue: '',
+        overrides: [],
+        props: [],
+        rules: []
+      },
+      {
+        variant: 'FIELD',
+        component: 'DEFAULT',
+        config: {
+          name: 'field-default'
+        },
+        initialValue: '',
+        overrides: [],
+        props: [],
+        rules: []
+      },
+      {
+        variant: 'FIELD',
+        component: 'DEFAULT',
+        config: {
+          name: 'field-default'
+        },
+        initialValue: '',
         overrides: [],
         props: [],
         rules: []
@@ -59,7 +125,7 @@ const schemas: ISchema<IMergeSchema>[] = [
     config: {
       name: 'field-default'
     },
-    initialValue: 12212,
+    initialValue: '',
     overrides: [],
     props: [],
     rules: []
@@ -80,6 +146,9 @@ const schemas: ISchema<IMergeSchema>[] = [
     config: {
       name: 'field-array-default'
     },
+    initialValue: [
+      {}
+    ],
     childs: [
       {
         variant: 'FIELD',
@@ -138,15 +207,59 @@ const schemas: ISchema<IMergeSchema>[] = [
     props: [],
     rules: []
   },
+  {
+    variant: 'FIELD-OBJECT',
+    component: 'DEFAULT',
+    config: {
+      name: 'field-object-default'
+    },
+    childs: [
+      {
+        variant: 'FIELD',
+        component: 'DEFAULT',
+        config: {
+          name: 'field-default'
+        },
+        overrides: [],
+        props: [],
+        rules: []
+      },
+      {
+        variant: 'FIELD',
+        component: 'CUSTOM-1',
+        config: {
+          name: 'field-custom1'
+        },
+        overrides: [],
+        props: [],
+        rules: []
+      },
+    ],
+    overrides: [],
+    props: [],
+    rules: []
+  },
+  {
+    variant: 'FIELD-OBJECT',
+    component: 'CUSTOM-1',
+    config: {
+      name: 'field-object-custom1'
+    },
+    overrides: [],
+    props: [],
+    rules: []
+  },
 ]
+
 const initialValues = {};
 
-const FieldDefault: Component<ISchemaFieldDefault> = (props) => {
+const FieldDefault: IComponent<ISchemaFieldDefault> = (props) => {
   const { state, onChange, onBlur } = useField({
     schema: props.schema,
   })
   return (
     <div>
+      {props.schema.attribute?.title}
       <input
         onBlur={onBlur}
         type="text" value={state.value}
@@ -159,24 +272,127 @@ const FieldDefault: Component<ISchemaFieldDefault> = (props) => {
   )
 }
 
-const ViewDefault: Component<ISchemaViewDefault> = (props) => {
-  const { state } = useView({
+const FieldCustom1: IComponent<ISchemaFieldCustom1> = (props) => {
+  const { state, onChange, onBlur } = useField({
+    schema: props.schema,
+  })
+  return (
+    <div>
+      {props.schema.attribute?.title}
+      <input
+        onBlur={onBlur}
+        type="text" value={state.value}
+        onChange={(e) => {
+          onChange(e.target.value)
+        }}
+      />
+      {state.error && <div>Has Error</div>}
+    </div>
+  )
+}
+
+const ViewDefault: IComponent<ISchemaViewDefault> = (props) => {
+  const { state, } = useView({
     schema: props.schema
   })
   return (
     <div >
+      {props.schema.attribute?.title}
       view = {state.value}
     </div>
   )
 }
 
-const components: Components = {
+
+const ContainerFieldArrayDefault: IComponentContainer = ({ data, children }) => {
+  return <div>
+    THIS CONTAINER
+    <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
+      {children}
+    </div>
+  </div>
+}
+
+const FieldArrayDefault: IComponentArray<ISchemaFieldArrayDefault> = (props) => {
+  const { state } = useField({
+    schema: props.schema
+  })
+
+  return (
+    <div>
+      FIELD ARRAY DEFAULT {props.schema.config.name}
+      {props.children({
+        value: state.value || [],
+        container: ContainerFieldArrayDefault
+      })}
+    </div>
+  )
+}
+
+const GroupDefault: IComponentGroup<ISchemaGroupDefault> = (props) => {
+  return (
+    <>
+      {props.children}
+    </>
+  )
+}
+
+const GroupCustom1: IComponentGroup<ISchemaGroupCustom1> = (props) => {
+  return (
+    <div style={{ border: '1px solid gray', padding: 10 }}>
+      {props.children}
+    </div>
+  )
+}
+
+const FieldObjectDefault: IComponentObject<ISchemaFieldObjectDefault> = (props) => {
+  const { state } = useField({
+    schema: props.schema
+  })
+
+  return (
+    <div>
+      FIELD ARRAY DEFAULT {props.schema.config.name}
+      {props.children({
+        value: state.value || [],
+        container: ContainerFieldArrayDefault
+      })}
+    </div>
+  )
+}
+
+const FieldObjectCustom1: IComponentObject<ISchemaFieldObjectCustom1> = (props) => {
+  const { state, onChange } = useField({
+    schema: props.schema
+  })
+
+  return (
+    <div>
+      FIELD ARRAY DEFAULT {props.schema.config.name}
+      <div>
+        <button onClick={() => { onChange({ name: 'Sample1', age: 20 }) }}>SET VALUE</button>
+      </div>
+      {JSON.stringify(state.value, null, 2)}
+    </div>
+  )
+}
+
+const components: IComponents = {
   FIELD: {
     "DEFAULT": FieldDefault,
+    "CUSTOM-1": FieldCustom1
   },
-  "FIELD-ARRAY": {},
-  "FIELD-OBJECT": {},
-  GROUP: {},
+  "FIELD-ARRAY": {
+    "DEFAULT": FieldArrayDefault
+  },
+  "FIELD-OBJECT": {
+    "DEFAULT": FieldObjectDefault,
+    "CUSTOM-1": FieldObjectCustom1
+  },
+  GROUP: {
+    'DEFAULT': GroupDefault,
+    'CUSTOM-1': GroupCustom1
+  },
   VIEW: {
     "DEFAULT": ViewDefault
   }
@@ -187,19 +403,31 @@ const FormConfigurable = () => {
     schemas,
     initialValues
   })
-  console.log('container root')
-  return (
-    <FormContextProvider
-      value={action}
-      components={components}
-    >
-      <FormGenerator
-        fallback={<div>Loading</div>}
-        fallbackComponentNotRegisterd={<div>Component Not Registed</div>}
-        fallbackVariantNotRegistered={<div>Variant Not Registered</div>}
-      />
-    </FormContextProvider>
 
+  const onSubmit = (values: any) => {
+    console.log(values)
+  }
+
+  const onSubmitError = (values: any, errors) => {
+    console.log(values, errors)
+  }
+
+  return (
+    <div>
+      <FormContextProvider
+        value={action}
+        components={components}
+      >
+        <div style={{ display: 'flex', gap: 10, flexDirection: 'column' }}>
+          <FormGenerator
+            fallback={<div>Loading</div>}
+            fallbackComponentNotRegisterd={<div>Component Not Registed</div>}
+            fallbackVariantNotRegistered={<div>Variant Not Registered</div>}
+          />
+        </div>
+      </FormContextProvider>
+      <button onClick={action.handleSubmit(onSubmit, onSubmitError)}>Sumbit</button>
+    </div>
   )
 }
 

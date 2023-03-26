@@ -60,6 +60,7 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     config,
     form: _form.current,
     state: _formState.current,
+    handleSubmit: _form.current.handleSubmit,
   };
 };
 

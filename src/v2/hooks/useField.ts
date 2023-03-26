@@ -54,6 +54,7 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
 
   return {
     state: _state.current,
+    formState: form.state.containerFormState,
     ref: _ref,
     form,
     data: schema.config.data || {},

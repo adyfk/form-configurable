@@ -31,8 +31,8 @@ var initializeState = {
     isDirty: false
   },
   propsState: {
-    editable: {},
-    show: {}
+    disabled: {},
+    hidden: {}
   },
   fieldsState: {
     touched: {}
@@ -228,11 +228,6 @@ var createForm = function createForm(props) {
     notify("fields");
     setSupportFormStateValid();
     setIsDirty();
-    console.log("setvalue", {
-      key: key,
-      value: value,
-      options: options
-    });
   }
   function setValues(values) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
@@ -264,23 +259,23 @@ var createForm = function createForm(props) {
       //
     }
   };
+  var updateProps = function updateProps(name, key, configValue, terms) {
+    var expressionValue = configValue.expressionValue,
+      value = configValue.value;
+    try {
+      var result = expressionValue ? parse(expressionValue, terms) : value;
+      initProp(name, key, result);
+    } catch (error) {
+      if (value) {
+        initProp(name, key, value);
+      }
+    }
+  };
   var executeEachPropsExpression = function executeEachPropsExpression(schema) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {
       parent: "",
       extraData: {},
       name: ""
-    };
-    var updateProps = function updateProps(name, key, configValue, terms) {
-      var expressionValue = configValue.expressionValue,
-        value = configValue.value;
-      try {
-        var result = expressionValue ? parse(expressionValue, terms) : value;
-        initProp(name, key, result);
-      } catch (error) {
-        if (value) {
-          initProp(name, key, value);
-        }
-      }
     };
     var _iterator2 = _createForOfIteratorHelper(schema.props),
       _step2;
@@ -457,8 +452,8 @@ var createForm = function createForm(props) {
         }
         executeEachPropsExpression(schema);
 
-        // skip when show is false
-        if (!getProp("show", _key2) || !getProp("editable", _key2)) continue;
+        // skip when hidden is false
+        if (getProp("hidden", _key2) || getProp("disabled", _key2)) continue;
         if (schema.variant === "FIELD") {
           executeEachRuleExpression(schema, options);
           continue;
@@ -565,7 +560,7 @@ var createForm = function createForm(props) {
                 break;
               }
               _state.containerFormState.isSubmitSuccessful = false;
-              onInvalid(_state.values, _state.error, "ON-SCHEMA", _state);
+              onInvalid == null ? void 0 : onInvalid(_state.values, _state.error, "ON-SCHEMA", _state);
               _context.next = 15;
               break;
             case 12:
@@ -579,7 +574,7 @@ var createForm = function createForm(props) {
               _context.prev = 17;
               _context.t0 = _context["catch"](3);
               _state.containerFormState.isSubmitSuccessful = false;
-              onInvalid(_state.values, _state.error, "ON-SUBMIT", _state);
+              onInvalid == null ? void 0 : onInvalid(_state.values, _state.error, "ON-SUBMIT", _state);
               //
             case 21:
               _context.prev = 21;

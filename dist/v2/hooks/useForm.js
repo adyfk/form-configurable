@@ -57,7 +57,8 @@ var useForm = function useForm(props) {
   return {
     config: config,
     form: _form.current,
-    state: _formState.current
+    state: _formState.current,
+    handleSubmit: _form.current.handleSubmit
   };
 };
 exports.useForm = useForm;

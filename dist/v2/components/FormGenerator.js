@@ -13,6 +13,7 @@ var _ComponentContext = _interopRequireDefault(require("../contexts/ComponentCon
 var _createForm = require("../logic/createForm");
 var _set = _interopRequireDefault(require("../utils/set"));
 var _contexts = require("../contexts");
+var _generateId = _interopRequireDefault(require("../utils/generateId"));
 var _jsxRuntime = require("react/jsx-runtime");
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-use-before-define */
@@ -22,8 +23,11 @@ var _jsxRuntime = require("react/jsx-runtime");
 
 var updateSchemaConfigName = function updateSchemaConfigName(schema, key) {
   if (!key) return schema;
-  (0, _set["default"])(schema, "config.name", key);
-  return schema;
+  var overrideSchema = (0, _extends2["default"])({}, schema, {
+    config: (0, _extends2["default"])({}, schema.config)
+  });
+  (0, _set["default"])(overrideSchema, "config.name", key);
+  return overrideSchema;
 };
 var updateSchemasAttributTitle = function updateSchemasAttributTitle(schemas, index) {
   return schemas.map(function (schema) {
@@ -38,8 +42,7 @@ var updateSchemasAttributTitle = function updateSchemasAttributTitle(schemas, in
   });
 };
 function SchemaComponent(_ref) {
-  var schemas = _ref.schemas,
-    schema = _ref.schema,
+  var schema = _ref.schema,
     parent = _ref.parent,
     fallback = _ref.fallback,
     fallbackVariantNotRegistered = _ref.fallbackVariantNotRegistered,
@@ -47,6 +50,9 @@ function SchemaComponent(_ref) {
   var _useContext = (0, _react.useContext)(_ComponentContext["default"]),
     components = _useContext.components;
   var identity = (0, _createForm.getSchemaName)(schema, parent);
+  var generatedKey = (0, _react.useMemo)(function () {
+    return (0, _generateId["default"])();
+  }, []);
   if (schema.variant === "FIELD") {
     var Component = components[schema.variant][schema.component];
     if (!Component) return fallbackComponentNotRegisterd;
@@ -74,10 +80,9 @@ function SchemaComponent(_ref) {
       fallback: fallback,
       children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Component2, {
         schema: schema,
-        schemas: schemas,
         children: /*#__PURE__*/(0, _jsxRuntime.jsx)(FormGenerator, {
           parent: parent,
-          schemas: schemas,
+          schemas: schema.childs,
           fallback: fallback,
           fallbackComponentNotRegisterd: fallbackComponentNotRegisterd,
           fallbackVariantNotRegistered: fallbackVariantNotRegistered
@@ -92,24 +97,24 @@ function SchemaComponent(_ref) {
       fallback: fallback,
       children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Component3, {
         schema: schema,
-        schemas: schemas,
         children: function children(_ref2) {
           var value = _ref2.value,
             Container = _ref2.container;
-          return value.map(function (data, index) {
+          return value == null ? void 0 : value.map(function (data, index) {
             return (
               /*#__PURE__*/
               // eslint-disable-next-line react/no-array-index-key
               (0, _jsxRuntime.jsx)(Container, {
+                schema: schema,
                 data: data,
                 children: /*#__PURE__*/(0, _jsxRuntime.jsx)(FormGenerator, {
                   parent: "".concat(identity, ".").concat(index),
-                  schemas: updateSchemasAttributTitle(schemas, index),
+                  schemas: updateSchemasAttributTitle(schema.childs, index),
                   fallback: fallback,
                   fallbackComponentNotRegisterd: fallbackComponentNotRegisterd,
                   fallbackVariantNotRegistered: fallbackVariantNotRegistered
                 })
-              }, "".concat(identity, "-").concat(index))
+              }, "".concat(parent, "-").concat(identity, "-").concat(index, "-").concat(generatedKey))
             );
           });
         }
@@ -123,15 +128,15 @@ function SchemaComponent(_ref) {
       fallback: fallback,
       children: /*#__PURE__*/(0, _jsxRuntime.jsx)(_Component4, {
         schema: schema,
-        schemas: schemas,
         children: function children(_ref3) {
           var value = _ref3.value,
             Container = _ref3.container;
           return /*#__PURE__*/(0, _jsxRuntime.jsx)(Container, {
+            schema: schema,
             data: value,
             children: /*#__PURE__*/(0, _jsxRuntime.jsx)(FormGenerator, {
               parent: "".concat(identity),
-              schemas: schemas,
+              schemas: schema.childs,
               fallback: fallback,
               fallbackComponentNotRegisterd: fallbackComponentNotRegisterd,
               fallbackVariantNotRegistered: fallbackVariantNotRegistered
@@ -156,17 +161,19 @@ function FormGenerator(props) {
     fallbackVariantNotRegistered = _props$fallbackVarian === void 0 ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {}) : _props$fallbackVarian,
     _props$fallbackCompon = props.fallbackComponentNotRegisterd,
     fallbackComponentNotRegisterd = _props$fallbackCompon === void 0 ? /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {}) : _props$fallbackCompon;
+  var generatedKey = (0, _react.useMemo)(function () {
+    return (0, _generateId["default"])();
+  }, []);
   return /*#__PURE__*/(0, _jsxRuntime.jsx)(_jsxRuntime.Fragment, {
     children: schemas.map(function (schema) {
-      var identity = (0, _createForm.getSchemaKey)(schema, parent);
+      var key = schema.variant + schema.component + (schema.config.name || "") + (schema.key || "") + parent + generatedKey;
       return /*#__PURE__*/(0, _jsxRuntime.jsx)(SchemaComponent, {
         parent: parent,
         schema: schema,
-        schemas: schemas,
         fallback: fallback,
         fallbackComponentNotRegisterd: fallbackComponentNotRegisterd,
         fallbackVariantNotRegistered: fallbackVariantNotRegistered
-      }, identity);
+      }, key);
     })
   });
 }

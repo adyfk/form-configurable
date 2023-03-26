@@ -1,7 +1,7 @@
 /// <reference types="react" />
 import type { IForm } from "../logic/createForm";
 import { IDefaultProp, ISchemaFieldCore } from "../types";
-export declare const useField: <TSchema extends ISchemaFieldCore>(props: {
+export declare const useFieldArray: <TSchema extends ISchemaFieldCore>(props: {
     form?: any;
     schema: TSchema;
     log?: (() => void) | undefined;
@@ -21,7 +21,12 @@ export declare const useField: <TSchema extends ISchemaFieldCore>(props: {
     ref: import("react").MutableRefObject<any>;
     form: IForm<any> | IForm<TSchema>;
     data: any;
+    onPush: (arg: any) => void;
+    onUnshift: (arg: any) => void;
+    onReplace: (id: any, arg: any, callbackId: (_item: string) => any) => void;
+    onDelete: (id: any, callbackId: (_item: string) => any) => void;
+    onClear: () => void;
     onChange: (arg: any) => void;
     onBlur: () => void;
 };
-export default useField;
+export default useFieldArray;

@@ -1,39 +1,36 @@
 import { createContext } from "react";
-import { ISchema } from "../types";
 
-export type Component<T> = (_props: { schema: T }) => any
-export type ComponentGroup<T> = (_props: {
+export type IComponentContainer<T = any> = (_propsContainer: { data: any; children: any; schema: T }) => any
+export type IComponent<T> = (_props: { schema: T }) => any
+export type IComponentGroup<T> = (_props: {
   schema: T
-  schemas: ISchema[],
   children: any
 }) => any
-export type ComponentArray<T> = (_props: {
+export type IComponentArray<T> = (_props: {
   schema: T
-  schemas: ISchema[],
   children: (_propsChildren: {
     value: any[],
-    container: (_propsContainer: { data: any; children: any }) => any
+    container: IComponentContainer<T>
   }) => any;
 }) => any
-export type ComponentObject<T> = (_props: {
+export type IComponentObject<T> = (_props: {
   schema: T
-  schemas: ISchema[],
   children: (_propsChildren: {
     value: Record<string, any>,
-    container: (_propsContainer: { data: any; children: any }) => any
+    container: IComponentContainer<T>
   }) => any;
 }) => any
 // Record<IVariant, Record<string, Component<any>>>;
 // ;
-export type Components = {
-  FIELD: Record<string, Component<any>>;
-  VIEW: Record<string, Component<any>>;
-  GROUP: Record<string, ComponentGroup<any>>;
-  "FIELD-ARRAY": Record<string, ComponentArray<any>>;
-  "FIELD-OBJECT": Record<string, ComponentObject<any>>;
+export type IComponents = {
+  FIELD: Record<string, IComponent<any>>;
+  VIEW: Record<string, IComponent<any>>;
+  GROUP: Record<string, IComponentGroup<any>>;
+  "FIELD-ARRAY": Record<string, IComponentArray<any>>;
+  "FIELD-OBJECT": Record<string, IComponentObject<any>>;
 };
 
-export const ComponentContext = createContext<{ components: Components }>({
+export const ComponentContext = createContext<{ components: IComponents }>({
   components: {
     "FIELD-ARRAY": {},
     "FIELD-OBJECT": {},

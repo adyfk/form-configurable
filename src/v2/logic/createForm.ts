@@ -28,8 +28,8 @@ export interface IState {
     isDirty: boolean;
   };
   propsState: {
-    editable: Record<string, any>;
-    show: Record<string, any>;
+    disabled: Record<string, any>;
+    hidden: Record<string, any>;
     [key: string]: Record<string, any>;
   };
   fieldsState: {
@@ -78,8 +78,8 @@ export const initializeState = {
     isDirty: false,
   },
   propsState: {
-    editable: {},
-    show: {},
+    disabled: {},
+    hidden: {},
   },
   fieldsState: {
     touched: {},
@@ -298,22 +298,22 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     }
   };
 
+  const updateProps = (name: string, key: string, configValue: any, terms: any) => {
+    const { expressionValue, value } = configValue;
+    try {
+      const result = (expressionValue ? parse(expressionValue, terms) : value);
+      initProp(name, key, result);
+    } catch (error) {
+      if (value) {
+        initProp(name, key, value);
+      }
+    }
+  };
+
   const executeEachPropsExpression = (
     schema: ISchema,
     options: IExecuteEachOptions = { parent: "", extraData: {}, name: "" },
   ) => {
-    const updateProps = (name: string, key: string, configValue: any, terms: any) => {
-      const { expressionValue, value } = configValue;
-      try {
-        const result = (expressionValue ? parse(expressionValue, terms) : value);
-        initProp(name, key, result);
-      } catch (error) {
-        if (value) {
-          initProp(name, key, value);
-        }
-      }
-    };
-
     for (
       const {
         condition = false,
@@ -449,8 +449,8 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
       executeEachPropsExpression(schema);
 
-      // skip when show is false
-      if (!getProp("show", key) || !getProp("editable", key)) continue;
+      // skip when hidden is false
+      if (getProp("hidden", key) || getProp("disabled", key)) continue;
 
       if (schema.variant === "FIELD") {
         executeEachRuleExpression(schema, options);
@@ -539,7 +539,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
   const handleSubmit = (
     onValid: (values: IState["values"], state?: IState) => Promise<void> | void,
-    onInvalid: (
+    onInvalid?: (
       values: IState["values"],
       errors: IState["error"],
       type?: "ON-SCHEMA" | "ON-SUBMIT",
@@ -559,7 +559,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
       if (hasError() && !options.forceSubmit) {
         _state.containerFormState.isSubmitSuccessful = false;
-        onInvalid(_state.values, _state.error, "ON-SCHEMA", _state);
+        onInvalid?.(_state.values, _state.error, "ON-SCHEMA", _state);
       } else {
         _state.containerFormState.isSubmitSuccessful = true;
         await onValid(_state.values, _state);
@@ -572,7 +572,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       // }
     } catch (error) {
       _state.containerFormState.isSubmitSuccessful = false;
-      onInvalid(_state.values, _state.error, "ON-SUBMIT", _state);
+      onInvalid?.(_state.values, _state.error, "ON-SUBMIT", _state);
       //
     } finally {
       _state.containerFormState.isSubmitting = false;

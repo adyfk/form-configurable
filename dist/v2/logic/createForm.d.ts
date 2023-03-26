@@ -12,8 +12,8 @@ export interface IState {
         isDirty: boolean;
     };
     propsState: {
-        editable: Record<string, any>;
-        show: Record<string, any>;
+        disabled: Record<string, any>;
+        hidden: Record<string, any>;
         [key: string]: Record<string, any>;
     };
     fieldsState: {
@@ -54,8 +54,8 @@ export declare const initializeState: {
         isDirty: boolean;
     };
     propsState: {
-        editable: {};
-        show: {};
+        disabled: {};
+        hidden: {};
     };
     fieldsState: {
         touched: {};
@@ -83,7 +83,7 @@ declare const createForm: <TSchema>(props: ICreateFormProps<TSchema>) => {
         skipNotify: boolean;
     }) => void;
     setFocus: (key: string) => void;
-    handleSubmit: (onValid: (values: IState["values"], state?: IState) => Promise<void> | void, onInvalid: (values: IState["values"], errors: IState["error"], type?: "ON-SCHEMA" | "ON-SUBMIT", istate?: IState) => void, options?: {
+    handleSubmit: (onValid: (values: IState["values"], state?: IState) => Promise<void> | void, onInvalid?: ((values: IState["values"], errors: IState["error"], type?: "ON-SCHEMA" | "ON-SUBMIT", istate?: IState) => void) | undefined, options?: {
         forceSubmit: boolean;
     }) => (event: FormEvent) => Promise<void>;
     reset: ({ initialValues, schemas, extraData, }: Partial<Omit<ICreateFormProps<TSchema>, "formula">>) => void;

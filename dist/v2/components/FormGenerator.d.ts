@@ -1,18 +1,15 @@
 /// <reference types="react" />
-import { ISchema, ISchemaCore } from "../types";
-export declare function SchemaComponent({ schemas, schema, parent, fallback, fallbackVariantNotRegistered, fallbackComponentNotRegisterd, }: {
-    schemas: ISchema[];
-    schema: ISchemaCore;
+import { ISchema } from "../types";
+interface IFormGeneratorProps {
+    schemas: any[];
     parent: string;
-    fallback?: any;
-    fallbackVariantNotRegistered?: any;
-    fallbackComponentNotRegisterd?: any;
-}): any;
-export declare function FormGenerator(props: {
-    schemas?: any[];
-    parent?: string;
-    fallback?: any;
-    fallbackVariantNotRegistered?: any;
-    fallbackComponentNotRegisterd?: any;
-}): JSX.Element;
+    fallback: any;
+    fallbackVariantNotRegistered: any;
+    fallbackComponentNotRegisterd: any;
+}
+interface ISchemaComponentProps extends Omit<IFormGeneratorProps, "schemas"> {
+    schema: ISchema;
+}
+export declare function SchemaComponent({ schema, parent, fallback, fallbackVariantNotRegistered, fallbackComponentNotRegisterd, }: ISchemaComponentProps): any;
+export declare function FormGenerator(props: Partial<IFormGeneratorProps>): JSX.Element;
 export default FormGenerator;
