@@ -81,7 +81,7 @@ export interface ISchemaFieldObjectDefault<TSchema = null> extends ISchemaFieldC
 
 // GROUP ====
 
-export interface ISchemaGroupCore extends Omit<ISchemaCore, "initialValue"> {
+export interface ISchemaGroupCore extends ISchemaCore {
   variant: "GROUP";
 }
 
@@ -104,7 +104,7 @@ export interface ISchemaGroupCustom<TProp> extends ISchemaGroupCore {
 
 // VIEW
 
-export interface ISchemaViewCore extends Omit<ISchemaCore, "initialValue"> {
+export interface ISchemaViewCore extends ISchemaCore {
   variant: "VIEW";
   config: {
     name?: string;

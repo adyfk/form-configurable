@@ -147,6 +147,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   }
 
   function getSchemaFieldState<
+    TValue = any,
     TFieldProps = IObject,
     TFieldState = IDefaultField
   >(schema: ISchema) {
@@ -164,7 +165,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     }
 
     return {
-      value: getValue(key),
+      value: getValue(key) as TValue,
       error: getError(key),
       propsState: propsState as TFieldProps,
       fieldState: fieldState as TFieldState,

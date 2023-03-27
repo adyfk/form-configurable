@@ -23,13 +23,13 @@ export const useFieldArray = <TSchema extends ISchemaFieldCore>(props: {
     schema,
   } = props as { form: IForm<TSchema>, schema: TSchema };
   const _ref = useRef<any>();
-  const _state = useRef(form.getSchemaFieldState<TSchema["propStateType"] & IDefaultProp>(schema as any));
+  const _state = useRef(form.getSchemaFieldState<TSchema["initialValue"], TSchema["propStateType"] & IDefaultProp>(schema as any));
   const update = useUpdate();
 
   const latestState = useCallback(
     () => {
       const latestState = _state.current;
-      const state = form.getSchemaFieldState<TSchema["propStateType"] & IDefaultProp>(schema as any);
+      const state = form.getSchemaFieldState<TSchema["initialValue"], TSchema["propStateType"] & IDefaultProp>(schema as any);
 
       if (
         JSON.stringify({
