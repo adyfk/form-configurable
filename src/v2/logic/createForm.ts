@@ -14,6 +14,7 @@ import type {
 } from "../types";
 import set from "../utils/set";
 import { createParser } from "../parser";
+import generateId from "../utils/generateId";
 
 // eslint-disable-next-line no-unused-vars
 
@@ -530,6 +531,22 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     }
   };
 
+  const generatedSchemaKey = (schemas: ISchema[]) => {
+    for (const schema of schemas) {
+      if (!schema.key) {
+        schema.key = schema.variant + schema.component + generateId();
+      }
+
+      if (schema.variant === "FIELD-ARRAY" && Array.isArray(schema.childs)) {
+        generatedSchemaKey(schema.childs);
+      } else if (schema.variant === "FIELD-OBJECT" && Array.isArray(schema.childs)) {
+        generatedSchemaKey(schema.childs);
+      } else if (schema.variant === "GROUP" && Array.isArray(schema.childs)) {
+        generatedSchemaKey(schema.childs);
+      }
+    }
+  };
+
   const reset = ({
     initialValues = props.initialValues,
     schemas = props.schemas,
@@ -542,6 +559,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     // ===
     Object.assign(_state, initializeState);
 
+    generatedSchemaKey(_config.schemas as ISchema[]);
     initializeValues(_config.schemas as ISchema[]);
     executeExpression();
     setSupportFormStateValid();
