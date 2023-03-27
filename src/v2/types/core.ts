@@ -9,6 +9,10 @@ export interface IDefaultProp {
   hidden: boolean;
 }
 
+export interface IDefaultField {
+  touched: boolean;
+}
+
 export type IProp = {
   condition?: boolean;
   name: string;

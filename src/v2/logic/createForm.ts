@@ -4,6 +4,7 @@ import isEqual from "lodash.isequal";
 import { FormEvent } from "react";
 import get from "../utils/get";
 import type {
+  IDefaultField,
   IExpressionString,
   IObject,
   ISchema,
@@ -146,7 +147,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
   function getSchemaFieldState<
     TFieldProps = IObject,
-    TFieldState = IObject
+    TFieldState = IDefaultField
   >(schema: ISchema) {
     const key = getSchemaKey(schema);
     const propsState: IObject = {};
