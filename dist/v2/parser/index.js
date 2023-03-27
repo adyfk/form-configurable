@@ -1,16 +1,13 @@
 "use strict";
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.createParser = void 0;
-var _expression = _interopRequireDefault(require("./expression"));
+var _parser = require("../../parser");
 var _formula = require("./formula");
 var createParser = function createParser() {
-  var config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _formula.formula;
-  return new _expression["default"](config(function (val) {
-    return val;
-  }));
+  var _config = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : _formula.formula;
+  return _parser.parser;
 };
 exports.createParser = createParser;

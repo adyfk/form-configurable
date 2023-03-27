@@ -286,7 +286,7 @@ var createForm = function createForm(props) {
       for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
         var _step2$value = _step2.value,
           _step2$value$conditio = _step2$value.condition,
-          condition = _step2$value$conditio === void 0 ? false : _step2$value$conditio,
+          condition = _step2$value$conditio === void 0 ? true : _step2$value$conditio,
           expression = _step2$value.expression,
           name = _step2$value.name,
           value = _step2$value.value,
@@ -383,7 +383,7 @@ var createForm = function createForm(props) {
       for (_iterator4.s(); !(_step4 = _iterator4.n()).done;) {
         var _step4$value = _step4.value,
           _step4$value$conditio = _step4$value.condition,
-          condition = _step4$value$conditio === void 0 ? false : _step4$value$conditio,
+          condition = _step4$value$conditio === void 0 ? true : _step4$value$conditio,
           expression = _step4$value.expression,
           message = _step4$value.message;
         try {

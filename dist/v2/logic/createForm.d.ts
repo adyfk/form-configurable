@@ -71,7 +71,7 @@ declare const createForm: <TSchema>(props: ICreateFormProps<TSchema>) => {
     state: IState;
     subject: ISubject;
     fieldRef: Record<string, any>;
-    parse: (expression: IExpressionString, terms?: Record<string, any>) => import("../parser/expression").ExpressionValue;
+    parse: (expression: IExpressionString, terms?: Record<string, any>) => import("expressionparser/dist/ExpressionParser").ExpressionValue;
     setContainerFormState: (formStateValue: Partial<IState["containerFormState"]>) => void;
     setSupportFormState: (formStateValue: Partial<IState["supportFormState"]>) => void;
     getValue: (key?: string) => any;

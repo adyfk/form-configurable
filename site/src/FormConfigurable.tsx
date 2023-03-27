@@ -87,13 +87,17 @@ const schemas: ISchema<IMergeSchema>[] = [
         overrides: [],
         props: [
           {
-            condition: false,
             name: 'hidden',
-            expression: '!!GET("name", fieldobjectdefault)',
-            value: true
+            expression: 'GET("name", fieldobjectcustom)',
+            value: true,
           }
         ],
-        rules: [],
+        rules: [
+          {
+            expression: "!fielddefault",
+            message: "HARUS TERISI"
+          }
+        ],
         attribute: {
           title: "Sample Title Hidden"
         }
@@ -147,13 +151,16 @@ const schemas: ISchema<IMergeSchema>[] = [
     initialValue: '',
     overrides: [],
     props: [],
-    rules: []
+    rules: [],
+    attribute: {
+      title: "COBAIN X"
+    }
   },
   {
     variant: 'FIELD',
     component: 'CUSTOM-1',
     config: {
-      name: 'fieldcustom1'
+      name: 'fieldcustom'
     },
     overrides: [],
     props: [],
@@ -186,7 +193,7 @@ const schemas: ISchema<IMergeSchema>[] = [
         variant: 'FIELD',
         component: 'CUSTOM-1',
         config: {
-          name: 'fieldcustom1'
+          name: 'fieldcustom'
         },
         overrides: [],
         props: [],
@@ -204,7 +211,7 @@ const schemas: ISchema<IMergeSchema>[] = [
     variant: 'FIELD-ARRAY',
     component: 'CUSTOM-1',
     config: {
-      name: 'fieldarraycustom1'
+      name: 'fieldarraycustom'
     },
     childs: [
       {
@@ -253,7 +260,7 @@ const schemas: ISchema<IMergeSchema>[] = [
         variant: 'FIELD',
         component: 'CUSTOM-1',
         config: {
-          name: 'fieldcustom1'
+          name: 'fieldcustom'
         },
         overrides: [],
         props: [],
@@ -268,7 +275,7 @@ const schemas: ISchema<IMergeSchema>[] = [
     variant: 'FIELD-OBJECT',
     component: 'CUSTOM-1',
     config: {
-      name: 'fieldobjectcustom1'
+      name: 'fieldobjectcustom'
     },
     overrides: [],
     props: [],
@@ -453,7 +460,8 @@ const FormConfigurable = () => {
   const actionParser = () => {
     console.log('action parser')
     try {
-      console.log(action.form.parse('GET("name", fieldobjectdefault)'))
+      console.log(action.form.state.values)
+      console.log(action.form.parse('GET("name", fieldobjectcustom)'))
     } catch (error) {
       console.log(error)
     }

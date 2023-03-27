@@ -321,7 +321,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
     for (
       const {
-        condition = false,
+        condition = true,
         expression,
         name,
         value,
@@ -387,7 +387,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     const key = getSchemaKey(schema, options.parent);
     for (
       const {
-        condition = false,
+        condition = true,
         expression,
         message,
       } of (schema.rules)
