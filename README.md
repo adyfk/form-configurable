@@ -1,6 +1,6 @@
 [TOC]
 
-# React Form Configurable
+# React Form Configurable & V2
 
 making applications the laziest is to create a form where we need to make validation on the frontend and backend, not to mention match the conditions between the two. form-configurable helps standardize the schema-based generator that can be configured from the backend
 
