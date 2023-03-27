@@ -22,9 +22,9 @@ export type IProp = {
 }
 
 export type IStyles = {
-  container: string;
-  root: string;
-  content: string;
+  container: any;
+  root: any;
+  content: any;
 }
 
 export type ISchemaCore = {
