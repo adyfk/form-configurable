@@ -1,6 +1,10 @@
 import { createContext } from "react";
+import { ISchemaFieldCore } from "../types";
 
-export type IComponentContainer<T = any> = (_propsContainer: { data: any; children: any; schema: T }) => any
+export type IComponentContainer<T = any> = (
+  _propsContainer: {
+    data: T extends ISchemaFieldCore ? T["initialValue"] : any; children: any; schema: T
+  }) => any
 export type IComponent<T> = (_props: { schema: T }) => any
 export type IComponentGroup<T> = (_props: {
   schema: T
