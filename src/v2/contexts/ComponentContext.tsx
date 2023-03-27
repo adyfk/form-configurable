@@ -3,7 +3,7 @@ import { ISchemaFieldCore } from "../types";
 
 export type IComponentContainer<T = any> = (
   _propsContainer: {
-    data: T extends ISchemaFieldCore ? T["initialValue"] : any; children: any; schema: T
+    data: T extends ISchemaFieldCore ? T["initialValue"][0] : any; children: any; schema: T
   }) => any
 export type IComponent<T> = (_props: { schema: T }) => any
 export type IComponentGroup<T> = (_props: {
