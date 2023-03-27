@@ -6,11 +6,11 @@ import {
 } from "react";
 import useSubscribe from "./useSubscribe";
 import useUpdate from "./useUpdate";
-import { IDefaultProp, ISchemaViewCore } from "../types";
+import { IDefaultProp, ISchemaCore } from "../types";
 import { IForm } from "../logic/createForm";
 import { FormContext } from "../contexts/FormContext";
 
-export const useView = <TSchema extends ISchemaViewCore>(props: {
+export const useView = <TSchema extends ISchemaCore>(props: {
   form?: any;
   schema: TSchema;
   // eslint-disable-next-line no-unused-vars
