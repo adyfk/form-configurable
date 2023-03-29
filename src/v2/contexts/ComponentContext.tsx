@@ -9,20 +9,23 @@ export type IComponentContainer<T = any> = (
     : any; children: any; schema: T
   }) => any
 
-export type IComponent<T> = (_props: { schema: T }) => any
+export type IComponent<T> = (_props: { schema: T; wrapper?: any; }) => any
 export type IComponentGroup<T> = (_props: {
-  schema: T
+  schema: T;
+  wrapper?: any;
   children: any
 }) => any
 export type IComponentArray<T> = (_props: {
-  schema: T
+  schema: T;
+  wrapper?: any;
   children: (_propsChildren: {
     value: any[],
     container: IComponentContainer<T>
   }) => any;
 }) => any
 export type IComponentObject<T> = (_props: {
-  schema: T
+  schema: T;
+  wrapper?: any;
   children: (_propsChildren: {
     value: Record<string, any>,
     container: IComponentContainer<T>

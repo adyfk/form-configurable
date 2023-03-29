@@ -3,57 +3,40 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-key */
-import { Suspense, useContext, useMemo } from "react";
-import { ISchema, ISchemaCore } from "../types";
+import { FC, Suspense, useContext, useMemo } from "react";
+import { ISchema } from "../types";
 import ComponentContext from "../contexts/ComponentContext";
 import { getSchemaName } from "../logic/createForm";
-import set from "../utils/set";
 import { FormContext } from "../contexts";
 import generateId from "../utils/generateId";
 
-interface IFormGeneratorProps {
+interface IFormManagementProps {
   schemas: any[];
   parent: string;
   fallback: any;
   fallbackVariantNotRegistered: any;
   fallbackComponentNotRegisterd: any;
-  wrapper?: any;
+  wrapper: any;
+  footer: FC<{
+    schemas: any;
+    [key: string]: any;
+  }>
 }
 
-interface ISchemaComponentProps extends Omit<IFormGeneratorProps, "schemas"> {
+interface ISchemaComponentProps extends Omit<IFormManagementProps, "schemas" | "footer"> {
   schema: ISchema;
 }
 
-const updateSchemaConfigName = (schema: ISchemaCore, key: string): any => {
-  if (!key) return schema;
-  const overrideSchema = { ...schema, config: { ...schema.config } };
-  set(overrideSchema, "config.name", key);
-  return overrideSchema;
-};
-
-const updateSchemasAttributTitle = (schemas: ISchema[], index: any) => schemas.map((schema) => {
-  const overrideSchema = { ...schema };
-  if (overrideSchema?.attribute?.title) {
-    overrideSchema.attribute = {
-      ...overrideSchema.attribute,
-      title: overrideSchema.attribute.title.replace("__ITEM__", `${+index + 1}`),
-    };
-  }
-
-  return overrideSchema;
-});
-
 export function SchemaComponent({
-  wrapper,
   schema,
   parent,
   fallback,
   fallbackVariantNotRegistered,
   fallbackComponentNotRegisterd,
+  wrapper,
 }: ISchemaComponentProps) {
   const { components } = useContext(ComponentContext);
   const identity = getSchemaName(schema as any, parent);
-  const generatedKey = useMemo(() => generateId(), []);
 
   if (schema.variant === "FIELD") {
     const Component = components[schema.variant][schema.component];
@@ -63,7 +46,7 @@ export function SchemaComponent({
       <Suspense fallback={fallback}>
         <Component
           wrapper={wrapper}
-          schema={updateSchemaConfigName(schema, identity)}
+          schema={schema}
         />
       </Suspense>
     );
@@ -77,7 +60,7 @@ export function SchemaComponent({
       <Suspense fallback={fallback}>
         <Component
           wrapper={wrapper}
-          schema={updateSchemaConfigName(schema, identity)}
+          schema={schema}
         />
       </Suspense>
     );
@@ -93,8 +76,7 @@ export function SchemaComponent({
           wrapper={wrapper}
           schema={schema}
         >
-          <FormGenerator
-            parent={parent}
+          <FormManagement
             schemas={schema.childs}
             fallback={fallback}
             fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
@@ -115,18 +97,16 @@ export function SchemaComponent({
           wrapper={wrapper}
           schema={schema}
         >
-          {({ value, container: Container }) => value?.map((data: any, index: number) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Container schema={schema} data={data} key={`${parent}-${identity}-${index}-${generatedKey}`}>
-              <FormGenerator
-                parent={`${identity}.${index}`}
-                schemas={updateSchemasAttributTitle(schema.childs, index)}
+          {({ container: Container }) => (
+            <Container schema={schema} data={{}}>
+              <FormManagement
+                schemas={schema.childs}
                 fallback={fallback}
                 fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
                 fallbackVariantNotRegistered={fallbackVariantNotRegistered}
               />
             </Container>
-          ))}
+          )}
         </Component>
       </Suspense>
     );
@@ -139,12 +119,11 @@ export function SchemaComponent({
     return (
       <Suspense fallback={fallback}>
         <Component
-          wrapper={wrapper}
           schema={schema}
         >
           {({ value, container: Container }) => (
             <Container schema={schema} data={value} key={`${identity}`}>
-              <FormGenerator
+              <FormManagement
                 parent={`${identity}`}
                 schemas={schema.childs}
                 fallback={fallback}
@@ -161,17 +140,19 @@ export function SchemaComponent({
   return fallbackVariantNotRegistered;
 }
 
-export function FormGenerator(props: Partial<IFormGeneratorProps>) {
+export function FormManagement(props: Partial<IFormManagementProps>) {
   const { form: formContext } = useContext(FormContext);
   const {
     schemas = formContext.config.schemas,
     parent = "",
     fallback = <></>,
-    wrapper,
     fallbackVariantNotRegistered = <></>,
     fallbackComponentNotRegisterd = <></>,
+    footer,
+    wrapper,
   } = props;
 
+  const Footer = footer!;
   const generatedKey = useMemo(() => generateId(), []);
 
   return (
@@ -181,8 +162,8 @@ export function FormGenerator(props: Partial<IFormGeneratorProps>) {
         return (
           <SchemaComponent
             key={key}
+            parent=""
             wrapper={wrapper}
-            parent={parent}
             schema={schema}
             fallback={fallback}
             fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
@@ -190,8 +171,9 @@ export function FormGenerator(props: Partial<IFormGeneratorProps>) {
           />
         );
       })}
+      <Footer schemas={schemas} />
     </>
   );
 }
 
-export default FormGenerator;
+export default FormManagement;
