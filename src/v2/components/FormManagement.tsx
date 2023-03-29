@@ -23,11 +23,12 @@ interface IFormManagementProps {
   }>
 }
 
-interface ISchemaComponentProps extends Omit<IFormManagementProps, "schemas" | "footer"> {
+interface ISchemaComponentProps extends Omit<IFormManagementProps, "footer"> {
   schema: ISchema;
 }
 
 export function SchemaComponent({
+  schemas,
   schema,
   parent,
   fallback,
@@ -45,6 +46,7 @@ export function SchemaComponent({
     return (
       <Suspense fallback={fallback}>
         <Component
+          schemas={schemas}
           wrapper={wrapper}
           schema={schema}
         />
@@ -59,6 +61,7 @@ export function SchemaComponent({
     return (
       <Suspense fallback={fallback}>
         <Component
+          schemas={schemas}
           wrapper={wrapper}
           schema={schema}
         />
@@ -75,6 +78,7 @@ export function SchemaComponent({
         <Component
           wrapper={wrapper}
           schema={schema}
+          schemas={schemas}
         >
           <FormManagement
             schemas={schema.childs}
@@ -96,6 +100,7 @@ export function SchemaComponent({
         <Component
           wrapper={wrapper}
           schema={schema}
+          schemas={schemas}
         >
           {({ container: Container }) => (
             <Container schema={schema} data={{}}>
@@ -119,7 +124,9 @@ export function SchemaComponent({
     return (
       <Suspense fallback={fallback}>
         <Component
+          wrapper={wrapper}
           schema={schema}
+          schemas={schemas}
         >
           {({ value, container: Container }) => (
             <Container schema={schema} data={value} key={`${identity}`}>
@@ -165,6 +172,7 @@ export function FormManagement(props: Partial<IFormManagementProps>) {
             parent=""
             wrapper={wrapper}
             schema={schema}
+            schemas={schemas}
             fallback={fallback}
             fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
             fallbackVariantNotRegistered={fallbackVariantNotRegistered}

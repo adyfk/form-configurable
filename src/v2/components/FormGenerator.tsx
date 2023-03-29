@@ -167,7 +167,7 @@ export function FormGenerator(props: Partial<IFormGeneratorProps>) {
     schemas = formContext.config.schemas,
     parent = "",
     fallback = <></>,
-    wrapper,
+    wrapper = ({ children }: any) => <>{children}</>,
     fallbackVariantNotRegistered = <></>,
     fallbackComponentNotRegisterd = <></>,
   } = props;
