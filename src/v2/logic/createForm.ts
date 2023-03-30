@@ -363,7 +363,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     for (const { condition, expression, values } of schema.overrides) {
       if (!expression) {
         setValues({ ...values }, { skipNotify: true });
-        continue;
+        break;
       }
 
       try {
@@ -453,11 +453,11 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       const key = getSchemaKey(schema as ISchema, options.parent);
 
       if (schema.variant === "FIELD" || schema.variant === "FIELD-ARRAY" || schema.variant === "FIELD-OBJECT") {
-        if (schema.overrideSelf) {
-          executeEachOverrideSelfExpression(schema, options);
-        }
         if (options.name === key) {
           executeEachOverrideExpression(schema, options);
+        }
+        if (schema.overrideSelf) {
+          executeEachOverrideSelfExpression(schema, options);
         }
       }
 
