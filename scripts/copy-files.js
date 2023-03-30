@@ -1,26 +1,27 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
-const path = require('path');
-const fse = require('fs-extra');
-const glob = require('fast-glob');
+const path = require("path");
+const fse = require("fs-extra");
+const glob = require("fast-glob");
 
 const packagePath = process.cwd();
-const buildPath = path.join(packagePath, './dist');
-const srcPath = path.join(packagePath, './src');
+const buildPath = path.join(packagePath, "./dist");
+const srcPath = path.join(packagePath, "./src");
 
 async function createModulePackages({ from, to }) {
   const directoryPackages = glob
-    .sync('*/index.{js,ts,tsx}', { cwd: from })
+    .sync("*/index.{js,ts,tsx}", { cwd: from })
     .map(path.dirname);
 
   await Promise.all(
     directoryPackages.map(async (directoryPackage) => {
-      const packageJsonPath = path.join(to, directoryPackage, 'package.json');
+      const packageJsonPath = path.join(to, directoryPackage, "package.json");
 
       const packageJson = {
         sideEffects: false,
-        module: './index.js',
-        main: './index.js',
-        types: './index.d.ts',
+        module: "./index.js",
+        main: "./index.js",
+        types: "./index.d.ts",
       };
 
       const [typingsEntryExist, moduleEntryExists, mainEntryExists] = await Promise.all([
@@ -55,7 +56,7 @@ async function createModulePackages({ from, to }) {
       if (manifestErrorMessages.length > 0) {
         // TODO: AggregateError
         throw new Error(
-          `${packageJsonPath}:\n${manifestErrorMessages.join('\n')}`,
+          `${packageJsonPath}:\n${manifestErrorMessages.join("\n")}`,
         );
       }
 
@@ -64,7 +65,7 @@ async function createModulePackages({ from, to }) {
   );
 }
 
-const packageIncludes = ['expressionparser', '@babel/runtime', 'lodash.isequal'];
+const packageIncludes = ["expressionparser", "@babel/runtime", "lodash.isequal", "react-dnd", "react-dnd-html5-backend"];
 
 async function includeFileInBuild(file) {
   const sourcePath = path.resolve(packagePath, file);
@@ -88,11 +89,15 @@ async function includeFileInBuild(file) {
 
 async function createPackageFile() {
   const packageData = await fse.readFile(
-    path.resolve(packagePath, './package.json'),
-    'utf8',
+    path.resolve(packagePath, "./package.json"),
+    "utf8",
   );
   const {
-    nyc, scripts, devDependencies, workspaces, ...packageDataOther
+    nyc,
+    scripts,
+    devDependencies,
+    workspaces,
+    ...packageDataOther
   } = JSON.parse(packageData);
 
   const { dependencies } = packageDataOther;
@@ -105,21 +110,21 @@ async function createPackageFile() {
     private: false,
     ...(packageDataOther.main
       ? {
-        main: './index.js',
-        module: './index.js',
+        main: "./index.js",
+        module: "./index.js",
       }
       : {}),
-    types: './index.d.ts',
+    types: "./index.d.ts",
   };
 
   delete newPackageData.files;
 
-  const targetPath = path.resolve(buildPath, './package.json');
+  const targetPath = path.resolve(buildPath, "./package.json");
 
   await fse.writeFile(
     targetPath,
     JSON.stringify(newPackageData, null, 2),
-    'utf8',
+    "utf8",
   );
   console.log(`Created package.json in ${targetPath}`);
 
@@ -127,8 +132,8 @@ async function createPackageFile() {
 }
 
 async function prepend(file, string) {
-  const data = await fse.readFile(file, 'utf8');
-  await fse.writeFile(file, string + data, 'utf8');
+  const data = await fse.readFile(file, "utf8");
+  await fse.writeFile(file, string + data, "utf8");
 }
 
 async function addLicense(packageData) {
@@ -139,11 +144,11 @@ async function addLicense(packageData) {
  */
 `;
   await Promise.all(
-    ['./index.js'].map(async (file) => {
+    ["./index.js"].map(async (file) => {
       try {
         await prepend(path.resolve(buildPath, file), license);
       } catch (err) {
-        if (err.code === 'ENOENT') {
+        if (err.code === "ENOENT") {
           console.log(`Skipped license for ${file}`);
         } else {
           throw err;
@@ -159,7 +164,7 @@ async function run() {
 
     await Promise.all(
       [
-        './README.md',
+        "./README.md",
         // './CHANGELOG.md',
         // './LICENSE',
       ].map((file) => includeFileInBuild(file)),
