@@ -23,7 +23,7 @@ interface IFormManagementProps {
   }>
 }
 
-interface ISchemaComponentProps extends Omit<IFormManagementProps, "footer"> {
+interface ISchemaComponentProps extends IFormManagementProps {
   schema: ISchema;
 }
 
@@ -32,6 +32,7 @@ export function SchemaComponent({
   schema,
   parent,
   fallback,
+  footer,
   fallbackVariantNotRegistered,
   fallbackComponentNotRegisterd,
   wrapper,
@@ -83,6 +84,8 @@ export function SchemaComponent({
           <FormManagement
             schemas={schema.childs}
             fallback={fallback}
+            wrapper={wrapper}
+            footer={footer}
             fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
             fallbackVariantNotRegistered={fallbackVariantNotRegistered}
           />
@@ -105,8 +108,11 @@ export function SchemaComponent({
           {({ container: Container }) => (
             <Container schema={schema} data={{}}>
               <FormManagement
+                parent={`${identity}.${generateId()}`}
                 schemas={schema.childs}
                 fallback={fallback}
+                wrapper={wrapper}
+                footer={footer}
                 fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
                 fallbackVariantNotRegistered={fallbackVariantNotRegistered}
               />
@@ -134,6 +140,8 @@ export function SchemaComponent({
                 parent={`${identity}`}
                 schemas={schema.childs}
                 fallback={fallback}
+                wrapper={wrapper}
+                footer={footer}
                 fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
                 fallbackVariantNotRegistered={fallbackVariantNotRegistered}
               />
@@ -170,6 +178,7 @@ export function FormManagement(props: Partial<IFormManagementProps>) {
           <SchemaComponent
             key={key}
             parent=""
+            footer={footer!}
             wrapper={wrapper}
             schema={schema}
             schemas={schemas}
