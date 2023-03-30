@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { ISchemaCore, IVariant } from "../types";
 
-interface IUseListComponent<T> {
+export interface IUseListComponent<T> {
   components: Record<IVariant, {
     [component: string]: T
   }>
 }
 
-const useListComponent = <T extends ISchemaCore>(props: IUseListComponent<T>) => {
+export const useListComponent = <T extends ISchemaCore>(props: IUseListComponent<T>) => {
   const listVariant = Object.keys(props.components) as IVariant[];
   const useVariant = useState<IVariant>(listVariant[0]);
 
