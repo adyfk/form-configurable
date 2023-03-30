@@ -2,30 +2,39 @@ import { useRef, useState } from "react";
 import useForm from "./useForm";
 import { ICreateFormProps } from "../logic/createForm";
 
-export const useManagement = <TSchema>(props: ICreateFormProps<TSchema>) => {
-  const schemas = useRef<any[]>([]);
-  const action = useForm(props);
-  const [openDialogAddComponent, setOpenDialog] = useState(false);
+const useDialogAddComponent = ({ action }: { action: any }) => {
+  const [openDialog, setOpenDialog] = useState(false);
 
-  const onOpenDialogAddComponent = (schemas: any) => {
-    schemas.current = schemas;
+  const schemasRef = useRef<any[]>([]);
+
+  const onOpenDialog = (schemas: any) => {
+    schemasRef.current = schemas;
     setOpenDialog(true);
   };
 
-  const onCloseDialogAddComponent = () => {
+  const onCloseDialog = () => {
     setOpenDialog(false);
   };
 
-  const onAddComponent = (schema: any) => {
-    schemas.current.push(schema);
+  const onAdd = (schema: any) => {
+    schemasRef.current.push(schema);
     action.form.reset({});
   };
 
   return {
-    action,
-    openDialogAddComponent,
-    onOpenDialogAddComponent,
-    onCloseDialogAddComponent,
-    onAddComponent,
+    openDialog,
+    onOpenDialog,
+    onCloseDialog,
+    onAdd,
   };
 };
+
+export const useManagement = <TSchema>(props: ICreateFormProps<TSchema>) => {
+  const action = useForm(props);
+  return {
+    useDialogAddComponent: useDialogAddComponent({ action }),
+
+  };
+};
+
+export default useManagement;
