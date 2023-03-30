@@ -33,7 +33,7 @@ export const useManagement = <TSchema>(props: ICreateFormProps<TSchema>) => {
   const action = useForm(props);
   return {
     useDialogAddComponent: useDialogAddComponent({ action }),
-
+    action,
   };
 };
 
