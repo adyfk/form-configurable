@@ -10,6 +10,7 @@ export interface IUseWrapperManagement {
 }
 
 export const useWrapperManagement = (props: IUseWrapperManagement) => {
+  const memo = useRef<Record<string, any>>({});
   const { form: formContext } = useContext(FormContext);
   const { schema, schemas, form = formContext } = props;
   const containerRef = useRef<any>();
@@ -29,6 +30,11 @@ export const useWrapperManagement = (props: IUseWrapperManagement) => {
       accept: ["FIELD", "FIELD-ARRAY", "FIELD-OBJECT", "VIEW", "GROUP"],
       hover(item: ISchemaCore) {
         if (item.key === schema.key) return;
+
+        const prevId = `${item.key}_${schema.key}`;
+        if (prevId === memo.current.HOVER) return;
+
+        memo.current.HOVER = prevId;
 
         const dragIndex = schemas.findIndex((config: ISchemaCore) => config.key === schema.key);
         const hoverIndex = schemas.findIndex((config: ISchemaCore) => config.key === item.key);
