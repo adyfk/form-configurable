@@ -362,19 +362,19 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
     for (const { condition, expression, values } of schema.overrides) {
       if (!expression) {
-        setValues({ ...values }, { skipNotify: true });
+        setValues(structuredClone(values), { skipNotify: true });
         break;
       }
 
       try {
         const result = parse(expression, { ...options.extraData });
         if (condition === !!result) {
-          setValues({ ...values }, { skipNotify: true });
+          setValues(structuredClone(values), { skipNotify: true });
           break;
         }
       } catch (error) {
         if (!condition) {
-          setValues({ ...values }, { skipNotify: true });
+          setValues(structuredClone(values), { skipNotify: true });
           break;
         }
       }
@@ -425,6 +425,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       executeEachExpression(schema as ISchema[], {
         parent: `${options.parent}.${index}`,
         extraData: {
+          __ITEM__: getValue(`${options.parent}.${index}`),
           __INDEX__: index,
         },
       });
