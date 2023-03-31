@@ -1,9 +1,10 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/jsx-no-useless-fragment */
 /* eslint-disable no-use-before-define */
 /* eslint-disable react/require-default-props */
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-key */
-import { Suspense, useContext, useMemo } from "react";
+import { Fragment, Suspense, useContext, useMemo } from "react";
 import { ISchema, ISchemaCore } from "../types";
 import ComponentContext from "../contexts/ComponentContext";
 import { getSchemaName } from "../logic/createForm";
@@ -115,18 +116,21 @@ export function SchemaComponent({
           wrapper={wrapper}
           schema={schema}
         >
-          {({ value, container: Container }) => value?.map((data: any, index: number) => (
-            // eslint-disable-next-line react/no-array-index-key
-            <Container schema={schema} data={data} key={`${parent}-${identity}-${index}-${generatedKey}`}>
-              <FormGenerator
-                parent={`${identity}.${index}`}
-                schemas={updateSchemasAttributTitle(schema.childs, index)}
-                fallback={fallback}
-                fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
-                fallbackVariantNotRegistered={fallbackVariantNotRegistered}
-              />
-            </Container>
-          ))}
+          {({ value, container: Container }, indexContainer) => (
+            <Fragment key={indexContainer}>
+              {value?.map((data: any, indexValue: number) => (
+                <Container schema={schema} data={data} key={`${parent}-${identity}-${indexContainer}-${indexValue}-${generatedKey}`}>
+                  <FormGenerator
+                    parent={`${identity}.${indexValue}`}
+                    schemas={updateSchemasAttributTitle(schema.childs, indexValue)}
+                    fallback={fallback}
+                    fallbackComponentNotRegisterd={fallbackComponentNotRegisterd}
+                    fallbackVariantNotRegistered={fallbackVariantNotRegistered}
+                  />
+                </Container>
+              ))}
+            </Fragment>
+          )}
         </Component>
       </Suspense>
     );

@@ -1,51 +1,50 @@
-import { createContext } from "react";
+import { createContext, FC } from "react";
 import { ISchemaFieldCore } from "../types";
 
-export type IComponentContainer<T = any> = (
-  _propsContainer: {
-    data: T extends ISchemaFieldCore ?
-    NonNullable<T["initialValue"]>[0] extends object ?
-    NonNullable<T["initialValue"]>[0] : any
-    : any; children: any; schema: T
-  }) => any
+export type IComponentContainerProps<T = any> = {
+  data: T extends ISchemaFieldCore ?
+  NonNullable<T["initialValue"]>[0] extends object ?
+  NonNullable<T["initialValue"]>[0] : any
+  : any; children: any; schema: T
+}
 
-export type IComponent<T> = (_props: {
+export type IComponentProps<T> = {
   schema: T;
   wrapper?: any;
   schemas?: any[];
-}) => any
-export type IComponentGroup<T> = (_props: {
+};
+export type IComponentGroupProps<T> = {
   schema: T;
   wrapper?: any;
   children: any;
   schemas?: any[];
-}) => any
-export type IComponentArray<T> = (_props: {
+};
+export type IComponentArrayProps<T> = {
   schema: T;
   wrapper?: any;
   schemas?: any[];
-  children: (_propsChildren: {
+  children: FC<{
     value: any[],
-    container: IComponentContainer<T>
-  }) => any;
-}) => any
-export type IComponentObject<T> = (_props: {
+    container: FC<IComponentContainerProps<T>>
+  }>
+};
+export type IComponentObjectProps<T> = {
   schema: T;
   wrapper?: any;
   schemas?: any[];
-  children: (_propsChildren: {
+  children: FC<{
     value: Record<string, any>,
-    container: IComponentContainer<T>
-  }) => any;
-}) => any
+    container: FC<IComponentContainerProps<T>>
+  }>
+};
 // Record<IVariant, Record<string, Component<any>>>;
 // ;
 export type IComponents = {
-  FIELD: Record<string, IComponent<any>>;
-  VIEW: Record<string, IComponent<any>>;
-  GROUP: Record<string, IComponentGroup<any>>;
-  "FIELD-ARRAY": Record<string, IComponentArray<any>>;
-  "FIELD-OBJECT": Record<string, IComponentObject<any>>;
+  FIELD: Record<string, FC<IComponentProps<any>>>;
+  VIEW: Record<string, FC<IComponentProps<any>>>;
+  GROUP: Record<string, FC<IComponentGroupProps<any>>>;
+  "FIELD-ARRAY": Record<string, FC<IComponentArrayProps<any>>>;
+  "FIELD-OBJECT": Record<string, FC<IComponentObjectProps<any>>>;
 };
 
 export const ComponentContext = createContext<{ components: IComponents }>({
