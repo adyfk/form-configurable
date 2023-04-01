@@ -1,20 +1,17 @@
-import {
-  ExpressionThunk,
+import type {
   ExpressionValue,
-  isExpressionArgumentsArray,
-  // ExpressionThunkFunction,
-} from "./expression";
+  ArgumentsArray,
+} from "expressionparser/dist/ExpressionParser";
 
-export const callbackShouldAThunk = (func: ExpressionValue): func is ExpressionThunk => {
-  if (typeof func === "function") {
-    return true;
-  }
-  return false;
-};
+export const isArgumentsArray = (
+  args: ExpressionValue,
+): args is ArgumentsArray => Array.isArray(args) && !!args.isArgumentsArray;
 
 export const num = (result: ExpressionValue) => {
   if (typeof result !== "number") {
-    throw new Error(`Expected number, found: ${typeof result} ${JSON.stringify(result)}`);
+    throw new Error(
+      `Expected number, found: ${typeof result} ${JSON.stringify(result)}`,
+    );
   }
 
   return result;
@@ -22,10 +19,12 @@ export const num = (result: ExpressionValue) => {
 
 export const array = (result: ExpressionValue) => {
   if (!Array.isArray(result)) {
-    throw new Error(`Expected array, found: ${typeof result} ${JSON.stringify(result)}`);
+    throw new Error(
+      `Expected array, found: ${typeof result} ${JSON.stringify(result)}`,
+    );
   }
 
-  if (isExpressionArgumentsArray(result)) {
+  if (isArgumentsArray(result)) {
     throw new Error("Expected array, found: arguments");
   }
 
@@ -34,15 +33,56 @@ export const array = (result: ExpressionValue) => {
 
 export const bool = (value: ExpressionValue) => {
   if (typeof value !== "boolean") {
-    throw new Error(`Expected boolean, found: ${typeof value} ${JSON.stringify(value)}`);
+    throw new Error(
+      `Expected boolean, found: ${typeof value} ${JSON.stringify(value)}`,
+    );
   }
 
   return value;
 };
 
+export const evalBool = (value: ExpressionValue): boolean => {
+  let result;
+
+  while (typeof value === "function" && value.length === 0) {
+    result = value();
+  }
+
+  if (!result) {
+    result = value;
+  }
+
+  return bool(result);
+};
+
+export const evalArray = (
+  arr: ExpressionValue,
+  // eslint-disable-next-line no-unused-vars
+  typeCheck?: (value: ExpressionValue) => ExpressionValue,
+) => array(arr).map((value) => {
+  let result;
+  if (typeof value === "function" && value.length === 0) {
+    result = value();
+  } else {
+    result = value;
+  }
+
+  if (typeCheck) {
+    try {
+      result = typeCheck(result);
+    } catch (err: any) {
+      throw new Error(`In array; ${err.message}`);
+    }
+  }
+
+  return result;
+});
+
 export const obj = (obj: ExpressionValue) => {
   if (typeof obj !== "object" || obj === null) {
-    throw new Error(`Expected object, found: ${typeof obj} ${JSON.stringify(obj)}`);
+    throw new Error(
+      `Expected object, found: ${typeof obj} ${JSON.stringify(obj)}`,
+    );
   } else if (Array.isArray(obj)) {
     throw new Error("Expected object, found array");
   }
@@ -52,7 +92,11 @@ export const obj = (obj: ExpressionValue) => {
 
 export const iterable = (result: ExpressionValue) => {
   if (!Array.isArray(result) && typeof result !== "string") {
-    throw new Error(`Expected array or string, found: ${typeof result} ${JSON.stringify(result)}`);
+    throw new Error(
+      `Expected array or string, found: ${typeof result} ${JSON.stringify(
+        result,
+      )}`,
+    );
   }
 
   return result;
@@ -60,7 +104,9 @@ export const iterable = (result: ExpressionValue) => {
 
 export const string = (result: ExpressionValue) => {
   if (typeof result !== "string") {
-    throw new Error(`Expected string, found: ${typeof result} ${JSON.stringify(result)}`);
+    throw new Error(
+      `Expected string, found: ${typeof result} ${JSON.stringify(result)}`,
+    );
   }
 
   return result;
@@ -68,7 +114,9 @@ export const string = (result: ExpressionValue) => {
 
 export const char = (result: ExpressionValue) => {
   if (typeof result !== "string" || result.length !== 1) {
-    throw new Error(`Expected char, found: ${typeof result} ${JSON.stringify(result)}`);
+    throw new Error(
+      `Expected char, found: ${typeof result} ${JSON.stringify(result)}`,
+    );
   }
 
   return result;
@@ -105,36 +153,3 @@ export const evalString = (value: ExpressionValue) => {
 
   return string(result);
 };
-
-export const evalBool = (value: ExpressionValue): boolean => {
-  let result;
-
-  while (typeof value === "function" && value.length === 0) {
-    result = value();
-  }
-
-  if (!result) {
-    result = value;
-  }
-
-  return bool(result);
-};
-
-export const evalArray = (arr: ExpressionValue, typeCheck?: ExpressionThunk) => array(arr).map((value) => {
-  let result;
-  if (typeof value === "function" && value.length === 0) {
-    result = value();
-  } else {
-    result = value;
-  }
-
-  if (typeCheck) {
-    try {
-      result = typeCheck(result);
-    } catch (err: any) {
-      throw new Error(`In array; ${err.message}`);
-    }
-  }
-
-  return result;
-});

@@ -1,51 +1,64 @@
 /* eslint-disable indent */
+/* eslint-disable func-names */
 /* eslint-disable no-use-before-define */
-import {
+import type {
+  Delegate,
   ExpressionThunk,
   TermDelegate,
   ExpressionValue,
-  isExpressionArgumentsArray,
   ExpressionParserOptions,
   TermTyper,
   TermType,
-  InfixOps,
-  PrefixOps,
-  // ExpressionThunkFunction,
-} from "./expression";
-import { infixOperator, prefixOperator } from "./formula-operator";
+} from "expressionparser/dist/ExpressionParser";
+import {
+  isArgumentsArray,
+} from "./formula-utils";
+import { PREFIX_OPS } from "./formula-operator-prefix";
+import { INFIX_OPS } from "./formula-operator-infix";
 
-type CallbackFn = (..._args: ExpressionThunk[]) => ExpressionValue;
+export interface FunctionOps {
+  // eslint-disable-next-line no-unused-vars
+  [op: string]: (...args: ExpressionThunk[]) => ExpressionValue;
+}
 
-const unpackArgs = (f: CallbackFn) => (expr: ExpressionThunk) => {
+const unpackArgs = (f: Delegate) => (expr: ExpressionThunk) => {
   const result = expr();
 
-  if (!isExpressionArgumentsArray(result)) {
+  if (!isArgumentsArray(result)) {
     if (f.length > 1) {
-      throw new Error(`Too few arguments. Expected ${f.length}, found 1 (${JSON.stringify(result)})`);
+      throw new Error(
+        `Too few arguments. Expected ${f.length}, found 1 (${JSON.stringify(
+          result,
+        )})`,
+      );
     }
     return f(() => result);
   } if (result.length === f.length || f.length === 0) {
-    return f(result as any);
+    // eslint-disable-next-line prefer-spread
+    return f.apply(null, result);
   }
   throw new Error(`Incorrect number of arguments. Expected ${f.length}`);
 };
 
-// eslint-disable-next-line func-names
-export const formula = (termDelegate: TermDelegate, termTypeDelegate?: TermTyper): ExpressionParserOptions => {
-  // callable
-  const prefixOps = { ...prefixOperator };
-  const infixOps = { ...infixOperator };
-
+// eslint-disable-next-line no-unused-vars
+export const formula = function (
+  termDelegate: TermDelegate,
+  termTypeDelegate?: TermTyper,
+): ExpressionParserOptions {
+  const prefixOps = PREFIX_OPS;
+  const infixOps = INFIX_OPS;
+  // Ensure arguments are unpacked accordingly
+  // Except for the ARRAY constructor
   Object.keys(prefixOps).forEach((key) => {
     if (key !== "ARRAY") {
-      prefixOps[key] = unpackArgs(prefixOps[key]);
+      prefixOps[key] = unpackArgs((prefixOps as any)[key]);
     }
   });
 
   return {
     ESCAPE_CHAR: "\\",
-    INFIX_OPS: infixOps as InfixOps,
-    PREFIX_OPS: prefixOps as PrefixOps,
+    INFIX_OPS: infixOps,
+    PREFIX_OPS: prefixOps,
     PRECEDENCE: [
       Object.keys(prefixOps),
       ["^"],
@@ -94,8 +107,6 @@ export const formula = (termDelegate: TermDelegate, termTypeDelegate?: TermTyper
       const numVal = parseFloat(term);
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case "PI":
-            return Math.PI;
           case "FALSE":
             return false;
           case "TRUE":
@@ -106,6 +117,8 @@ export const formula = (termDelegate: TermDelegate, termTypeDelegate?: TermTyper
             return {};
           case "INFINITY":
             return Number.POSITIVE_INFINITY;
+          case "UNDEFINED":
+            return undefined as any;
           default:
             return termDelegate(term);
         }
@@ -119,8 +132,6 @@ export const formula = (termDelegate: TermDelegate, termTypeDelegate?: TermTyper
 
       if (Number.isNaN(numVal)) {
         switch (term) {
-          case "SQRT2":
-            return "number";
           case "FALSE":
             return "boolean";
           case "TRUE":
@@ -129,6 +140,8 @@ export const formula = (termDelegate: TermDelegate, termTypeDelegate?: TermTyper
             return "array";
           case "INFINITY":
             return "number";
+          case "EPSILON":
+            return "number";
           default:
             return termTypeDelegate ? termTypeDelegate(term) : "unknown";
         }
@@ -136,5 +149,9 @@ export const formula = (termDelegate: TermDelegate, termTypeDelegate?: TermTyper
         return "number";
       }
     },
+
+    isCaseInsensitive: true,
   };
 };
+
+export default formula;

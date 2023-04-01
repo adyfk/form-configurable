@@ -1,42 +1,38 @@
-/* eslint-disable indent */
 /* eslint-disable no-use-before-define */
+/* eslint-disable no-unused-vars */
 
-// init value
-
-// eslint-disable-next-line max-classes-per-file
-export type ExpressionPrimitive = number | boolean | string;
-export type ExpressionThunk = (..._args: ExpressionValue[]) => ExpressionValue;
-export type ExpressionThunkArray = ExpressionThunk[] & { isExpressionArgumentsArray?: boolean; }
-export type ExpressionValueArray = ExpressionValue[] & { isExpressionArgumentsArray?: boolean; }
-export type ExpressionObject = { [key: string]: ExpressionValue }
-export type ExpressionThunkFunction = (..._args: ExpressionThunk[]) => ExpressionValue
-
+export type ValuePrimitive = number | boolean | string;
+export type Delegate = (...args: (ExpressionValue | ExpressionThunk)[]) => ExpressionValue;
+export type ExpressionFunction = Delegate;
 export type ExpressionValue =
-  ExpressionPrimitive |
-  ExpressionThunk |
-  ExpressionThunkArray |
-  ExpressionValueArray |
-  ExpressionObject |
-  ExpressionThunkFunction;
-
-// ==================================================================================================
-
-// term
-
-export type TermDelegate = (_term: string) => ExpressionValue;
+  | ValuePrimitive
+  | ArgumentsArray
+  | ExpressionArray<ExpressionValue>
+  | { [key: string]: ExpressionValue }
+  | ExpressionThunk
+  | ExpressionFunction;
+export type ExpressionThunk = () => ExpressionValue;
+export type TermDelegate = (term: string) => ExpressionValue;
 export type TermType = "number" | "boolean" | "string" | "function" | "array" | "object" | "unknown";
-export type TermTyper = (_term: string) => TermType;
+export type TermTyper = (term: string) => TermType;
 
-// ==================================================================================================
+type Infixer<T> = (token: string, lhs: T, rhs: T) => T;
+type Prefixer<T> = (token: string, rhs: T) => T;
+type Terminator<T> = (token: string, terms?: Record<string, ExpressionValue>) => T;
 
-// expression options
+export type PrefixOp = (expr: ExpressionThunk) => ExpressionValue;
 
 export interface PrefixOps {
-  [op: string]: ExpressionThunk;
+  [op: string]: PrefixOp;
 }
 
+export type InfixOp = (
+  a: ExpressionThunk,
+  b: ExpressionThunk
+) => ExpressionValue;
+
 export interface InfixOps {
-  [op: string]: ExpressionThunk;
+  [op: string]: InfixOp;
 }
 
 export interface Description {
@@ -45,8 +41,79 @@ export interface Description {
   sig: string[];
   text: string;
 }
+const isInArray = <T>(array: T[], value: T) => {
+  let i; let
+    len;
+  for (i = 0, len = array.length; i !== len; ++i) {
+    if (array[i] === value) {
+      return true;
+    }
+  }
+  return false;
+};
 
-// ==================================================================================================
+const mapValues = <A, B>(mapper: (val: A) => B) => (obj: {
+  [key: string]: A;
+}): { [key: string]: B } => {
+  const result: { [key: string]: B } = {};
+  Object.keys(obj).forEach((key) => {
+    result[key] = mapper(obj[key]);
+  });
+
+  return result;
+};
+
+const convertKeys = <T>(converter: (key: string) => string) => (obj: {
+  [key: string]: T;
+}) => {
+  const newKeys = Object.keys(obj)
+    .map((key) => (obj.hasOwnProperty(key) ? [key, converter(key)] : null))
+    .filter((val) => val != null);
+
+  newKeys.forEach((keys) => {
+    const [oldKey, newKey] = keys as string[];
+    if (oldKey !== newKey) {
+      obj[newKey] = obj[oldKey];
+      delete obj[oldKey];
+    }
+  });
+
+  return obj;
+};
+
+export interface ExpressionArray<T> extends Array<T> {
+  isArgumentsArray?: boolean;
+}
+
+export interface ArgumentsArray extends ExpressionArray<ExpressionThunk> {
+  isArgumentsArray: true;
+}
+
+export const isArgumentsArray = (
+  args: ExpressionValue,
+): args is ArgumentsArray => Array.isArray(args) && !!args.isArgumentsArray;
+
+const thunkEvaluator = (val: ExpressionValue) => evaluate(val);
+const objEvaluator = mapValues<ExpressionValue, ExpressionValue>(
+  thunkEvaluator,
+);
+
+const evaluate = (
+  thunkExpression: ExpressionThunk | ExpressionValue,
+): ExpressionValue => {
+  if (typeof thunkExpression === "function" && thunkExpression.length === 0) {
+    return evaluate(thunkExpression());
+  } if (isArgumentsArray(thunkExpression)) {
+    return thunkExpression.map((val) => evaluate(val()));
+  } if (Array.isArray(thunkExpression)) {
+    return thunkExpression.map(thunkEvaluator);
+  } if (typeof thunkExpression === "object") {
+    return objEvaluator(thunkExpression);
+  }
+  return thunkExpression;
+};
+
+const thunk = (delegate: Delegate, ...args: ExpressionValue[]) => () => delegate(...args);
 
 export interface ExpressionParserOptions {
   AMBIGUOUS: {
@@ -70,88 +137,49 @@ export interface ExpressionParserOptions {
       CLOSE: string;
     };
   };
+
+  isCaseInsensitive?: boolean;
   descriptions?: Description[];
 }
 
-type Infixer<T> = (_token: string, _lhs: T, _rhs: T) => T;
-type Prefixer<T> = (_token: string, _rhs: T) => T;
-type Terminator<T> = (_token: string, _terms?: Record<string, ExpressionValue>) => T;
-
-export const isExpressionArgumentsArray = (args: ExpressionValue): args is ExpressionThunkArray => Array.isArray(args) && !!args.isExpressionArgumentsArray;
-
-const thunkEvaluator = (val: ExpressionValue) => evaluate(val);
-const mapValues = <A, B>(mapper: (_val: A) => B) => (obj: { [key: string]: A; }): { [key: string]: B } => {
-  const result: { [key: string]: B } = {};
-
-  Object.keys(obj).forEach((key) => {
-    result[key] = mapper(obj[key]);
-  });
-
-  return result;
-};
-const objEvaluator = mapValues<ExpressionValue, ExpressionValue>(
-  thunkEvaluator,
-);
-
-const evaluate = (
-  thunkExpression: ExpressionThunk | ExpressionValue,
-): ExpressionValue => {
-  if (typeof thunkExpression === "function" && thunkExpression.length === 0) {
-    return evaluate(thunkExpression());
-  }
-
-  if (isExpressionArgumentsArray(thunkExpression)) {
-    return thunkExpression.map((val) => evaluate(val()));
-  }
-
-  if (Array.isArray(thunkExpression)) {
-    return thunkExpression.map(thunkEvaluator);
-  }
-
-  if (typeof thunkExpression === "object") {
-    return objEvaluator(thunkExpression);
-  }
-  return thunkExpression;
-};
-
-const thunk = (delegate: ExpressionThunk, ...args: ExpressionValue[]) => () => delegate(...args);
-
 class ExpressionParser {
-  options: ExpressionParserOptions = {} as ExpressionParserOptions;
+  options: ExpressionParserOptions;
 
   surroundingOpen: {
     [token: string]: boolean;
-  } = {};
+  };
 
   surroundingClose: {
     [token: string]: {
       OPEN: string;
       ALIAS: string;
     };
-  } = {};
+  };
 
   symbols: {
     [token: string]: string;
-  } = {};
+  };
 
-  // eslint-disable-next-line prefer-regex-literals
-  LIT_CLOSE_REGEX: RegExp = new RegExp("\"$");
+  LIT_CLOSE_REGEX?: RegExp;
 
-  // eslint-disable-next-line prefer-regex-literals
-  LIT_OPEN_REGEX: RegExp = new RegExp("^\"$");
+  LIT_OPEN_REGEX?: RegExp;
 
   constructor(options: ExpressionParserOptions) {
     this.options = options;
     this.surroundingOpen = {};
     this.surroundingClose = {};
-    this.symbols = {};
 
     if (this.options.SURROUNDING) {
       Object.keys(this.options.SURROUNDING).forEach((key) => {
-        const item = this.options!.SURROUNDING?.[key];
+        const item = this.options.SURROUNDING![key];
 
-        const open = item!.OPEN;
-        const close = item!.CLOSE;
+        let open = item.OPEN;
+        let close = item.CLOSE;
+        if (this.options.isCaseInsensitive) {
+          key = key.toUpperCase();
+          open = open.toUpperCase();
+          close = close.toUpperCase();
+        }
 
         this.surroundingOpen[open] = true;
         this.surroundingClose[close] = {
@@ -159,6 +187,18 @@ class ExpressionParser {
           ALIAS: key,
         };
       });
+    }
+
+    if (this.options.isCaseInsensitive) {
+      // convert all terms to uppercase
+      const upperCaser = (key: string) => key.toUpperCase();
+      const upperCaseKeys = convertKeys(upperCaser);
+      const upperCaseVals = mapValues(upperCaser);
+      upperCaseKeys(this.options.INFIX_OPS);
+      upperCaseKeys(this.options.PREFIX_OPS);
+      upperCaseKeys(this.options.AMBIGUOUS);
+      upperCaseVals(this.options.AMBIGUOUS);
+      this.options.PRECEDENCE = this.options.PRECEDENCE.map((arr) => arr.map((val) => val.toUpperCase()));
     }
 
     if (this.options.LITERAL_OPEN) {
@@ -169,9 +209,18 @@ class ExpressionParser {
       this.LIT_OPEN_REGEX = new RegExp(`^${this.options.LITERAL_CLOSE}`);
     }
 
+    this.symbols = {};
     this.options.SYMBOLS.forEach((symbol) => {
       this.symbols[symbol] = symbol;
     });
+  }
+
+  resolveCase(key: string) {
+    return this.options.isCaseInsensitive ? key.toUpperCase() : key;
+  }
+
+  resolveAmbiguity(token: string) {
+    return this.options.AMBIGUOUS[this.resolveCase(token)];
   }
 
   isSymbol(char: string) {
@@ -185,7 +234,7 @@ class ExpressionParser {
       if (typeof termValue !== "function") {
         throw new Error(`${op} is not a function.`);
       }
-      const result: (..._args: any) => ExpressionValue = termValue;
+      const result: (...args: any) => ExpressionValue = termValue;
 
       return (argsThunk: ExpressionThunk | ExpressionValue) => {
         const args = evaluate(argsThunk);
@@ -195,11 +244,11 @@ class ExpressionParser {
         return () => result(...args);
       };
     }
-    return this.options.PREFIX_OPS[op];
+    return this.options.PREFIX_OPS[this.resolveCase(op)];
   }
 
   getInfixOp(op: string) {
-    return this.options.INFIX_OPS[op];
+    return this.options.INFIX_OPS[this.resolveCase(op)];
   }
 
   getPrecedence(op: string) {
@@ -209,114 +258,112 @@ class ExpressionParser {
       return 0;
     }
 
-    const casedOp = op;
+    const casedOp = this.resolveCase(op);
 
     for (i = 0, len = this.options.PRECEDENCE.length; i !== len; ++i) {
-      if (this.options.PRECEDENCE[i].includes(casedOp)) {
+      if (isInArray(this.options.PRECEDENCE[i], casedOp)) {
         return i;
       }
     }
     return i;
   }
 
-  resolveAmbiguity(token: string) {
-    return this.options?.AMBIGUOUS[token] ?? token;
-  }
-
   tokenize(expression: string) {
-    const tokens: string[] = [];
+    const EOF = 0;
+    const tokens = [];
     let token = "";
-    let isScanningLiteral = false;
-    let isScanningSymbols = false;
-    let isEscaping = false;
 
-    for (let i = 0; i < expression.length; i++) {
-      const currChar = expression[i];
+    const state = {
+      startedWithSep: true,
+      scanningLiteral: false,
+      scanningSymbols: false,
+      escaping: false,
+    };
 
-      if (isEscaping) {
-        token += currChar;
-        isEscaping = false;
-        continue;
-      }
-
-      if (currChar === this.options.ESCAPE_CHAR) {
-        isEscaping = true;
-        continue;
-      }
-
-      if (isScanningLiteral) {
-        if (currChar === this.options.LITERAL_CLOSE) {
-          tokens.push(this.options.LITERAL_OPEN + token + this.options.LITERAL_CLOSE);
-          token = "";
-          isScanningLiteral = false;
+    const endWord = (endedWithSep: boolean) => {
+      if (token !== "") {
+        const disambiguated = this.resolveAmbiguity(token);
+        if (disambiguated && state.startedWithSep && !endedWithSep) {
+          tokens.push(disambiguated);
         } else {
-          token += currChar;
+          tokens.push(token);
         }
-        continue;
-      }
-
-      if (currChar === this.options.LITERAL_OPEN) {
-        tokens.push(token);
         token = "";
-        isScanningLiteral = true;
+        state.startedWithSep = false;
+      }
+    };
+
+    const chars = expression.split("");
+    let currChar: string | typeof EOF;
+
+    const handleGrouping = (currChar: string) => {
+      endWord(currChar === this.options.GROUP_CLOSE);
+      state.startedWithSep = currChar === this.options.GROUP_OPEN;
+      tokens.push(currChar);
+    };
+
+    const handleSurrounding = (currChar: string) => {
+      endWord(currChar in this.surroundingClose);
+      state.startedWithSep = currChar in this.surroundingOpen;
+      tokens.push(currChar);
+    };
+
+    const isSwitchingSymbol = (currChar: string) => (
+      (this.isSymbol(currChar) && !state.scanningSymbols)
+      || (!this.isSymbol(currChar) && state.scanningSymbols)
+    );
+
+    for (let i = 0, len = chars.length; i <= len; ++i) {
+      currChar = i === len ? EOF : chars[i];
+
+      if (currChar === this.options.ESCAPE_CHAR && !state.escaping) {
+        state.escaping = true;
         continue;
       }
 
-      if (currChar === this.options.SEPARATOR) {
-        if (token !== "") {
-          tokens.push(token);
-          token = "";
-        }
-        continue;
+      if (state.escaping) {
+        token += currChar;
+      } else if (
+        currChar === this.options.LITERAL_OPEN
+        && !state.scanningLiteral
+      ) {
+        state.scanningLiteral = true;
+        endWord(false);
+      } else if (currChar === this.options.LITERAL_CLOSE) {
+        state.scanningLiteral = false;
+        tokens.push(
+          this.options.LITERAL_OPEN + token + this.options.LITERAL_CLOSE,
+        );
+        token = "";
+      } else if (currChar === EOF) {
+        endWord(true);
+      } else if (state.scanningLiteral) {
+        token += currChar;
+      } else if (currChar === this.options.SEPARATOR) {
+        endWord(true);
+        state.startedWithSep = true;
+      } else if (
+        currChar === this.options.GROUP_OPEN
+        || currChar === this.options.GROUP_CLOSE
+      ) {
+        handleGrouping(currChar);
+      } else if (
+        currChar in this.surroundingOpen
+        || currChar in this.surroundingClose
+      ) {
+        handleSurrounding(currChar);
+      } else if (isSwitchingSymbol(currChar)) {
+        endWord(false);
+        token += currChar;
+        state.scanningSymbols = !state.scanningSymbols;
+      } else {
+        token += currChar;
       }
 
-      if (currChar === this.options.GROUP_OPEN || currChar === this.options.GROUP_CLOSE) {
-        if (token !== "") {
-          tokens.push(token);
-          token = "";
-        }
-        tokens.push(currChar);
-        continue;
-      }
-
-      if (currChar in this.surroundingOpen || currChar in this.surroundingClose) {
-        if (token !== "") {
-          tokens.push(token);
-          token = "";
-        }
-        tokens.push(currChar);
-        continue;
-      }
-
-      const isSymbol = this.isSymbol(currChar);
-      if (isSymbol !== isScanningSymbols) {
-        if (token !== "") {
-          tokens.push(token);
-          token = "";
-        }
-        isScanningSymbols = isSymbol;
-      }
-
-      token += currChar;
+      state.escaping = false;
     }
 
-    if (token !== "") {
-      tokens.push(token);
-    }
-
-    return tokens.map((t) => this.resolveAmbiguity(t));
-  }
-
-  isSurroundingOpen(token: string) {
-    return this.surroundingOpen[token] !== undefined;
-  }
-
-  isSurroundingClose(token: string) {
-    return this.surroundingClose[token] !== undefined;
-  }
-
-  getSurroundingToken(token: string) {
-    return this.surroundingClose[token];
+    return tokens;
   }
 
   tokensToRpn(tokens: string[]) {
@@ -324,84 +371,73 @@ class ExpressionParser {
     const stack: string[] = [];
     const grouping: string[] = [];
 
-    // eslint-disable-next-line no-restricted-syntax
+    const isInfixOrPrefix = (token: string) => typeof this.getInfixOp(token) !== "undefined"
+      || typeof this.getPrefixOp(token) !== "undefined";
+
+    const handleOperator = (token: string) => {
+      const tokenPrecedence = this.getPrecedence(token);
+      let lastInStack = stack[stack.length - 1];
+
+      while (
+        lastInStack
+        && ((!!this.getPrefixOp(lastInStack)
+          && this.getPrecedence(lastInStack) < tokenPrecedence)
+          || (!!this.getInfixOp(lastInStack)
+            && this.getPrecedence(lastInStack) <= tokenPrecedence))
+      ) {
+        output.push(stack.pop()!);
+        lastInStack = stack[stack.length - 1];
+      }
+      stack.push(token);
+    };
+
+    const handleGrouping = (token: string, openToken: string) => {
+      if (grouping.pop() !== openToken) {
+        throw new Error(`Mismatched Grouping (unexpected closing "${token}")`);
+      }
+
+      let poppedToken = stack.pop();
+      while (poppedToken !== openToken && typeof poppedToken !== "undefined") {
+        output.push(poppedToken);
+        poppedToken = stack.pop();
+      }
+
+      if (typeof poppedToken === "undefined") {
+        throw new Error("Mismatched Grouping");
+      }
+    };
+
     for (const token of tokens) {
-      const isInfix = this.getInfixOp(token) !== undefined;
-      const isPrefix = this.getPrefixOp(token) !== undefined;
-
-      if (isInfix || isPrefix) {
-        const tokenPrecedence = this.getPrecedence(token);
-        let lastInStack = stack[stack.length - 1];
-
-        while (lastInStack
-          && ((!!this.getPrefixOp(lastInStack) && this.getPrecedence(lastInStack) < tokenPrecedence)
-            || (!!this.getInfixOp(lastInStack) && this.getPrecedence(lastInStack) <= tokenPrecedence))) {
-          output.push(stack.pop() as string);
-          lastInStack = stack[stack.length - 1];
-        }
-
-        stack.push(token);
-      } else if (this.isSurroundingOpen(token)) {
+      if (isInfixOrPrefix(token)) {
+        handleOperator(token);
+      } else if (this.surroundingOpen[token]) {
         stack.push(token);
         grouping.push(token);
-      } else if (this.isSurroundingClose(token)) {
-        const surroundingToken = this.getSurroundingToken(token);
-
-        if (grouping.pop() !== surroundingToken.OPEN) {
-          throw new Error(`Mismatched Grouping (unexpected closing "${token}")`);
-        }
-
-        let poppedToken = stack.pop();
-
-        while (poppedToken !== surroundingToken.OPEN && poppedToken !== undefined) {
-          output.push(poppedToken);
-          poppedToken = stack.pop();
-        }
-
-        if (poppedToken === undefined) {
-          throw new Error("Mismatched Grouping");
-        }
-
+      } else if (this.surroundingClose[token]) {
+        const surroundingToken = this.surroundingClose[token];
+        handleGrouping(token, surroundingToken.OPEN);
         stack.push(surroundingToken.ALIAS);
       } else if (token === this.options.GROUP_OPEN) {
         stack.push(token);
         grouping.push(token);
       } else if (token === this.options.GROUP_CLOSE) {
-        if (grouping.pop() !== this.options.GROUP_OPEN) {
-          throw new Error(`Mismatched Grouping (unexpected closing "${token}")`);
-        }
-
-        let poppedToken = stack.pop();
-
-        while (poppedToken !== this.options.GROUP_OPEN && poppedToken !== undefined) {
-          output.push(poppedToken);
-          poppedToken = stack.pop();
-        }
-
-        if (poppedToken === undefined) {
-          throw new Error("Mismatched Grouping");
-        }
+        handleGrouping(token, this.options.GROUP_OPEN);
       } else {
         output.push(token);
       }
     }
 
-    while (stack.length !== 0) {
-      const token = stack.pop() as string;
+    while (stack.length > 0) {
+      const token = stack.pop()!;
+      const surroundingToken = this.surroundingClose[token!];
 
-      if (this.isSurroundingClose(token)) {
-        const surroundingToken = this.getSurroundingToken(token);
-
-        if (grouping.pop() !== surroundingToken.OPEN) {
-          throw new Error(`Mismatched Grouping (unexpected closing "${token}")`);
-        }
+      if (surroundingToken) {
+        handleGrouping(token!, surroundingToken.OPEN);
       } else if (token === this.options.GROUP_CLOSE) {
-        if (grouping.pop() !== this.options.GROUP_OPEN) {
-          throw new Error(`Mismatched Grouping (unexpected closing "${token}")`);
-        }
+        handleGrouping(token!, this.options.GROUP_OPEN);
+      } else {
+        output.push(token);
       }
-
-      output.push(token);
     }
 
     if (grouping.length !== 0) {
@@ -418,43 +454,75 @@ class ExpressionParser {
     terminator: Terminator<T>,
     terms?: Record<string, ExpressionValue>,
   ): T {
-    let lhs;
-    let rhs;
-
     const token = stack.pop();
 
     if (typeof token === "undefined") {
       throw new Error("Parse Error: unexpected EOF");
     }
 
-    const isInfixDelegate = !!this.getInfixOp(token);
-    const isPrefixDelegate = !!this.getPrefixOp(token);
+    const infixDelegate = !!this.getInfixOp(token);
+    const prefixDelegate = !!this.getPrefixOp(token);
 
-    const isInfix = isInfixDelegate && stack.length > 1;
-    const isPrefix = isPrefixDelegate && stack.length > 0;
-
-    if (isInfix || isPrefix) {
-      rhs = this.evaluateRpn<T>(stack, infixer, prefixer, terminator, terms);
-    }
+    const isInfix = infixDelegate && stack.length > 1;
+    const isPrefix = prefixDelegate && stack.length > 0;
 
     if (isInfix) {
-      lhs = this.evaluateRpn<T>(stack, infixer, prefixer, terminator, terms);
-      return infixer(token, lhs, rhs as T);
+      const rhs = this.evaluateRpn<T>(stack, infixer, prefixer, terminator, terms);
+      const lhs = this.evaluateRpn<T>(stack, infixer, prefixer, terminator, terms);
+      return infixer(token, lhs, rhs);
     } if (isPrefix) {
-      return prefixer(token, rhs as T);
+      const rhs = this.evaluateRpn<T>(stack, infixer, prefixer, terminator, terms);
+      return prefixer(token, rhs);
     }
     return terminator(token, terms);
   }
 
-  rpnToThunk(stack: string[], terms?: Record<string, ExpressionValue>) {
-    const infixExpr: Infixer<ExpressionThunk> = (term, lhs, rhs) => thunk(this.getInfixOp(term), lhs, rhs);
-    const prefixExpr: Prefixer<ExpressionThunk> = (term, rhs) => thunk(this.getPrefixOp(term), rhs);
+  rpnToExpression(stack: string[]): string {
+    const infixExpr: Infixer<string> = (term, lhs, rhs) => `${this.options.GROUP_OPEN}${lhs}${this.options.SEPARATOR}${term}${this.options.SEPARATOR}${rhs}${this.options.GROUP_CLOSE}`;
+
+    const prefixExpr: Prefixer<string> = (term, rhs) => `${this.isSymbol(term) ? term : term + this.options.SEPARATOR}${this.options.GROUP_OPEN}${rhs}${this.options.GROUP_CLOSE}`;
+
+    const termExpr: Terminator<string> = (term) => term;
+
+    return this.evaluateRpn(stack, infixExpr, prefixExpr, termExpr);
+  }
+
+  rpnToTokens(stack: string[]): string[] {
+    const infixExpr: Infixer<string[]> = (term, lhs, rhs) => [
+      this.options.GROUP_OPEN,
+      ...lhs,
+      term,
+      ...rhs,
+      this.options.GROUP_CLOSE,
+    ];
+
+    const prefixExpr: Prefixer<string[]> = (term, rhs) => [
+      term,
+      this.options.GROUP_OPEN,
+      ...rhs,
+      this.options.GROUP_CLOSE,
+    ];
+
+    const termExpr: Terminator<string[]> = (term) => [term];
+
+    return this.evaluateRpn(stack, infixExpr, prefixExpr, termExpr);
+  }
+
+  rpnToThunk(stack: string[], terms?: Record<string, ExpressionValue>): ExpressionThunk {
+    const infixExpr: Infixer<ExpressionThunk> = (term, lhs, rhs) => thunk(this.getInfixOp(term) as Delegate, lhs, rhs);
+
+    const prefixExpr: Prefixer<ExpressionThunk> = (term, rhs) => thunk(this.getPrefixOp(term) as Delegate, rhs);
+
     const termExpr: Terminator<ExpressionThunk> = (term, terms) => {
-      if (this.options?.LITERAL_OPEN && term.startsWith(this.options.LITERAL_OPEN)) {
+      if (this.options.LITERAL_OPEN && term.startsWith(this.options.LITERAL_OPEN)) {
         // Literal string
-        return () => term.replace(this.LIT_OPEN_REGEX, "").replace(this.LIT_CLOSE_REGEX, "");
+        return () => term
+          .replace(this.LIT_OPEN_REGEX!, "")
+          .replace(this.LIT_CLOSE_REGEX!, "");
       }
-      return terms?.hasOwnProperty(term) ? () => terms[term] : thunk(this.options.termDelegate as any, term);
+      return terms && term in terms
+        ? () => terms[term]
+        : thunk(this.options.termDelegate as Delegate, term);
     };
 
     return this.evaluateRpn(stack, infixExpr, prefixExpr, termExpr, terms);
@@ -464,8 +532,28 @@ class ExpressionParser {
     return evaluate(this.rpnToThunk(stack, terms));
   }
 
-  expressionToValue(expression: string, terms: Record<string, ExpressionValue>) {
-    return this.rpnToValue(this.tokensToRpn(this.tokenize(expression)), terms);
+  thunkToValue(thunk: ExpressionThunk) {
+    return evaluate(thunk);
+  }
+
+  expressionToRpn(expression: string) {
+    return this.tokensToRpn(this.tokenize(expression));
+  }
+
+  expressionToThunk(expression: string, terms?: Record<string, ExpressionValue>) {
+    return this.rpnToThunk(this.expressionToRpn(expression), terms);
+  }
+
+  expressionToValue(expression: string, terms?: Record<string, ExpressionValue>) {
+    return this.rpnToValue(this.expressionToRpn(expression), terms);
+  }
+
+  tokensToValue(tokens: string[]) {
+    return this.rpnToValue(this.tokensToRpn(tokens));
+  }
+
+  tokensToThunk(tokens: string[]) {
+    return this.rpnToThunk(this.tokensToRpn(tokens));
   }
 }
 
