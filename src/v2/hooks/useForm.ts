@@ -19,7 +19,6 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
   if (!_form.current) {
     _form.current = createForm<TSchema>(props);
-    _form.current.reset({});
   }
 
   const latestState = useCallback(
@@ -27,7 +26,7 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       const latestState = _formState.current;
 
       if (JSON.stringify(state.containerFormState) !== JSON.stringify(latestState)) {
-        _formState.current = latestState;
+        _formState.current = state.containerFormState;
         update();
       }
     },

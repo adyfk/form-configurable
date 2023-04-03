@@ -146,7 +146,7 @@ export const PREFIX_ARRAY: FunctionOps = {
   INCLUDES: (arg1, arg2) => {
     const item = arg1();
     const arr = evalArray(arg2());
-    return arr.includes(item);
+    return arr?.includes(item) || false;
   },
   AVERAGE: (arg) => {
     const arr = evalArray(arg());
@@ -177,7 +177,7 @@ export const PREFIX_ARRAY: FunctionOps = {
     return arr;
   },
   INDEX: (arg1, arg2) => iterable(arg2())[num(arg1())],
-  LENGTH: (arg) => iterable(arg()).length,
+  LENGTH: (arg) => iterable(arg())?.length || 0,
   JOIN: (arg1, arg2) => evalArray(arg2()).join(string(arg1())),
   SPLIT: (arg1, arg2) => string(arg2()).split(string(arg1())),
   CHAR_ARRAY: (arg) => {
@@ -191,36 +191,36 @@ export const PREFIX_ARRAY: FunctionOps = {
   MAP: (arg1, arg2) => {
     const func = arg1();
     const arr = evalArray(arg2());
-    return arr.map((val) => {
+    return arr?.map((val) => {
       if (typeof func === "function") {
         return () => func(val);
       }
       return call(string(func))(() => val);
-    });
+    }) || [];
   },
   MAP_ITEM: (arg1, arg2) => {
     const item = string(arg1());
     const arr = evalArray(arg2());
-    return arr.map((val: any) => val[item]);
+    return arr?.map((val: any) => val[item]) || [];
   },
   EVERY: (arg1, arg2) => {
     const varg1 = arg1();
     const arr = evalArray(arg2());
-    return arr.every((item) => item === varg1);
+    return arr?.every((item) => item === varg1) || false;
   },
   EVERY_IS: (arg1, arg2) => {
     const func = arg1();
     const arr = evalArray(arg2());
-    return arr.every((item) => {
+    return arr?.every((item) => {
       const args: ExpressionArray<ExpressionThunk> = [() => item];
       return call(string(func))(...args);
-    });
+    }) || false;
   },
   EVERY_INFIX: (arg1, arg2, arg3) => {
     const func = arg1();
     const value = arg2();
     const arr = evalArray(arg3());
-    return arr.every((item) => {
+    return arr?.every((item) => {
       const args: ExpressionArray<ExpressionThunk> = [
         () => value,
         () => item,
@@ -229,19 +229,19 @@ export const PREFIX_ARRAY: FunctionOps = {
         return func(...args);
       }
       return call(string(func))(...args);
-    });
+    }) || false;
   },
   REDUCE: (arg1, arg2, arg3) => {
     const func = arg1();
     const start = arg2();
     const arr = evalArray(arg3());
-    return arr.reduce((prev, curr) => {
+    return arr?.reduce((prev, curr) => {
       const args: ExpressionArray<ExpressionThunk> = [() => prev, () => curr];
       if (typeof func === "function") {
         return func(...args);
       }
       return call(string(func))(...args);
-    }, start);
+    }, start) || start;
   },
   RANGE: (arg1, arg2) => {
     const start = num(arg1());
@@ -289,7 +289,7 @@ export const PREFIX_OBJECT: FunctionOps = {
     const key = string(arg1());
     const inputObj = obj(arg2());
 
-    return inputObj[key];
+    return inputObj?.[key];
   },
   PUT: (arg1, arg2, arg3) => {
     const key = string(arg1());
@@ -312,12 +312,11 @@ export const PREFIX_OBJECT: FunctionOps = {
   },
   KEYS: (arg1) => {
     const inputObj = obj(arg1());
-    return Object.keys(inputObj).sort();
+    return Object.keys(inputObj || {});
   },
   VALUES: (arg1) => {
     const inputObj = obj(arg1());
-    return Object.keys(inputObj)
-      .sort()
+    return Object.keys(inputObj || {})
       .map((key) => inputObj[key]);
   },
 };

@@ -412,12 +412,12 @@ export const ExamplePrefixObject = {
   },
   KEYS: {
     expression: "KEYS(objectsimple)",
-    result: ["number", "string"],
+    result: ["string", "number"],
     description: "",
   },
   VALUES: {
     expression: "VALUES(objectsimple)",
-    result: [2, "string"],
+    result: ["string", 2],
     description: "",
   },
 };
