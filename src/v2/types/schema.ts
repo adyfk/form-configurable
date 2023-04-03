@@ -8,8 +8,8 @@ export interface IOverrideSchema extends ISchemaCore {
 }
 
 export interface IOverrideField {
-  condition: boolean;
-  expression: IExpressionString;
+  condition?: boolean;
+  expression?: IExpressionString;
   values: any;
 }
 

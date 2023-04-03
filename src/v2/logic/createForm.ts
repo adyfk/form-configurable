@@ -360,7 +360,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   ) => {
     if (!schema.overrides) return;
 
-    for (const { condition, expression, values } of schema.overrides) {
+    for (const { condition = true, expression, values } of schema.overrides) {
       if (!expression) {
         setValues(structuredClone(values), { skipNotify: true });
         break;
