@@ -18,13 +18,8 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   }
 
   const latestState = useCallback(
-    (state: IState) => {
-      const latestState = _formState.current;
-
-      if (JSON.stringify(state.containerFormState) !== JSON.stringify(latestState)) {
-        _formState.current = state.containerFormState;
-        update();
-      }
+    () => {
+      update();
     },
     [],
   );
@@ -36,7 +31,7 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   });
 
   useEffect(() => {
-    latestState(_form.current.state);
+    latestState();
   }, []);
 
   useEffect(() => {
@@ -46,9 +41,6 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       initialValues: props.initialValues,
     });
     update();
-
-    _form.current.notify("containers");
-    _form.current.notify("fields");
   }, [props.schemas, props.extraData, props.initialValues]);
 
   return {
