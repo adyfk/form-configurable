@@ -18,13 +18,13 @@ export const useView = <TSchema extends ISchemaCore>(props: {
 }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, schema } = props as { form: IForm<TSchema>, schema: TSchema };
-  const _state = useRef(form.getSchemaViewState<TSchema["propStateType"] & IDefaultProp>(schema as any));
+  const _state = useRef({});
   const update = useUpdate();
 
   const latestState = useCallback(
     () => {
       const latestState = _state.current;
-      const state = form.getSchemaViewState<TSchema["propStateType"] & IDefaultProp>(schema as any);
+      const state = form.getSchemaViewState(schema as any);
       if (JSON.stringify(state) !== JSON.stringify(latestState)) {
         _state.current = state;
         update();
@@ -44,7 +44,7 @@ export const useView = <TSchema extends ISchemaCore>(props: {
   }, [schema]);
 
   return {
-    state: _state.current,
+    state: form.getSchemaViewState<TSchema["propStateType"] & IDefaultProp>(schema as any),
     data: schema.config.data || {},
     form,
   };

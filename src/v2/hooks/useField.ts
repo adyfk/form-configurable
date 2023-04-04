@@ -20,13 +20,13 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, schema } = props as { form: IForm<TSchema>, schema: TSchema };
   const _ref = useRef<any>();
-  const _state = useRef(form.getSchemaFieldState<TSchema["initialValue"], TSchema["propStateType"] & IDefaultProp>(schema as any));
+  const _state = useRef({});
   const update = useUpdate();
 
   const latestState = useCallback(
     () => {
       const latestState = _state.current;
-      const state = form.getSchemaFieldState<TSchema["initialValue"], TSchema["propStateType"] & IDefaultProp>(schema as any);
+      const state = form.getSchemaFieldState(schema as any);
       if (JSON.stringify(state) !== JSON.stringify(latestState)) {
         _state.current = state;
         update();
@@ -53,7 +53,7 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
   }, [schema.config.name]);
 
   return {
-    state: _state.current,
+    state: form.getSchemaFieldState<TSchema["initialValue"], TSchema["propStateType"] & IDefaultProp>(schema as any),
     formState: form.state.containerFormState,
     ref: _ref,
     form,

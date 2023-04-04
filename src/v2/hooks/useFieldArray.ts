@@ -69,7 +69,7 @@ export const useFieldArray = <TSchema extends ISchemaFieldCore>(props: {
   }, [schema.config.name]);
 
   return {
-    state: _state.current,
+    state: form.getSchemaFieldState<TSchema["initialValue"], TSchema["propStateType"] & IDefaultProp>(schema as any),
     formState: form.state.containerFormState,
     ref: _ref,
     form,
