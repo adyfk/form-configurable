@@ -5,10 +5,10 @@ import { renderHook } from "@testing-library/react";
 import { ISchema, ISchemaFieldArrayCustom, ISchemaFieldCustom, ISchemaGroupCustom, ISchemaViewCustom } from "../../types";
 import useForm from "../useForm";
 import useField from "../useField";
-import "@testing-library/jest-dom";
 import useView from "../useView";
+import "@testing-library/jest-dom";
+import "core-js";
 
-global.structuredClone = jest.fn((val = {}) => val);
 interface ISchemaFieldCustom1 extends ISchemaFieldCustom<{ test: boolean }> {
   variant: "FIELD",
   component: "CUSTOM 1",

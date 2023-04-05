@@ -109,7 +109,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     initialValues: props.initialValues || {},
   };
 
-  const _state: IState = structuredClone?.(initializeState) || JSON.parse(JSON.stringify(initializeState));
+  const _state: IState = structuredClone(initializeState);
 
   const _subject: ISubject = {
     fields: [],
@@ -362,19 +362,19 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
     for (const { condition = true, expression, values } of schema.overrides) {
       if (!expression) {
-        setValues(structuredClone?.(values), { skipNotify: true });
+        setValues(structuredClone(values), { skipNotify: true });
         break;
       }
 
       try {
         const result = parse(expression, { ...options.extraData });
         if (condition === !!result) {
-          setValues(structuredClone?.(values), { skipNotify: true });
+          setValues(structuredClone(values), { skipNotify: true });
           break;
         }
       } catch (error) {
         if (!condition) {
-          setValues(structuredClone?.(values), { skipNotify: true });
+          setValues(structuredClone(values), { skipNotify: true });
           break;
         }
       }
@@ -550,26 +550,33 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   };
 
   const reset = ({
-    initialValues = props.initialValues,
-    schemas = props.schemas,
-    extraData = props.extraData,
+    initialValues = _config.schemas,
+    schemas = _config.schemas,
+    extraData = _config.extraData,
   }: Partial<Omit<ICreateFormProps<TSchema>, "formula">>) => {
-    // ===
-    _config.schemas = schemas || [];
-    _config.initialValues = initialValues || {};
-    _config.extraData = extraData || {};
-    _state.values = {};
-    _state.error = {};
+    try {
+      props.log?.("prev config =", { ..._config });
+      props.log?.("prev state =", { ..._state });
+      // ===
+      _config.schemas = schemas;
+      _config.initialValues = initialValues;
+      _config.extraData = extraData;
 
-    Object.assign(_state, structuredClone?.(initializeState) || JSON.parse(JSON.stringify(initializeState)));
+      Object.assign(_state, structuredClone(initializeState));
 
-    generatedSchemaKey(_config.schemas as ISchema[]);
-    initializeValues(_config.schemas as ISchema[]);
-    executeExpression();
-    setSupportFormStateValid();
-    notify("containers");
-    notify("fields");
-    notify("supports");
+      generatedSchemaKey(_config.schemas as ISchema[]);
+      initializeValues(_config.schemas as ISchema[]);
+      executeExpression();
+      setSupportFormStateValid();
+      notify("containers");
+      notify("fields");
+      notify("supports");
+
+      props.log?.("curr config =", { ..._config });
+      props.log?.("curr state =", { ..._state });
+    } catch (error) {
+      props.log?.("failed reset =", error);
+    }
   };
 
   const handleSubmit = (

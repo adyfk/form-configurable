@@ -2,8 +2,7 @@
 /* eslint-disable no-console */
 import { ISchema, ISchemaFieldCore } from "../../types";
 import createForm from "../createForm";
-
-global.structuredClone = jest.fn((val = {}) => val);
+import "core-js";
 
 test("cobain v2", () => {
   interface NewX extends ISchemaFieldCore {
