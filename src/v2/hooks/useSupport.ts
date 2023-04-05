@@ -15,7 +15,7 @@ export const useSupport = (props: {
 }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext } = props as { form: IForm<ISchema> };
-  const _state = useRef<IState["supportFormState"]>(initializeState.supportFormState);
+  const _state = useRef<IState["supportFormState"]>(structuredClone(initializeState.supportFormState));
   const update = useUpdate();
 
   const latestState = useCallback(

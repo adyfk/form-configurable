@@ -109,7 +109,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     initialValues: props.initialValues || {},
   };
 
-  const _state: IState = initializeState;
+  const _state: IState = structuredClone(initializeState);
 
   const _subject: ISubject = {
     fields: [],
@@ -559,9 +559,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     _config.initialValues = initialValues || {};
     _config.extraData = extraData || {};
 
-    for (const key in initializeState) {
-      _state[key as keyof IState] = initializeState[key as keyof IState] as any;
-    }
+    Object.assign(_state, structuredClone(initializeState));
 
     generatedSchemaKey(_config.schemas as ISchema[]);
     initializeValues(_config.schemas as ISchema[]);

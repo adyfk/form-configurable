@@ -10,7 +10,7 @@ import useSubscribe from "./useSubscribe";
 export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   const update = useUpdate();
   const _form = useRef<IForm<TSchema>>(null as any);
-  const _formState = useRef<IState["containerFormState"]>(initializeState.containerFormState);
+  const _formState = useRef<IState["containerFormState"]>(structuredClone(initializeState.containerFormState));
 
   if (!_form.current) {
     _form.current = createForm<TSchema>(props);
