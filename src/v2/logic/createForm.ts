@@ -558,8 +558,10 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     _config.schemas = schemas || [];
     _config.initialValues = initialValues || {};
     _config.extraData = extraData || {};
-    // ===
-    Object.assign(_state, initializeState);
+
+    for (const key in initializeState) {
+      _state[key as keyof IState] = initializeState[key as keyof IState] as any;
+    }
 
     generatedSchemaKey(_config.schemas as ISchema[]);
     initializeValues(_config.schemas as ISchema[]);
