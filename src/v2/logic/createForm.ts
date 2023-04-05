@@ -558,6 +558,8 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     _config.schemas = schemas || [];
     _config.initialValues = initialValues || {};
     _config.extraData = extraData || {};
+    _state.values = {};
+    _state.error = {};
 
     Object.assign(_state, structuredClone?.(initializeState) || JSON.parse(JSON.stringify(initializeState)));
 
