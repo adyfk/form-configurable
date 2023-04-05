@@ -109,7 +109,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     initialValues: props.initialValues || {},
   };
 
-  const _state: IState = structuredClone(initializeState);
+  const _state: IState = structuredClone?.(initializeState) || JSON.parse(JSON.stringify(initializeState));
 
   const _subject: ISubject = {
     fields: [],
@@ -362,19 +362,19 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
     for (const { condition = true, expression, values } of schema.overrides) {
       if (!expression) {
-        setValues(structuredClone(values), { skipNotify: true });
+        setValues(structuredClone?.(values), { skipNotify: true });
         break;
       }
 
       try {
         const result = parse(expression, { ...options.extraData });
         if (condition === !!result) {
-          setValues(structuredClone(values), { skipNotify: true });
+          setValues(structuredClone?.(values), { skipNotify: true });
           break;
         }
       } catch (error) {
         if (!condition) {
-          setValues(structuredClone(values), { skipNotify: true });
+          setValues(structuredClone?.(values), { skipNotify: true });
           break;
         }
       }
@@ -559,7 +559,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     _config.initialValues = initialValues || {};
     _config.extraData = extraData || {};
 
-    Object.assign(_state, structuredClone(initializeState));
+    Object.assign(_state, structuredClone?.(initializeState) || JSON.parse(JSON.stringify(initializeState)));
 
     generatedSchemaKey(_config.schemas as ISchema[]);
     initializeValues(_config.schemas as ISchema[]);

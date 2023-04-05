@@ -8,6 +8,7 @@ import useField from "../useField";
 import "@testing-library/jest-dom";
 import useView from "../useView";
 
+global.structuredClone = jest.fn((val = {}) => val);
 interface ISchemaFieldCustom1 extends ISchemaFieldCustom<{ test: boolean }> {
   variant: "FIELD",
   component: "CUSTOM 1",

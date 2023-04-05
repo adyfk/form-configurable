@@ -3,6 +3,8 @@
 import { ISchema, ISchemaFieldCore } from "../../types";
 import createForm from "../createForm";
 
+global.structuredClone = jest.fn((val = {}) => val);
+
 test("cobain v2", () => {
   interface NewX extends ISchemaFieldCore {
     variant: "FIELD",
