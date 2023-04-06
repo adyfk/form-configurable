@@ -550,7 +550,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   };
 
   const reset = ({
-    initialValues = _config.schemas,
+    initialValues = _config.initialValues,
     schemas = _config.schemas,
     extraData = _config.extraData,
   }: Partial<Omit<ICreateFormProps<TSchema>, "formula">>) => {
