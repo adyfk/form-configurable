@@ -1,3 +1,5 @@
+import "core-js";
+
 export * from "./hooks/useForm";
 export * from "./hooks/useField";
 export * from "./hooks/useView";

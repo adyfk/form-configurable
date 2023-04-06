@@ -522,7 +522,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
           set(
             _state.values,
             key,
-            get(_config.initialValues, key) || schema.initialValue,
+            schema.initialValue,
           );
         } else if (schema.variant === "GROUP") {
           initializeValues(schema.childs);
@@ -557,15 +557,19 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     try {
       props.log?.("prev config =", { ..._config });
       props.log?.("prev state =", { ..._state });
-      // ===
+      // === reset
       _config.schemas = schemas;
       _config.initialValues = initialValues;
       _config.extraData = extraData;
-
       Object.assign(_state, structuredClone(initializeState));
 
+      // generate key
       generatedSchemaKey(_config.schemas as ISchema[]);
+
+      // initialize
       initializeValues(_config.schemas as ISchema[]);
+      Object.assign(_state.values, structuredClone(_config.initialValues));
+
       executeExpression();
       setSupportFormStateValid();
       notify("containers");

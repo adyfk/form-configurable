@@ -65,7 +65,7 @@ async function createModulePackages({ from, to }) {
   );
 }
 
-const packageIncludes = ["expressionparser", "@babel/runtime", "lodash.isequal", "react-dnd", "react-dnd-html5-backend"];
+const packageIncludes = ["expressionparser", "@babel/runtime", "lodash.isequal", "react-dnd", "react-dnd-html5-backend", "core-js"];
 
 async function includeFileInBuild(file) {
   const sourcePath = path.resolve(packagePath, file);
