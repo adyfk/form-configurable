@@ -235,7 +235,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     }
   };
 
-  const setSupportFormStateValid = (options: { skipNotify: boolean } = { skipNotify: true }) => {
+  const setSupportFormStateValid = (options: { skipNotify: boolean } = { skipNotify: false }) => {
     const isValid = !hasError();
 
     if (isValid !== _state.supportFormState.isValid) {
