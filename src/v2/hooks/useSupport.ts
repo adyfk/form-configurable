@@ -19,11 +19,11 @@ export const useSupport = (props: {
   const update = useUpdate();
 
   const latestState = useCallback(
-    (state: IState) => {
+    () => {
       const latestState = _state.current;
 
-      if (JSON.stringify(state.supportFormState) !== JSON.stringify(latestState)) {
-        _state.current = state.supportFormState;
+      if (JSON.stringify(form.state.supportFormState) !== JSON.stringify(latestState)) {
+        _state.current = form.state.supportFormState;
         update();
       }
     },
@@ -37,7 +37,7 @@ export const useSupport = (props: {
   });
 
   useEffect(() => {
-    latestState(form.state);
+    latestState();
   }, []);
 
   return {
