@@ -76,7 +76,7 @@ export const initializeState = {
     isValidating: false,
   },
   supportFormState: {
-    isValid: true,
+    isValid: false,
     isDirty: false,
   },
   propsState: {
