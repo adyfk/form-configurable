@@ -226,16 +226,16 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     }
   };
 
+  const unregisterEvent = (event: keyof IEvent, key: string) => {
+    delete _event[event][key];
+  };
+
   const registerEvent = (event: keyof IEvent, key: string, callback: IEventCallback) => {
     _event[event][key] = callback;
 
     return () => {
-      delete _event[event][key];
+      unregisterEvent(event, key);
     };
-  };
-
-  const unregisterEvent = (event: keyof IEvent, key: string) => {
-    delete _event[event][key];
   };
 
   const setContainerFormState = (formStateValue: Partial<IState["containerFormState"]>) => {
