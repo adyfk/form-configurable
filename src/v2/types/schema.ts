@@ -128,10 +128,41 @@ export interface ISchemaViewCustom<TProp> extends ISchemaViewCore {
 
 // ======================================================
 
+// FORM
+
+export interface ISchemaFormCore extends ISchemaCore {
+  initialValue?: any;
+  overrideSelf?: IExpressionString;
+  overrides: IOverrideField[];
+  rules: IRule[];
+  config: {
+    name: string;
+    data?: any;
+  };
+}
+
+export interface ISchemaFormDefault extends ISchemaFormCore {
+  variant: "FORM",
+  component: "DEFAULT";
+  props: (IProp & {
+    name: keyof IDefaultProp
+  })[];
+}
+
+export interface ISchemaFormCustom<TProp> extends ISchemaFormCore {
+  props: (IProp & {
+    name: keyof TProp | keyof IDefaultProp
+  })[]
+  readonly propStateType?: TProp & IDefaultProp
+}
+
+// ======================================================
+
 export type INativeSchema<TMoreSchema = null> = ISchemaFieldDefault |
   ISchemaFieldArrayDefault<TMoreSchema> |
   ISchemaFieldObjectDefault<TMoreSchema> |
   ISchemaGroupDefault<TMoreSchema> |
+  ISchemaFormDefault |
   ISchemaViewDefault;
 
 export type ISchema<TMoreSchema = null> = TMoreSchema extends ISchemaCore ? INativeSchema<TMoreSchema> | TMoreSchema : INativeSchema

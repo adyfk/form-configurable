@@ -2,7 +2,7 @@ import { IObject } from "./utils";
 
 export type IExpressionString = string;
 
-export type IVariant = "FIELD" | "FIELD-ARRAY" | "FIELD-OBJECT" | "VIEW" | "GROUP"
+export type IVariant = "FIELD" | "FIELD-ARRAY" | "FIELD-OBJECT" | "VIEW" | "GROUP" | "FORM"
 
 export interface IDefaultProp {
   disabled: boolean;

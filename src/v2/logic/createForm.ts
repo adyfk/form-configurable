@@ -11,6 +11,7 @@ import type {
   ISchemaFieldArrayDefault,
   ISchemaFieldDefault,
   ISchemaFieldObjectDefault,
+  ISchemaFormDefault,
 } from "../types";
 import set from "../utils/set";
 import { createParser } from "../parser";
@@ -49,6 +50,12 @@ export interface ISubject {
   supports: any[];
 }
 
+export type IEventCallback = () => boolean
+
+export interface IEvent {
+  submit: Record<string, IEventCallback>
+}
+
 export interface ICreateFormProps<TSchema> {
   initialValues: IState["values"];
   schemas: TSchema[];
@@ -66,7 +73,7 @@ export interface IConfig<TSchema> {
 
 interface IExecuteEachOptions { parent: string; extraData: Record<string, any>; name: string }
 
-type ISchemaFieldAll = ISchemaFieldDefault | ISchemaFieldArrayDefault | ISchemaFieldObjectDefault;
+type ISchemaFieldAll = ISchemaFieldDefault | ISchemaFieldArrayDefault | ISchemaFieldObjectDefault | ISchemaFormDefault;
 
 export const initializeState = {
   containerFormState: {
@@ -110,6 +117,10 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   };
 
   const _state: IState = structuredClone(initializeState);
+
+  const _event: IEvent = {
+    submit: {},
+  };
 
   const _subject: ISubject = {
     fields: [],
@@ -213,6 +224,18 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     } else {
       props.log?.(`ref "${key}" focus not yet registered`);
     }
+  };
+
+  const registerEvent = (event: keyof IEvent, key: string, callback: IEventCallback) => {
+    _event[event][key] = callback;
+
+    return () => {
+      delete _event[event][key];
+    };
+  };
+
+  const unregisterEvent = (event: keyof IEvent, key: string) => {
+    delete _event[event][key];
   };
 
   const setContainerFormState = (formStateValue: Partial<IState["containerFormState"]>) => {
@@ -467,6 +490,11 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       // skip when hidden is false
       if (getProp("hidden", key) || getProp("disabled", key)) continue;
 
+      if (schema.variant === "FORM") {
+        executeEachRuleExpression(schema, options);
+        continue;
+      }
+
       if (schema.variant === "FIELD") {
         executeEachRuleExpression(schema, options);
         continue;
@@ -557,10 +585,12 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     try {
       props.log?.("prev config =", { ..._config });
       props.log?.("prev state =", { ..._state });
+
       // === reset
       _config.schemas = schemas;
       _config.initialValues = initialValues;
       _config.extraData = extraData;
+
       Object.assign(_state, structuredClone(initializeState));
 
       // generate key
@@ -583,6 +613,16 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     }
   };
 
+  const executeEventSubmit = () => {
+    for (const key in _event.submit) {
+      const callback = _event.submit[key];
+      if (!callback()) {
+        initError(key, "FORM-INVALID");
+        break;
+      }
+    }
+  };
+
   const handleSubmit = (
     onValid: (values: IState["values"], state?: IState) => Promise<void> | void,
     onInvalid?: (
@@ -601,6 +641,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       _state.containerFormState.isSubmitting = true;
       notify("containers");
 
+      executeEventSubmit();
       executeExpression();
 
       if (hasError() && !options.forceSubmit) {
@@ -610,12 +651,6 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
         _state.containerFormState.isSubmitSuccessful = true;
         await onValid(_state.values, _state);
       }
-
-      // else {
-      //   _state.containerFormState.isSubmitSuccessful = true;
-      //   await onValid(_state.values, _state);
-      //   //
-      // }
     } catch (error) {
       _state.containerFormState.isSubmitSuccessful = false;
       onInvalid?.(_state.values, _state.error, "ON-SUBMIT", _state);
@@ -636,6 +671,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     state: _state,
     subject: _subject,
     fieldRef: _fieldRef,
+    event: _event,
     parse,
     setContainerFormState,
     setSupportFormState,
@@ -654,6 +690,8 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     getSchemaFieldState,
     getSchemaViewState,
     updateTouch,
+    registerEvent,
+    unregisterEvent,
   };
 };
 

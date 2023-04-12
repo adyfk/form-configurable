@@ -2,6 +2,7 @@ import "core-js";
 
 export * from "./hooks/useForm";
 export * from "./hooks/useFieldArray";
+export * from "./hooks/useFieldForm";
 export * from "./hooks/useSupport";
 export * from "./hooks/useField";
 export * from "./hooks/useView";
