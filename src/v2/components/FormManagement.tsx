@@ -106,8 +106,12 @@ export function SchemaComponent({
           schema={schema}
           schemas={schemas}
         >
-          {({ container: Container }) => (
-            <Container schema={schema} data={{}}>
+          {({ container: Container }, indexValue) => (
+            <Container
+              schema={schema}
+              data={{}}
+              index={indexValue}
+            >
               <FormManagement
                 parent={`${identity}.${generateId()}`}
                 schemas={schema.childs}
@@ -135,8 +139,13 @@ export function SchemaComponent({
           schema={schema}
           schemas={schemas}
         >
-          {({ value, container: Container }) => (
-            <Container schema={schema} data={value} key={`${identity}`}>
+          {({ value, container: Container }, indexValue) => (
+            <Container
+              schema={schema}
+              data={value}
+              index={indexValue}
+              key={`${identity}`}
+            >
               <FormManagement
                 parent={`${identity}`}
                 schemas={schema.childs}

@@ -119,7 +119,12 @@ export function SchemaComponent({
           {({ value, container: Container }, indexContainer) => (
             <Fragment key={indexContainer}>
               {value?.map((data: any, indexValue: number) => (
-                <Container schema={schema} data={data} key={`${parent}-${identity}-${indexContainer}-${indexValue}-${generatedKey}`}>
+                <Container
+                  index={indexValue}
+                  schema={schema}
+                  data={data}
+                  key={`${parent}-${identity}-${indexContainer}-${indexValue}-${generatedKey}`}
+                >
                   <FormGenerator
                     parent={`${identity}.${indexValue}`}
                     schemas={updateSchemasAttributTitle(schema.childs, indexValue)}
@@ -146,8 +151,13 @@ export function SchemaComponent({
           wrapper={wrapper}
           schema={schema}
         >
-          {({ value, container: Container }) => (
-            <Container schema={schema} data={value} key={`${identity}`}>
+          {({ value, container: Container }, indexValue) => (
+            <Container
+              index={indexValue}
+              schema={schema}
+              data={value}
+              key={`${identity}`}
+            >
               <FormGenerator
                 parent={`${identity}`}
                 schemas={schema.childs}

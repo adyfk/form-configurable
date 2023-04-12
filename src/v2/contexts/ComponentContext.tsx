@@ -5,7 +5,10 @@ export type IComponentContainerProps<T = any> = {
   data: T extends ISchemaFieldCore ?
   NonNullable<T["initialValue"]>[0] extends object ?
   NonNullable<T["initialValue"]>[0] : any
-  : any; children: any; schema: T
+  : any;
+  children: any;
+  schema: T;
+  index: number;
 }
 
 export type IComponentProps<T> = {
