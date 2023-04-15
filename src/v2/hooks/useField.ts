@@ -28,7 +28,7 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
       const latestState = _state.current;
       const state = form.getSchemaFieldState(schema as any);
       if (JSON.stringify(state) !== JSON.stringify(latestState)) {
-        _state.current = state;
+        _state.current = structuredClone(state);
         update();
       }
     },
