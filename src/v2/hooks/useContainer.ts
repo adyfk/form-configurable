@@ -1,11 +1,8 @@
-import {
-  useCallback, useContext, useEffect, useRef,
-} from "react";
-import useSubscribe from "./useSubscribe";
-import useUpdate from "./useUpdate";
-import { IForm, IState, initializeState } from "../logic/createForm";
+import { useContext } from "react";
+import { IForm } from "../logic/createForm";
 import { FormContext } from "../contexts/FormContext";
 import { ISchema } from "../types";
+import useSubscribeAndCompare from "./useSubscribeAndCompare";
 // import type { ISchema } from "../../types";
 
 export const useContainer = (props: {
@@ -15,34 +12,15 @@ export const useContainer = (props: {
 }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext } = props as { form: IForm<ISchema> };
-  const _state = useRef<IState["containerFormState"]>(structuredClone(initializeState.containerFormState));
-  const update = useUpdate();
 
-  const latestState = useCallback(
-    () => {
-      const latestState = _state.current;
-      const { containerFormState } = form.state;
-      if (JSON.stringify(containerFormState) !== JSON.stringify(latestState)) {
-        _state.current = containerFormState;
-        update();
-      }
-    },
-    [],
-  );
-
-  useSubscribe({
+  useSubscribeAndCompare({
     form,
-    callback: latestState,
     subject: "containers",
   });
 
-  useEffect(() => {
-    latestState();
-  }, []);
-
   return {
     form,
-    state: _state.current,
+    state: form.state.containerFormState,
   };
 };
 

@@ -1,13 +1,10 @@
 import {
-  useCallback,
   useContext,
-  useEffect,
   useRef,
 } from "react";
-import useSubscribe from "./useSubscribe";
-import useUpdate from "./useUpdate";
 import { IForm, IState } from "../logic/createForm";
 import { FormContext } from "../contexts/FormContext";
+import useSubscribeAndCompare from "./useSubscribeAndCompare";
 
 export const useWatch = <T>(props: {
   defaultValue?: any;
@@ -19,29 +16,14 @@ export const useWatch = <T>(props: {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, name } = props as { form: IForm<any>, name: string };
   const _state = useRef<IState>(form.getValue(name) || props.defaultValue);
-  const update = useUpdate();
 
-  const latestState = useCallback(
-    () => {
-      const latestState = _state.current;
-      const state = form.getValue(name);
-      if (JSON.stringify(state) !== JSON.stringify(latestState)) {
-        _state.current = state;
-        update();
-      }
-    },
-    [],
-  );
-
-  useSubscribe({
+  useSubscribeAndCompare({
     form,
-    callback: latestState,
     subject: "fields",
+    getState() {
+      return form.getValue(name);
+    },
   });
-
-  useEffect(() => {
-    latestState();
-  }, []);
 
   return {
     state: _state.current as T,

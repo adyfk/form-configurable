@@ -4,11 +4,10 @@ import {
   useEffect,
   useRef,
 } from "react";
-import useSubscribe from "./useSubscribe";
-import useUpdate from "./useUpdate";
 import type { IEventCallback, IForm } from "../logic/createForm";
 import { IDefaultProp, ISchemaFieldCore } from "../types";
 import { FormContext } from "../contexts/FormContext";
+import useSubscribeAndCompare from "./useSubscribeAndCompare";
 
 // eslint-disable-next-line no-use-before-define
 export const useFieldForm = <TSchema extends ISchemaFieldCore>(props: {
@@ -20,30 +19,14 @@ export const useFieldForm = <TSchema extends ISchemaFieldCore>(props: {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, schema } = props as { form: IForm<TSchema>, schema: TSchema };
   const _ref = useRef<any>();
-  const _state = useRef({});
-  const update = useUpdate();
 
-  const latestState = useCallback(
-    () => {
-      const latestState = _state.current;
-      const state = form.getSchemaFieldState(schema as any);
-      if (JSON.stringify(state) !== JSON.stringify(latestState)) {
-        _state.current = state;
-        update();
-      }
-    },
-    [schema],
-  );
-
-  useSubscribe({
+  useSubscribeAndCompare({
     form,
-    callback: latestState,
+    getState() {
+      return form.getSchemaFieldState(schema as any);
+    },
     subject: "fields",
   });
-
-  useEffect(() => {
-    latestState();
-  }, [schema]);
 
   useEffect(() => {
     form.fieldRef[schema.config.name] = _ref;

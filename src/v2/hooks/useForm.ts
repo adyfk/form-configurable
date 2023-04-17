@@ -1,37 +1,24 @@
 import {
-  useCallback, useEffect, useRef,
+  useEffect, useRef,
 } from "react";
 import createForm, {
-  IForm, ICreateFormProps, IState, initializeState,
+  IForm, ICreateFormProps,
 } from "../logic/createForm";
 import useUpdate from "./useUpdate";
-import useSubscribe from "./useSubscribe";
+import useSubscribeAndCompare from "./useSubscribeAndCompare";
 
 export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   const update = useUpdate();
   const _form = useRef<IForm<TSchema>>(null as any);
-  const _formState = useRef<IState["containerFormState"]>(structuredClone(initializeState.containerFormState));
 
   if (!_form.current) {
     _form.current = createForm<TSchema>(props);
   }
 
-  const latestState = useCallback(
-    () => {
-      update();
-    },
-    [],
-  );
-
-  useSubscribe({
+  useSubscribeAndCompare({
     form: _form.current,
-    callback: latestState,
     subject: "containers",
   });
-
-  useEffect(() => {
-    latestState();
-  }, []);
 
   useEffect(() => {
     _form.current.reset({
@@ -44,7 +31,7 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
   return {
     form: _form.current,
-    state: _formState.current,
+    state: _form.current.state.containerFormState,
     handleSubmit: _form.current.handleSubmit,
   };
 };

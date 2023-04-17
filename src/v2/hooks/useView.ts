@@ -1,14 +1,8 @@
-import {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-} from "react";
-import useSubscribe from "./useSubscribe";
-import useUpdate from "./useUpdate";
+import { useContext } from "react";
 import { IDefaultProp, ISchemaCore } from "../types";
 import { IForm } from "../logic/createForm";
 import { FormContext } from "../contexts/FormContext";
+import useSubscribeAndCompare from "./useSubscribeAndCompare";
 
 export const useView = <TSchema extends ISchemaCore>(props: {
   form?: any;
@@ -18,30 +12,14 @@ export const useView = <TSchema extends ISchemaCore>(props: {
 }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, schema } = props as { form: IForm<TSchema>, schema: TSchema };
-  const _state = useRef({});
-  const update = useUpdate();
 
-  const latestState = useCallback(
-    () => {
-      const latestState = _state.current;
-      const state = form.getSchemaViewState(schema as any);
-      if (JSON.stringify(state) !== JSON.stringify(latestState)) {
-        _state.current = state;
-        update();
-      }
-    },
-    [schema],
-  );
-
-  useSubscribe({
+  useSubscribeAndCompare({
     form,
-    callback: latestState,
     subject: "fields",
+    getState() {
+      return form.getSchemaViewState<TSchema["propStateType"] & IDefaultProp>(schema as any);
+    },
   });
-
-  useEffect(() => {
-    latestState();
-  }, [schema]);
 
   return {
     state: form.getSchemaViewState<TSchema["propStateType"] & IDefaultProp>(schema as any),
