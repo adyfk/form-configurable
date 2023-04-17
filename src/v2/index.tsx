@@ -11,4 +11,5 @@ export * from "./hooks/useWatch";
 export * from "./hooks/useWatchAll";
 export * from "./types";
 export * from "./logic/createForm";
+export * from "./logic/validate";
 export * from "./parser";
