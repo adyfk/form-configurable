@@ -357,8 +357,6 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       const key = getSchemaKey(schema, options.parent);
       const terms = { ...options.extraData, __SELF__: getValue(key) };
 
-      if (typeof getProp(name, key) !== "undefined") continue;
-
       if (!expression) {
         updateProps(name, key, { value, expressionValue }, terms);
         continue;
