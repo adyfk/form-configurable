@@ -13,42 +13,42 @@ import type {
 import {
   isArgumentsArray,
 } from "./formula-utils";
-import { PREFIX_OPS } from "./formula-operator-prefix";
 import { INFIX_OPS } from "./formula-operator-infix";
+import { createPrefixOperator } from "./formula-operator-prefix";
 
 export interface FunctionOps {
   // eslint-disable-next-line no-unused-vars
   [op: string]: (...args: ExpressionThunk[]) => ExpressionValue;
 }
 
-const unpackArgs = (f: Delegate, key: string) => (expr: ExpressionThunk) => {
+const unpackArgs = (func: Delegate, key: string) => (expr: ExpressionThunk) => {
   const result = expr();
 
   if (!isArgumentsArray(result)) {
-    if (f.length > 1) {
+    if (func.length > 1) {
       throw new Error(
-        `Too few arguments. Expected ${f.length}, found 1 (${JSON.stringify(
+        `Too few arguments. Expected ${func.length}, found 1 (${JSON.stringify(
           result,
         )})`,
       );
     }
-    return f(() => result);
-  } if (result.length === f.length || f.length === 0) {
+    return func(() => result);
+  } if (result.length === func.length || func.length === 0) {
     // eslint-disable-next-line prefer-spread
-    return f.apply(null, result);
+    return func.apply(null, result);
   }
   // eslint-disable-next-line no-console
   console.log("key =", key);
   // eslint-disable-next-line no-console
   console.log(`fn: unpackArgs (result.length) = ${result.length}`, { result });
   // eslint-disable-next-line no-console
-  console.log(`fn: unpackArgs (f.length) = ${f.length}`, { f });
+  console.log(`fn: unpackArgs (f.length) = ${func.length}`, { func });
   // eslint-disable-next-line no-console
-  console.log("fn: unpackArgs (f.toString) = ", f.toString());
+  console.log("fn: unpackArgs (f.toString) = ", func.toString());
   // eslint-disable-next-line no-console
   console.log("fn: unpackArgs (expr)", { expr });
 
-  throw new Error(`Incorrect number of arguments. Expected ${f.length}`);
+  throw new Error(`Incorrect number of arguments. Expected ${func.length}`);
 };
 
 // eslint-disable-next-line no-unused-vars
@@ -56,7 +56,7 @@ export const formula = function (
   termDelegate: TermDelegate,
   termTypeDelegate?: TermTyper,
 ): ExpressionParserOptions {
-  const prefixOps = PREFIX_OPS;
+  const prefixOps = createPrefixOperator();
   const infixOps = INFIX_OPS;
   // Ensure arguments are unpacked accordingly
   // Except for the ARRAY constructor
