@@ -21,7 +21,7 @@ export interface FunctionOps {
   [op: string]: (...args: ExpressionThunk[]) => ExpressionValue;
 }
 
-const unpackArgs = (f: Delegate) => (expr: ExpressionThunk) => {
+const unpackArgs = (f: Delegate, key: string) => (expr: ExpressionThunk) => {
   const result = expr();
 
   if (!isArgumentsArray(result)) {
@@ -37,6 +37,15 @@ const unpackArgs = (f: Delegate) => (expr: ExpressionThunk) => {
     // eslint-disable-next-line prefer-spread
     return f.apply(null, result);
   }
+  // eslint-disable-next-line no-console
+  console.log("key =", key);
+  // eslint-disable-next-line no-console
+  console.log(`fn: unpackArgs (result.length) = ${result.length}`, { result });
+  // eslint-disable-next-line no-console
+  console.log(`fn: unpackArgs (f.length) = ${f.length}`, { f });
+  // eslint-disable-next-line no-console
+  console.log("fn: unpackArgs (expr)", { expr });
+
   throw new Error(`Incorrect number of arguments. Expected ${f.length}`);
 };
 
@@ -51,7 +60,7 @@ export const formula = function (
   // Except for the ARRAY constructor
   Object.keys(prefixOps).forEach((key) => {
     if (key !== "ARRAY") {
-      prefixOps[key] = unpackArgs((prefixOps as any)[key]);
+      prefixOps[key] = unpackArgs((prefixOps as any)[key], key);
     }
   });
 
