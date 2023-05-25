@@ -43,6 +43,7 @@ const unpackArgs = (f: Delegate, key: string) => (expr: ExpressionThunk) => {
   console.log(`fn: unpackArgs (result.length) = ${result.length}`, { result });
   // eslint-disable-next-line no-console
   console.log(`fn: unpackArgs (f.length) = ${f.length}`, { f });
+  console.log("fn: unpackArgs (f.toString) = ", f.toString());
   // eslint-disable-next-line no-console
   console.log("fn: unpackArgs (expr)", { expr });
 
