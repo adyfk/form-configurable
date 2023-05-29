@@ -12,6 +12,7 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   const _form = useRef<IForm<TSchema>>(null as any);
 
   if (!_form.current) {
+    props.log?.("first init useForm");
     _form.current = createForm<TSchema>(props);
   }
 
@@ -26,6 +27,7 @@ export const useForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       extraData: props.extraData,
       initialValues: props.initialValues,
     });
+    props.log?.("update useForm");
     update();
   }, [props.schemas, props.extraData, props.initialValues]);
 
