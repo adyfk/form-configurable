@@ -7,7 +7,6 @@ import useForm from "../useForm";
 import useField from "../useField";
 import useView from "../useView";
 import "@testing-library/jest-dom";
-import "core-js";
 
 interface ISchemaFieldCustom1 extends ISchemaFieldCustom<{ test: boolean }> {
   variant: "FIELD",

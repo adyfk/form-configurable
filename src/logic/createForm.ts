@@ -1,4 +1,5 @@
 import isEqual from "lodash.isequal";
+import cloneDeep from "lodash.clonedeep";
 import createPath from "../v2/utils/createPath";
 import { expressionToValue } from "../parser";
 import type { Schema, SchemaField, SchemaFieldArray } from "../types";
@@ -161,7 +162,7 @@ export const createForm = (props: CreateFormProps) => {
     const path = options.path || config.name;
 
     if (typeof name === "string" && path.includes(name) && config.override?.others) {
-      Object.assign(_config.values, structuredClone(config.override?.others));
+      Object.assign(_config.values, cloneDeep(config.override?.others));
     }
 
     if (config.override?.self) {

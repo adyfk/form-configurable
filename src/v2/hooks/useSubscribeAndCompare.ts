@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import cloneDeep from "lodash.clonedeep";
 import type { ISubject } from "../logic/createForm";
 import { FormContext } from "../contexts/FormContext";
 import useUpdate from "./useUpdate";
@@ -25,12 +26,12 @@ const useSubscribeAndCompare = (props: IUseSubscribeAndCompareProps) => {
   useEffect(() => {
     if (disabled) return;
 
-    let prevState = structuredClone(getState?.());
+    let prevState = cloneDeep(getState?.());
     const unsubscribe = form.subscribe(subject, () => {
       if (!getState?.()) {
         update();
       } else if (JSON.stringify(prevState) !== JSON.stringify(getState())) {
-        prevState = structuredClone(getState());
+        prevState = cloneDeep(getState());
         update();
       }
     });

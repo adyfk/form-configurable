@@ -9,7 +9,6 @@ import {
   ExamplePrefixString,
   ExampleTerms,
 } from "../example";
-import "core-js";
 // import { ExampleInfix } from "../example-infix";
 
 const parser = createParser();

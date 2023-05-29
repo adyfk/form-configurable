@@ -3,7 +3,6 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable consistent-return */
 /* eslint-disable react/jsx-key */
-import "core-js";
 import { FC, Suspense, useContext, useMemo } from "react";
 import { ISchema } from "../types";
 import ComponentContext from "../contexts/ComponentContext";

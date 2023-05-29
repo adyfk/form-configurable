@@ -2,7 +2,6 @@
 /* eslint-disable no-console */
 import { ISchema, ISchemaFieldCore } from "../../types";
 import createForm from "../createForm";
-import "core-js";
 
 test("cobain v2", () => {
   interface NewX extends ISchemaFieldCore {

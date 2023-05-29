@@ -2,6 +2,7 @@
 /* eslint-disable no-unused-vars */
 import isEqual from "lodash.isequal";
 import { FormEvent } from "react";
+import cloneDeep from "lodash.clonedeep";
 import get from "../utils/get";
 import type {
   IDefaultField,
@@ -116,7 +117,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     initialValues: props.initialValues || {},
   };
 
-  const _state: IState = structuredClone(initializeState);
+  const _state: IState = cloneDeep(initializeState);
 
   const _event: IEvent = {
     submit: {},
@@ -383,19 +384,19 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
     for (const { condition = true, expression, values } of schema.overrides) {
       if (!expression) {
-        setValues(structuredClone(values), { skipNotify: true });
+        setValues(cloneDeep(values), { skipNotify: true });
         break;
       }
 
       try {
         const result = parse(expression, { ...options.extraData });
         if (condition === !!result) {
-          setValues(structuredClone(values), { skipNotify: true });
+          setValues(cloneDeep(values), { skipNotify: true });
           break;
         }
       } catch (error) {
         if (!condition) {
-          setValues(structuredClone(values), { skipNotify: true });
+          setValues(cloneDeep(values), { skipNotify: true });
           break;
         }
       }
@@ -589,14 +590,14 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       _config.initialValues = initialValues;
       _config.extraData = extraData;
 
-      Object.assign(_state, structuredClone(initializeState));
+      Object.assign(_state, cloneDeep(initializeState));
 
       // generate key
       generatedSchemaKey(_config.schemas as ISchema[]);
 
       // initialize
       initializeValues(_config.schemas as ISchema[]);
-      Object.assign(_state.values, structuredClone(_config.initialValues));
+      Object.assign(_state.values, cloneDeep(_config.initialValues));
 
       executeExpression();
       setSupportFormStateValid();
