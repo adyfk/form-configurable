@@ -284,13 +284,15 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     }
   };
 
-  function setValue(key: string, value: any, options: { skipNotify: boolean } = { skipNotify: false }) {
+  function setValue(key: string, value: any, options: { skipNotify: boolean; skipTouch: boolean } = { skipNotify: false, skipTouch: false }) {
     initValue(key, value);
 
     // eslint-disable-next-line no-useless-return
     if (options?.skipNotify) return;
 
-    updateTouch(key, true, false);
+    if (!options?.skipTouch) {
+      updateTouch(key, true, false);
+    }
     // eslint-disable-next-line no-use-before-define
     executeExpression(key);
     notify("fields");
