@@ -367,6 +367,16 @@ export const ExamplePrefixArray = {
     result: true,
     description: "",
   },
+  HAS: {
+    expression: "HAS(2,[4,2,1,3])",
+    result: true,
+    description: "",
+  },
+  HAS_IS: {
+    expression: "HAS_IS(IS_NUMBER,[\"4\",2,\"4\",\"4\"])",
+    result: true,
+    description: "",
+  },
   REDUCE: {
     expression: "REDUCE(\"ADD\",0,[4,4,4,4])",
     result: 16,

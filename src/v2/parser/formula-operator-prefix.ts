@@ -232,6 +232,19 @@ export const createPrefixOperator = () => {
         return call(string(func))(...args);
       }) || false;
     },
+    HAS: (arg1, arg2) => {
+      const item = arg1();
+      const arr = evalArray(arg2());
+      return arr?.some((val: any) => val === item) || [];
+    },
+    HAS_IS: (arg1, arg2) => {
+      const func = arg1();
+      const arr = evalArray(arg2());
+      return arr?.some((item) => {
+        const args: ExpressionArray<ExpressionThunk> = [() => item];
+        return call(string(func))(...args);
+      }) || false;
+    },
     REDUCE: (arg1, arg2, arg3) => {
       const func = arg1();
       const start = arg2();
