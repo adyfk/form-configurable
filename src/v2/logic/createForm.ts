@@ -300,6 +300,17 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     setIsDirty();
   }
 
+  function setError(key: string, value: any, options: { skipNotify: boolean; } = { skipNotify: false }) {
+    initError(key, value);
+
+    // eslint-disable-next-line no-useless-return
+    if (options?.skipNotify) return;
+
+    notify("fields");
+    setSupportFormStateValid();
+    setIsDirty();
+  }
+
   function setValues(values: IState["values"], options: { skipNotify: boolean; } = { skipNotify: false }) {
     Object.entries(values).forEach(([key, value]) => {
       initValue(key, value);
@@ -679,6 +690,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     getValue,
     setValue,
     getError,
+    setError,
     getProp,
     setValues,
     setFocus,
