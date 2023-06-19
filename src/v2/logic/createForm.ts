@@ -17,6 +17,7 @@ import type {
 import set from "../utils/set";
 import { createParser } from "../parser";
 import generateId from "../utils/generateId";
+import { parserV2 } from "../parser/parser-v2";
 
 // eslint-disable-next-line no-unused-vars
 
@@ -131,7 +132,10 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
   const _fieldRef: Record<string, any> = {};
 
-  const parse = (expression: IExpressionString, terms: Record<string, any> = {}) => parser.expressionToValue(expression, { ..._config.extraData, ..._state.values, ...terms });
+  const parse = (expression: IExpressionString, terms: Record<string, any> = {}, version: string = "v1") => {
+    if (version === "v2") return parserV2.evaluate(expression, { ..._config.extraData, ..._state.values, ...terms });
+    return parser.expressionToValue(expression, { ..._config.extraData, ..._state.values, ...terms });
+  };
 
   function hasError() { return !!Object.keys(_state.error).length; }
   // values
@@ -331,20 +335,24 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     try {
       initValue(
         key,
-        parse(schema.overrideSelf as string, {
-          ...options.extraData,
-          __SELF__: getValue(key),
-        }),
+        parse(
+          schema.overrideSelf as string,
+          {
+            ...options.extraData,
+            __SELF__: getValue(key),
+          },
+          schema.version,
+        ),
       );
     } catch (error) {
       //
     }
   };
 
-  const updateProps = (name: string, key: string, configValue: any, terms: any) => {
+  const updateProps = (name: string, key: string, configValue: any, terms: any, version: string = "v1") => {
     const { expressionValue, value } = configValue;
     try {
-      const result = (expressionValue ? parse(expressionValue, terms) : value);
+      const result = (expressionValue ? parse(expressionValue, terms, version) : value);
       initProp(name, key, result);
     } catch (error) {
       if (value) {
@@ -372,18 +380,18 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       const terms = { ...options.extraData, __SELF__: getValue(key) };
 
       if (!expression) {
-        updateProps(name, key, { value, expressionValue }, terms);
+        updateProps(name, key, { value, expressionValue }, terms, schema.version);
         continue;
       }
 
       try {
-        const result = parse(expression, terms);
+        const result = parse(expression, terms, schema.version);
         if (condition === !!result) {
-          updateProps(name, key, { value, expressionValue }, terms);
+          updateProps(name, key, { value, expressionValue }, terms, schema.version);
         }
       } catch (error) {
         if (!condition) {
-          updateProps(name, key, { value, expressionValue }, terms);
+          updateProps(name, key, { value, expressionValue }, terms, schema.version);
         }
       }
     }
@@ -402,7 +410,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       }
 
       try {
-        const result = parse(expression, { ...options.extraData });
+        const result = parse(expression, { ...options.extraData }, schema.version);
         if (condition === !!result) {
           setValues(cloneDeep(values), { skipNotify: true });
           break;
@@ -431,10 +439,14 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       } of (schema.rules)
     ) {
       try {
-        const result = parse(expression, {
-          ...options.extraData,
-          __SELF__: getValue(key),
-        });
+        const result = parse(
+          expression,
+          {
+            ...options.extraData,
+            __SELF__: getValue(key),
+          },
+          schema.version,
+        );
         if (condition === !!result) {
           initError(key, message);
           break;

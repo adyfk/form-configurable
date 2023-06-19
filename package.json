@@ -9,6 +9,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@adifkz/exp-p": "^1.0.13",
     "@babel/runtime": "^7.21.0",
     "eslint-plugin-jest": "^27.2.1",
     "expressionparser": "^1.1.5",

@@ -4,7 +4,7 @@ export type IExpressionString = string;
 
 export type IVariant = "FIELD" | "FIELD-ARRAY" | "FIELD-OBJECT" | "VIEW" | "GROUP" | "FORM"
 
-export type IExpressionVersion = "v1" | "v2"
+export type ISchemaVersion = "v1" | "v2"
 
 export interface IDefaultProp {
   disabled: boolean;
@@ -30,6 +30,7 @@ export type IStyles = {
 }
 
 export type ISchemaCore = {
+  version?: ISchemaVersion,
   key?: string;
   variant: IVariant;
   component: string;
