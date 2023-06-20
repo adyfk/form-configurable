@@ -1,6 +1,7 @@
 export * from "./hooks/useForm";
 export * from "./hooks/useFieldForm";
 export * from "./hooks/useSupport";
+export * from "./hooks/useFieldArray";
 export * from "./hooks/useField";
 export * from "./hooks/useView";
 export * from "./hooks/useSubscribe";
