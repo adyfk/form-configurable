@@ -26,6 +26,7 @@ export interface ISchemaFieldCore extends ISchemaCore {
   rules: IRule[];
   config: {
     name: string;
+    attributeId?: string;
     data?: any;
   };
 }
