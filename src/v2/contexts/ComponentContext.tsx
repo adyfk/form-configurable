@@ -9,6 +9,7 @@ export type IComponentContainerProps<T = any> = {
   children: any;
   schema: T;
   index: number;
+  containerProps?: Record<string, any>;
 }
 
 export type IComponentProps<T> = {

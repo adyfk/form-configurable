@@ -124,7 +124,7 @@ export function SchemaComponent({
                   schema={schema}
                   data={data}
                   key={`${parent}-${identity}-${indexContainer}-${indexValue}-${generatedKey}`}
-                  {...containerProps}
+                  containerProps={containerProps}
                 >
                   <FormGenerator
                     parent={`${identity}.${indexValue}`}
@@ -152,12 +152,13 @@ export function SchemaComponent({
           wrapper={wrapper}
           schema={schema}
         >
-          {({ value, container: Container }, indexValue) => (
+          {({ value, container: Container, containerProps }, indexValue) => (
             <Container
               index={indexValue}
               schema={schema}
               data={value}
               key={`${identity}`}
+              containerProps={containerProps}
             >
               <FormGenerator
                 parent={`${identity}`}
