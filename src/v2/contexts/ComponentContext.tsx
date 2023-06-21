@@ -28,7 +28,8 @@ export type IComponentArrayProps<T> = {
   schemas?: any[];
   children: FC<{
     value: any[],
-    container: FC<IComponentContainerProps<T>>
+    container: FC<IComponentContainerProps<T>>;
+    containerProps?: Record<string, any>
   }>
 };
 export type IComponentObjectProps<T> = {
@@ -38,6 +39,7 @@ export type IComponentObjectProps<T> = {
   children: FC<{
     value: Record<string, any>,
     container: FC<IComponentContainerProps<T>>
+    containerProps?: Record<string, any>
   }>
 };
 // Record<IVariant, Record<string, Component<any>>>;

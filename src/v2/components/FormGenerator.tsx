@@ -116,7 +116,7 @@ export function SchemaComponent({
           wrapper={wrapper}
           schema={schema}
         >
-          {({ value, container: Container }, indexContainer) => (
+          {({ value, container: Container, containerProps }, indexContainer) => (
             <Fragment key={indexContainer}>
               {value?.map((data: any, indexValue: number) => (
                 <Container
@@ -124,6 +124,7 @@ export function SchemaComponent({
                   schema={schema}
                   data={data}
                   key={`${parent}-${identity}-${indexContainer}-${indexValue}-${generatedKey}`}
+                  {...containerProps}
                 >
                   <FormGenerator
                     parent={`${identity}.${indexValue}`}
