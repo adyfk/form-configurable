@@ -1,8 +1,7 @@
 import {
   useContext,
-  useRef,
 } from "react";
-import { IForm, IState } from "../logic/createForm";
+import { IForm } from "../logic/createForm";
 import { FormContext } from "../contexts/FormContext";
 import useSubscribeAndCompare from "./useSubscribeAndCompare";
 
@@ -14,7 +13,6 @@ export const useWatchAll = (props: {
 }) => {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext } = props as { form: IForm<any> };
-  const _state = useRef<IState["values"]>({} as any);
 
   useSubscribeAndCompare({
     form,
@@ -22,7 +20,7 @@ export const useWatchAll = (props: {
   });
 
   return {
-    state: _state.current,
+    state: form.state.values,
     form,
   };
 };
