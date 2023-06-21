@@ -363,7 +363,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
   const executeEachPropsExpression = (
     schema: ISchema,
-    options: IExecuteEachOptions = { parent: "", extraData: {}, name: "" },
+    options: Partial<IExecuteEachOptions> = { parent: "", extraData: {} },
   ) => {
     if (!schema.props) return;
 
@@ -509,7 +509,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
         }
       }
 
-      executeEachPropsExpression(schema);
+      executeEachPropsExpression(schema, options);
 
       // skip when hidden is false
       if (getProp("hidden", key) || getProp("disabled", key)) continue;
