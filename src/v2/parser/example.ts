@@ -251,6 +251,16 @@ export const ExamplePrefixNumber = {
     result: 3,
     description: "",
   },
+  PRECISION: {
+    expression: "PRECISION(12.34343434, 4)",
+    result: 12.34,
+    description: "",
+  },
+  FIXED: {
+    expression: "FIXED(12.34343434, 4)",
+    result: 12.3434,
+    description: "",
+  },
   ADD: {
     expression: "ADD(1, 2)",
     result: 3,

@@ -137,6 +137,8 @@ export const createPrefixOperator = () => {
     SUB: (a, b) => num(a()) - num(b()),
     MUL: (a, b) => num(a()) * num(b()),
     DIV: (a, b) => num(a()) / num(b()),
+    PRECISION: (a, b) => +(num(a()).toPrecision(num(b()))),
+    FIXED: (a, b) => +(num(a()).toFixed(num(b()))),
   };
 
   const PREFIX_BOOLEAN: FunctionOps = {
