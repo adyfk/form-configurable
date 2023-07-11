@@ -512,7 +512,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       executeEachPropsExpression(schema, options);
 
       // skip when hidden is false
-      if (getProp("hidden", key) || getProp("disabled", key)) continue;
+      if (getProp("hidden", key)) continue;
 
       if (schema.variant === "FORM") {
         executeEachRuleExpression(schema, options);
