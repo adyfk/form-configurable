@@ -19,7 +19,7 @@ export type IProp = {
   condition?: boolean;
   name: string;
   expression?: IExpressionString;
-  value: any;
+  value?: any;
   expressionValue?: IExpressionString;
 }
 
