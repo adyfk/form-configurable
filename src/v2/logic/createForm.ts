@@ -668,6 +668,12 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       executeExpression();
 
       if (hasError() && !options.forceSubmit) {
+        if (props.shouldFocusError) {
+          const name = Object.keys(_state.error)[0];
+          setFocus(name);
+          props.log?.(`trigger focus ${name}`);
+        }
+
         _state.containerFormState.isSubmitSuccessful = false;
         onInvalid?.(_state.values, _state.error, "ON-SCHEMA", _state);
       } else {
