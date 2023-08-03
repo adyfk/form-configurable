@@ -403,16 +403,21 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   ) => {
     if (!schema.overrides) return;
 
-    for (const { condition = true, expression, values } of schema.overrides) {
-      if (!expression) {
-        setValues(cloneDeep(values), { skipNotify: true });
-        break;
-      }
-
+    for (const { condition = true, expression, values, valuesExpression } of schema.overrides) {
       try {
-        const result = parse(expression, { ...options.extraData }, schema.version);
-        if (condition === !!result) {
-          setValues(cloneDeep(values), { skipNotify: true });
+        const skip = !expression;
+        const result = skip ? true : parse(expression, { ...options.extraData }, schema.version);
+
+        if (skip || (condition === !!result)) {
+          if (values) { setValues(cloneDeep(values), { skipNotify: true }); }
+          if (valuesExpression) {
+            for (const key in valuesExpression) {
+              initValue(
+                key,
+                parse(valuesExpression[key], { ...options.extraData }, schema.version),
+              );
+            }
+          }
           break;
         }
       } catch (error) {

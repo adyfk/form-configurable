@@ -3,14 +3,11 @@ import { IDefaultProp, IExpressionString, IProp, ISchemaCore } from "./core";
 
 // Field ===========================
 
-export interface IOverrideSchema extends ISchemaCore {
-  comopnent: string;
-}
-
 export interface IOverrideField {
   condition?: boolean;
   expression?: IExpressionString;
-  values: any;
+  values?: any;
+  valuesExpression?: Record<string, string>;
 }
 
 export type IRule = {
