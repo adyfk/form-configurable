@@ -517,7 +517,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       if (schema.variant === "FIELD" || schema.variant === "FIELD-ARRAY" || schema.variant === "FIELD-OBJECT") {
         if (options.name === key) {
           executeEachOverrideExpression(schema, options);
-        } else if (schema.overrideSelf && !_state.hasChangedByOverride[options.name!]) {
+        } else if (schema.overrideSelf && !_state.hasChangedByOverride[schema.config?.name!]) {
           executeEachOverrideSelfExpression(schema, options);
         }
       }
