@@ -44,6 +44,7 @@ export interface IState {
   fieldsRef: Record<string, any>;
   values: Record<string, any>;
   error: Record<string, any>;
+  hasChangedByOverride: Record<string, any>;
 }
 
 export interface ISubject {
@@ -98,6 +99,7 @@ export const initializeState = {
   fieldsRef: {},
   error: {},
   values: {},
+  hasChangedByOverride: {},
 };
 
 export function getSchemaKey(schema: ISchema, parent?: string) {
@@ -403,26 +405,33 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   ) => {
     if (!schema.overrides) return;
 
+    function setValuesByOverride(values: Record<string, any>, expression: boolean = false) {
+      for (const key in values) {
+        _state.hasChangedByOverride[key] = true;
+        initValue(
+          key,
+          expression
+            ? parse(values[key], { ...options.extraData }, schema.version)
+            : values[key],
+        );
+      }
+    }
+
     for (const { condition = true, expression, values, valuesExpression } of schema.overrides) {
       try {
         const skip = !expression;
-        const result = skip ? true : parse(expression, { ...options.extraData }, schema.version);
 
-        if (skip || (condition === !!result)) {
-          if (values) { setValues(cloneDeep(values), { skipNotify: true }); }
-          if (valuesExpression) {
-            for (const key in valuesExpression) {
-              initValue(
-                key,
-                parse(valuesExpression[key], { ...options.extraData }, schema.version),
-              );
-            }
+        if (skip || (condition === !!parse(expression, { ...options.extraData }, schema.version))) {
+          if (values) {
+            setValuesByOverride(cloneDeep(values));
+          } else if (valuesExpression) {
+            setValuesByOverride(valuesExpression, true);
           }
           break;
         }
       } catch (error) {
         if (!condition) {
-          setValues(cloneDeep(values), { skipNotify: true });
+          setValuesByOverride(cloneDeep(values));
           break;
         }
       }
@@ -508,7 +517,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
       if (schema.variant === "FIELD" || schema.variant === "FIELD-ARRAY" || schema.variant === "FIELD-OBJECT") {
         if (options.name === key) {
           executeEachOverrideExpression(schema, options);
-        } else if (schema.overrideSelf) {
+        } else if (schema.overrideSelf && !_state.hasChangedByOverride[options.name!]) {
           executeEachOverrideSelfExpression(schema, options);
         }
       }
@@ -561,6 +570,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
 
   const executeExpression = (name?: string) => {
     _state.error = {};
+    _state.hasChangedByOverride = {};
 
     // eslint-disable-next-line guard-for-in
     for (const prop in _state.propsState) {
