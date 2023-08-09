@@ -424,10 +424,10 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
         if (skip || (condition === !!parse(expression, { ...options.extraData }, schema.version))) {
           if (values) {
             setValuesByOverride(cloneDeep(values));
-          } else if (valuesExpression) {
+          }
+          if (valuesExpression) {
             setValuesByOverride(valuesExpression, true);
           }
-          break;
         }
       } catch (error) {
         if (!condition) {
