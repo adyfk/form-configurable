@@ -103,12 +103,12 @@ export const initializeState = {
 };
 
 export function getSchemaKey(schema: ISchema, parent?: string) {
-  return `${parent ? `${parent}.` : ""}${schema.config.name ?? schema.key}`;
+  return `${parent ? `${parent}.` : ""}${schema.config?.name ?? schema.key}`;
 }
 
 export function getSchemaName(schema: ISchema, parent?: string) {
-  if (!schema.config.name) return "";
-  return `${parent ? `${parent}.` : ""}${schema.config.name}`;
+  if (!schema.config?.name) return "";
+  return `${parent ? `${parent}.` : ""}${schema.config?.name}`;
 }
 
 const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {

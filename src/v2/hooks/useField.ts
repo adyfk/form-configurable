@@ -8,6 +8,7 @@ import type { IForm } from "../logic/createForm";
 import { IDefaultProp, ISchemaFieldCore } from "../types";
 import { FormContext } from "../contexts/FormContext";
 import useSubscribeAndCompare from "./useSubscribeAndCompare";
+import generateId from "../utils/generateId";
 
 // eslint-disable-next-line no-use-before-define
 export const useField = <TSchema extends ISchemaFieldCore>(props: {
@@ -19,6 +20,8 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
   const { form: formContext } = useContext(FormContext);
   const { form = formContext, schema } = props as { form: IForm<TSchema>, schema: TSchema };
   const _ref = useRef<any>();
+
+  const identity = schema.config?.name || schema.key || generateId();
 
   useSubscribeAndCompare({
     form,
@@ -34,11 +37,11 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
   });
 
   useEffect(() => {
-    form.fieldRef[schema.config.name] = _ref;
+    form.fieldRef[identity] = _ref;
     return () => {
-      delete form.fieldRef[schema.config.name];
+      delete form.fieldRef[identity];
     };
-  }, [schema.config.name]);
+  }, [identity]);
 
   return {
     state: form.getSchemaFieldState<TSchema["initialValue"], TSchema["propStateType"] & IDefaultProp>(schema as any),
@@ -49,16 +52,16 @@ export const useField = <TSchema extends ISchemaFieldCore>(props: {
     onChange: useCallback(
       (arg: any) => {
         if (typeof arg === "function") {
-          form.setValue(schema.config.name, arg(form.state.values));
+          form.setValue(identity, arg(form.state.values));
         } else {
-          form.setValue(schema.config.name, arg);
+          form.setValue(identity, arg);
         }
       },
-      [schema.config.name, form],
+      [identity, form],
     ),
     onBlur: useCallback(
-      () => form.updateTouch(schema.config.name),
-      [schema.config.name, form],
+      () => form.updateTouch(identity),
+      [identity, form],
     ),
   };
 };

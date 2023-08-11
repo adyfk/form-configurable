@@ -193,7 +193,7 @@ export function FormGenerator(props: Partial<IFormGeneratorProps>) {
   return (
     <>
       {(schemas as ISchema[]).map((schema) => {
-        const key = schema.variant + schema.component + (schema.config.name || "") + (schema.key || "") + parent + generatedKey;
+        const key = schema.variant + schema.component + (schema.config?.name || "") + (schema.key || "") + parent + generatedKey;
         return (
           <SchemaComponent
             key={key}
