@@ -54,7 +54,7 @@ export const useFieldArray = <TSchema extends ISchemaFieldCore>(props: {
     formState: form.state.containerFormState,
     ref: _ref,
     form,
-    data: schema.config.data || {},
+    data: schema.config?.data || {},
     onChange: useCallback(
       (arg: any) => {
         if (typeof arg === "function") {

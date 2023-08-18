@@ -23,7 +23,7 @@ export const useView = <TSchema extends ISchemaCore>(props: {
 
   return {
     state: form.getSchemaViewState<TSchema["propStateType"] & IDefaultProp>(schema as any),
-    data: schema.config.data || {},
+    data: schema.config?.data || {},
     form,
   };
 };
