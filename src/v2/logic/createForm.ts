@@ -132,8 +132,6 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     supports: [],
   };
 
-  const _fieldRef: Record<string, any> = {};
-
   const parse = (expression: IExpressionString, terms: Record<string, any> = {}, version: string = "v1") => {
     if (version === "v2") return parserV2.evaluate(expression, { ..._config.extraData, ..._state.values, ...terms });
     return parser.expressionToValue(expression, { ..._config.extraData, ..._state.values, ...terms });
@@ -714,7 +712,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     config: _config,
     state: _state,
     subject: _subject,
-    fieldRef: _fieldRef,
+    fieldRef: _state.fieldsRef,
     event: _event,
     parse,
     setContainerFormState,
