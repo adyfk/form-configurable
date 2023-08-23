@@ -712,7 +712,6 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     config: _config,
     state: _state,
     subject: _subject,
-    fieldRef: _state.fieldsRef,
     event: _event,
     parse,
     setContainerFormState,

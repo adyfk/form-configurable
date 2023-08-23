@@ -43,9 +43,9 @@ export const useFieldArray = <TSchema extends ISchemaFieldCore>(props: {
   });
 
   useEffect(() => {
-    form.fieldRef[identity] = _ref;
+    form.state.fieldsRef[identity] = _ref;
     return () => {
-      delete form.fieldRef[identity];
+      delete form.state.fieldsRef[identity];
     };
   }, [identity]);
 
