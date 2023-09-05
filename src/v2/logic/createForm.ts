@@ -51,6 +51,7 @@ export interface ISubject {
   fields: any[];
   containers: any[];
   supports: any[];
+  extras: any[];
 }
 
 export type IEventCallback = () => boolean
@@ -130,6 +131,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     fields: [],
     containers: [],
     supports: [],
+    extras: [],
   };
 
   const parse = (expression: IExpressionString, terms: Record<string, any> = {}, version: string = "v1") => {
@@ -142,6 +144,11 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
   function getValue(key?: string) {
     if (!key) return undefined;
     return get(_state.values, key);
+  }
+  // extras
+  function getExtra(key?: string) {
+    if (!key) return undefined;
+    return get(_config.extraData, key);
   }
   function initValue(key: string, value: any) { set(_state.values, key, value); }
   // fieldState
@@ -717,6 +724,7 @@ const createForm = <TSchema>(props: ICreateFormProps<TSchema>) => {
     setContainerFormState,
     setSupportFormState,
     getValue,
+    getExtra,
     setValue,
     getError,
     setError,
