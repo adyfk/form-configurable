@@ -1,1 +1,0 @@
-export declare const createParser: (_config?: (termDelegate: import("./expression").TermDelegate, termTypeDelegate?: import("./expression").TermTyper | undefined) => import("./expression").ExpressionParserOptions) => import("expressionparser/dist/ExpressionParser").default;

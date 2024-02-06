@@ -1,6 +1,6 @@
 {
   "name": "form-configurable",
-  "version": "3.3.3-development",
+  "version": "3.3.4-development",
   "license": "MIT",
   "private": false,
   "author": "Adi Fatkhurozi <ady.fatkhurozi@gmail.com>",
@@ -9,7 +9,7 @@
     "access": "public"
   },
   "dependencies": {
-    "@adifkz/exp-p": "^1.0.17",
+    "@adifkz/exp-p": "^1.0.25",
     "@babel/runtime": "^7.21.0",
     "eslint-plugin-jest": "^27.2.1",
     "expressionparser": "^1.1.5",
